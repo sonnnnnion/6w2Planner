@@ -62,19 +62,9 @@
     font-family:var(--font-body); line-height:1.5;
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
-  [data-theme="sage"] body{
-    background:
-      radial-gradient(circle at 16% 6%, rgba(93,125,63,.14), transparent 34%),
-      radial-gradient(circle at 86% 0%, rgba(255,255,255,.6), transparent 28%),
-      linear-gradient(160deg,#f7f4e8 0%,#eceedb 60%,#e2e6cf 100%);
-    background-attachment:fixed;
-  }
-  [data-theme="midnight"] body{
-    background:
-      radial-gradient(circle at 14% 4%, rgba(233,79,138,.10), transparent 36%),
-      linear-gradient(160deg,#10131c 0%,#0d1018 60%,#0a0d14 100%);
-    background-attachment:fixed;
-  }
+  /* Solid, cheap backgrounds — no fixed-attachment (that caused scroll jank). */
+  [data-theme="sage"] body{ background:#eff0e2; }
+  [data-theme="midnight"] body{ background:#0d1018; }
   a{color:var(--accent-ink)}
 
   /* ===================== TOPBAR ===================== */
@@ -82,10 +72,8 @@
     position:sticky; top:0; z-index:50;
     display:flex; align-items:center; gap:14px; flex-wrap:wrap;
     padding:11px clamp(14px,4vw,40px);
-    background:color-mix(in srgb,var(--bg) 80%,transparent);
-    backdrop-filter:blur(16px) saturate(140%);
-    -webkit-backdrop-filter:blur(16px) saturate(140%);
-    border-bottom:1px solid var(--rule-soft);
+    background:var(--bg);
+    border-bottom:1px solid var(--rule);
   }
   [data-theme="carbon"] .topbar{backdrop-filter:none;background:var(--bg);border-bottom:2px solid #111}
   .brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
@@ -110,14 +98,14 @@
   [data-theme="midnight"] .seg button[aria-pressed="true"]{color:#1a0d14}
 
   /* ===================== LAYOUT ===================== */
-  .wrap{max-width:1080px;margin:0 auto;padding:clamp(16px,3vw,30px) clamp(14px,4vw,40px) 80px}
-  .hero{margin:6px 0 18px}
+  .wrap{max-width:1440px;margin:0 auto;padding:clamp(14px,2.4vw,24px) clamp(14px,4vw,44px) 70px}
+  .hero{margin:2px 0 14px}
   .hero h1{
     font-family:var(--font-display);font-weight:var(--display-wt);
-    font-size:clamp(30px,6vw,52px);line-height:1.02;margin:.1em 0 .15em;letter-spacing:-.015em;
+    font-size:clamp(26px,3.6vw,40px);line-height:1.02;margin:.05em 0 .18em;letter-spacing:-.015em;
   }
-  .hero p{margin:.2em 0;color:var(--ink-soft);max-width:64ch;font-size:15px}
-  .hero .courses{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .hero p{margin:.15em 0;color:var(--ink-soft);max-width:70ch;font-size:14px}
+  .hero .courses{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .course-tag{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;
     padding:5px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--chip)}
   [data-theme="carbon"] .course-tag{border-radius:0}
@@ -138,27 +126,34 @@
   .rw.done{opacity:.55}
   .rw.current .wk{color:var(--today)}
 
-  /* ===================== UP NEXT ===================== */
-  .upnext{margin:20px 0;padding:16px 18px;border-radius:var(--radius);border:1px solid var(--rule);
-    background:linear-gradient(180deg,var(--card),var(--card-2));box-shadow:var(--shadow-md)}
-  .upnext h2{font-family:var(--font-display);font-weight:var(--display-wt);font-size:20px;margin:0 0 3px;display:flex;align-items:center;gap:9px}
-  .upnext .sub{color:var(--ink-faint);font-size:12px;margin:0 0 13px;font-family:var(--font-mono)}
-  .due-list{display:flex;flex-direction:column;gap:7px}
-  .due{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:var(--radius-sm);
-    background:var(--card);border:1px solid var(--rule-soft);transition:transform var(--motion-fast) var(--ease-out)}
-  [data-theme="carbon"] .due{border-radius:0}
-  .due:hover{transform:translatex(2px)}
-  .due .when{flex:0 0 92px;font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);text-align:right;line-height:1.3}
-  .due .when b{display:block;font-size:12.5px;color:var(--ink)}
-  .due .bar{flex:0 0 4px;align-self:stretch;border-radius:3px;min-height:30px}
-  .due .body{flex:1;min-width:0}
-  .due .body .t{font-weight:600;font-size:14px}
-  .due .body .m{font-size:11.5px;color:var(--ink-faint);font-family:var(--font-mono)}
-  .due .tag{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;
-    padding:3px 8px;border-radius:999px;color:#fff;white-space:nowrap}
-  [data-theme="carbon"] .due .tag{border-radius:0}
-  .due.soon{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c-exam) 45%,transparent)}
-  .due.today-due .when b{color:var(--c-exam)}
+  /* ===================== TO-DO BOARD ===================== */
+  .todo{margin:14px 0 22px;padding:16px 18px;border-radius:var(--radius);border:1px solid var(--rule);
+    background:linear-gradient(180deg,var(--card),var(--card-2));box-shadow:var(--shadow-sm)}
+  .todo-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .todo-head h2{font-family:var(--font-display);font-weight:var(--display-wt);font-size:26px;margin:0}
+  .todo-head .todo-sub{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-faint)}
+  .todo-head .spacer{flex:1}
+  .todo-head .todo-nextexam{font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fff;background:var(--c-exam);padding:5px 12px;border-radius:999px;white-space:nowrap}
+  [data-theme="carbon"] .todo-head .todo-nextexam{border-radius:0}
+  .todo-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;align-items:start}
+  .todo-col{background:var(--card);border:1px solid var(--rule-soft);border-radius:var(--radius-sm);padding:12px 12px 8px}
+  [data-theme="carbon"] .todo-col{border-radius:0}
+  .todo-col.urgent{border-color:color-mix(in srgb,var(--c-exam) 40%,var(--rule));box-shadow:0 0 0 1px color-mix(in srgb,var(--c-exam) 22%,transparent)}
+  .todo-col-head{display:flex;align-items:baseline;gap:9px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--rule-soft)}
+  .todo-col-head .tc-title{font-family:var(--font-display);font-weight:var(--display-wt);font-size:18px}
+  .todo-col.urgent .tc-title{color:var(--c-exam)}
+  .todo-col-head .tc-date{font-family:var(--font-mono);font-size:10px;color:var(--ink-faint)}
+  .todo-col-head .tc-count{margin-left:auto;font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--ink-soft);background:var(--card-2);border:1px solid var(--rule-soft);border-radius:999px;padding:2px 9px}
+  [data-theme="carbon"] .todo-col-head .tc-count{border-radius:0}
+  .todo-item{display:flex;gap:10px;padding:9px 4px;align-items:flex-start}
+  .todo-item + .todo-item{border-top:1px solid var(--rule-soft)}
+  .todo-item .ti-bar{flex:0 0 4px;align-self:stretch;border-radius:3px;min-height:34px}
+  .todo-item .ti-body{flex:1;min-width:0}
+  .todo-item .ti-title{font-weight:600;font-size:14.5px;line-height:1.28}
+  .todo-item .ti-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-faint);margin-top:3px}
+  .todo-item .ti-tag{align-self:center;font-family:var(--font-mono);font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;padding:3px 7px;border-radius:999px;white-space:nowrap}
+  [data-theme="carbon"] .todo-item .ti-tag{border-radius:0}
+  .todo-empty{color:var(--ink-faint);font-size:12.5px;font-style:italic;padding:10px 2px}
   .all-clear{padding:18px;text-align:center;color:var(--ink-faint);font-family:var(--font-mono);font-size:13px}
 
   /* ===================== FILTERS ===================== */
@@ -295,7 +290,7 @@
 
   /* ===================== IMAGE VIEWER (lightbox) ===================== */
   .viewer{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
-    background:var(--backdrop,rgba(20,16,10,.72));backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);padding:16px}
+    background:rgba(20,16,10,.78);padding:16px}
   .viewer.open{display:flex}
   .viewer-panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);
     max-width:960px;width:100%;max-height:94vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);overflow:hidden}
@@ -423,10 +418,14 @@
       <div class="rail-weeks" id="railWeeks"></div>
     </div>
 
-    <section class="upnext reveal" id="upnext" aria-live="polite">
-      <h2>⏳ Up next</h2>
-      <p class="sub" id="upnextSub"></p>
-      <div class="due-list" id="dueList"></div>
+    <section class="todo reveal" id="todo" aria-live="polite">
+      <div class="todo-head">
+        <h2>✅ To do</h2>
+        <span class="todo-sub" id="todoSub"></span>
+        <span class="spacer"></span>
+        <span class="todo-nextexam" id="todoNextExam"></span>
+      </div>
+      <div class="todo-board" id="todoBoard"></div>
     </section>
 
     <section class="examprep reveal" id="examprep">
@@ -894,27 +893,49 @@ function renderRail(){
   $('#nowLabel').textContent=label;
 }
 
-/* ---------- up next ---------- */
+/* ---------- to-do board (Today · This week · Next week) ---------- */
+function startOfWeekMon(d){ const x=new Date(d); x.setDate(x.getDate()-((x.getDay()+6)%7)); x.setHours(0,0,0,0); return x; }
+function todoItemHTML(x){
+  const d=x.due, c=CATS[x.cat];
+  const day=`${DOW[d.getDay()]} ${MON[d.getMonth()]} ${d.getDate()}`;
+  return `<div class="todo-item" data-cat="${x.cat}">
+    <div class="ti-bar" style="background:${c.color}"></div>
+    <div class="ti-body"><div class="ti-title">${x.title}</div><div class="ti-meta">${day} · ${timeStr(d)} · ${x.loc}</div></div>
+    <div class="ti-tag" style="background:${c.color}">${c.label}</div></div>`;
+}
 function renderUpNext(){
-  const list=$('#dueList'); const n=now();
+  const board=$('#todoBoard'); const n=now(), t=today();
+  const thisMon=startOfWeekMon(t);
+  const thisSun=new Date(thisMon); thisSun.setDate(thisMon.getDate()+6);
+  const nextMon=new Date(thisMon); nextMon.setDate(thisMon.getDate()+7);
+  const nextSun=new Date(nextMon); nextSun.setDate(nextMon.getDate()+6);
+  const dayOf=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
   const items=DEADLINES.map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc}))
-    .filter(x=>x.due>=n).sort((a,b)=>a.due-b.due).slice(0,8);
-  list.innerHTML='';
-  if(!items.length){ list.innerHTML='<div class="all-clear">🎉 Nothing left on the calendar — term complete.</div>'; $('#upnextSub').textContent=''; return; }
-  $('#upnextSub').textContent = `${items.length} closest deadlines · as of ${fmtShort(today())}`;
-  items.forEach(x=>{
-    const w=relWhen(x.due);
-    const soon = w.diff<=1;
-    const el=document.createElement('div');
-    el.className='due cat-'+x.cat+(soon?' soon':'')+(w.big==='Today'?' today-due':'');
-    el.dataset.cat=x.cat;
-    el.innerHTML=`
-      <div class="when"><b>${w.big}</b>${w.small?`<span>${w.small}</span>`:''}</div>
-      <div class="bar" style="background:${CATS[x.cat].color}"></div>
-      <div class="body"><div class="t">${x.title}</div><div class="m">${x.loc}</div></div>
-      <div class="tag" style="background:${CATS[x.cat].color}">${CATS[x.cat].label}</div>`;
-    list.appendChild(el);
+    .filter(x=>x.due>=n).sort((a,b)=>a.due-b.due);
+  const cols=[
+    {key:'today',    title:'Today',     date:fmtShort(t), urgent:true, items:[]},
+    {key:'thisweek', title:'This week', date:'through '+fmtShort(thisSun), items:[]},
+    {key:'nextweek', title:'Next week', date:fmtShort(nextMon)+' – '+fmtShort(nextSun), items:[]},
+  ];
+  let later=0;
+  items.forEach(x=>{ const d=dayOf(x.due);
+    if(+d===+t) cols[0].items.push(x);
+    else if(d>t && d<=thisSun) cols[1].items.push(x);
+    else if(d>=nextMon && d<=nextSun) cols[2].items.push(x);
+    else later++;
   });
+  if(!items.length){ board.innerHTML='<div class="all-clear">🎉 Nothing left on the calendar — term complete.</div>'; $('#todoSub').textContent=''; $('#todoNextExam').textContent=''; return; }
+  board.innerHTML = cols.map(c=>{
+    const inner = c.items.length ? c.items.map(todoItemHTML).join('')
+      : `<div class="todo-empty">${c.key==='today'?'Nothing due today 🎉':'Nothing scheduled'}</div>`;
+    return `<div class="todo-col${c.urgent&&c.items.length?' urgent':''}">
+      <div class="todo-col-head"><span class="tc-title">${c.title}</span><span class="tc-date">${c.date}</span><span class="tc-count">${c.items.length}</span></div>
+      ${inner}</div>`;
+  }).join('');
+  const total=cols.reduce((s,c)=>s+c.items.length,0);
+  $('#todoSub').textContent = `${total} due in the next 2 weeks${later?` · +${later} further out`:''} · as of ${fmtShort(t)}`;
+  const ne=nextExam();
+  $('#todoNextExam').textContent = ne ? `📕 Next exam: ${ne.name} · ${examCountdown(ne)}` : 'exams complete 🎉';
   applyFilters();
 }
 
