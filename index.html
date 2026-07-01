@@ -362,30 +362,57 @@
   .cal-note{font-size:12.5px;color:var(--ink-faint);margin:2px 0 12px;max-width:80ch}
   .view[hidden]{display:none}
 
-  /* ===================== CALENDAR GRID ===================== */
-  .cal-scroll{overflow-x:auto;padding-bottom:6px}
-  .cal{min-width:760px}
-  .cal-headrow,.cal-row{display:grid;grid-template-columns:58px repeat(5,1fr);gap:6px}
-  .cal-headrow{margin-bottom:4px}
-  .cal-dow{text-align:center;font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);padding:2px}
-  .cal-row{margin-bottom:6px}
-  .cal-wk{display:flex;flex-direction:column;justify-content:center;padding:2px;font-family:var(--font-mono);text-align:center}
-  .cal-wk .cw-n{font-size:10.5px;font-weight:700;color:var(--accent-ink)}
-  .cal-wk .cw-d{font-size:9px;color:var(--ink-faint)}
-  .cal-day{background:var(--card);border:1px solid var(--rule-soft);border-radius:9px;padding:5px 5px 6px;min-height:110px}
-  [data-theme="carbon"] .cal-day{border-radius:0}
-  .cal-day.is-today{box-shadow:inset 0 0 0 2px var(--today);border-color:var(--today)}
-  .cal-day.empty{background:transparent;border-style:dashed;opacity:.55}
-  .cal-date{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--ink-faint);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
-  .cal-day.is-today .cal-date{color:var(--today)}
-  .cal-date .cd-t{font-size:8px;background:var(--today);color:#fff;padding:1px 6px;border-radius:999px}
-  .cal-safety{font-size:9px;font-weight:700;color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 13%,var(--card));border:1px solid color-mix(in srgb,var(--c-lab) 45%,var(--rule));border-radius:5px;padding:3px 5px;margin-bottom:4px;line-height:1.3}
-  .cal-chip{display:block;font-size:10.5px;line-height:1.28;padding:3px 6px;border-radius:5px;margin-bottom:3px;background:color-mix(in srgb,var(--cc) 14%,var(--card));border-left:3px solid var(--cc);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  [data-theme="carbon"] .cal-chip{border-radius:0}
-  .cal-chip .cc-t{font-family:var(--font-mono);font-size:9px;color:var(--ink-soft);margin-right:3px}
-  .cal-chip[data-cat="exam"],.cal-chip[data-cat="quiz"]{font-weight:800}
-  .cal-due{display:block;font-size:9.5px;line-height:1.25;padding:2px 6px;border-radius:4px;margin-bottom:3px;color:var(--ink);background:color-mix(in srgb,var(--cc) 10%,var(--card));border-left:2px solid var(--cc);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .cal-holiday{font-size:9.5px;font-style:italic;color:var(--ink-faint);padding:3px}
+  /* ============ CALENDAR — time-grid week view (inspired by the old planner) ============ */
+  .cal-nav{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:2px 0 12px}
+  .nav-btn{font:inherit;font-size:16px;line-height:1;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--chip);color:var(--ink)}
+  [data-theme="carbon"] .nav-btn{border-radius:0}
+  .nav-btn:hover{box-shadow:var(--shadow-sm)}
+  .nav-btn:disabled{opacity:.35;cursor:default;box-shadow:none}
+  .cal-nav .nav-title{font-family:var(--font-display);font-weight:var(--display-wt);font-size:19px;min-width:230px}
+  .cal-nav .wk-dots{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+  .wk-dot{font-family:var(--font-mono);font-size:10.5px;cursor:pointer;padding:5px 10px;border-radius:999px;border:1px solid var(--rule-soft);background:var(--card-2);color:var(--ink-soft)}
+  [data-theme="carbon"] .wk-dot{border-radius:0}
+  .wk-dot.active{background:var(--accent);color:#fff;border-color:transparent}
+  [data-theme="midnight"] .wk-dot.active{color:#1a0d14}
+  .wk-dot.now{box-shadow:0 0 0 2px color-mix(in srgb,var(--today) 45%,transparent)}
+
+  .wv{border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;background:var(--card);box-shadow:var(--shadow-md)}
+  [data-theme="carbon"] .wv{border-radius:0}
+  .wv-scroll{overflow-x:auto}
+  .wv-inner{min-width:860px}
+  .wv-head,.wv-allday,.wv-grid{display:grid;grid-template-columns:52px repeat(7,1fr)}
+  .wv-head{background:var(--card-2);border-bottom:1px solid var(--rule-soft)}
+  .wv-corner{border:0}
+  .wv-dh{padding:7px 5px;text-align:center;border-left:1px solid var(--rule-soft)}
+  .wv-dh.wknd{background:color-mix(in srgb,var(--ink-faint) 6%,var(--card-2))}
+  .wv-dh .dh-dow{font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint)}
+  .wv-dh .dh-date{font-family:var(--font-display);font-weight:var(--display-wt);font-size:16px;line-height:1.1}
+  .wv-dh.is-today{background:color-mix(in srgb,var(--today) 13%,var(--card-2))}
+  .wv-dh.is-today .dh-date{color:var(--today)}
+  .wv-dh .dh-safe{font-size:8.5px;font-weight:700;color:var(--c-lab);margin-top:2px;line-height:1.2}
+  .wv-allday{border-bottom:1px solid var(--rule)}
+  .wv-adlabel{font-family:var(--font-mono);font-size:8px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;justify-content:flex-end;padding-right:5px}
+  .wv-adcell{border-left:1px solid var(--rule-soft);padding:4px;display:flex;flex-direction:column;gap:3px;min-height:24px}
+  .wv-adcell.wknd{background:color-mix(in srgb,var(--ink-faint) 5%,transparent)}
+  .wv-adchip{font-size:9.5px;line-height:1.22;padding:2px 6px;border-radius:5px;background:color-mix(in srgb,var(--cc) 15%,var(--card));border-left:3px solid var(--cc);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:default}
+  [data-theme="carbon"] .wv-adchip{border-radius:0}
+  .wv-grid{position:relative}
+  .wv-hour{font-family:var(--font-mono);font-size:9px;color:var(--ink-faint);text-align:right;padding-right:5px;box-sizing:border-box}
+  .wv-col{position:relative;border-left:1px solid var(--rule-soft)}
+  .wv-col.wknd{background:color-mix(in srgb,var(--ink-faint) 4%,transparent)}
+  .wv-col.is-today{background:color-mix(in srgb,var(--today) 5%,transparent)}
+  .wv-hline{position:absolute;left:0;right:0;border-top:1px solid var(--rule-soft);pointer-events:none}
+  .wv-ev{position:absolute;border-radius:6px;padding:3px 5px;overflow:hidden;background:color-mix(in srgb,var(--cc) 17%,var(--card));border-left:3px solid var(--cc);color:var(--ink);box-shadow:var(--shadow-xs)}
+  [data-theme="carbon"] .wv-ev{border-radius:0}
+  .wv-ev .we-time{font-family:var(--font-mono);font-size:8px;color:var(--ink-soft)}
+  .wv-ev .we-ttl{font-size:10px;font-weight:700;line-height:1.15}
+  .wv-ev .we-room{font-family:var(--font-mono);font-size:8px;color:var(--ink-faint)}
+  .wv-ev.exam{background:color-mix(in srgb,var(--c-exam) 20%,var(--card));border-left-color:var(--c-exam)}
+  .wv-dl{position:absolute;font-size:8.5px;line-height:1.1;padding:2px 4px;border-radius:5px;background:var(--card);border:1px solid var(--cc);color:var(--ink);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;box-shadow:var(--shadow-xs);z-index:3}
+  [data-theme="carbon"] .wv-dl{border-radius:0}
+  .wv-now{position:absolute;height:2px;background:var(--today);z-index:4}
+  .wv-now::before{content:'';position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--today)}
+  .wv-holiday{position:absolute;left:3px;right:3px;top:3px;font-size:9px;font-style:italic;color:var(--ink-faint)}
 
   /* ===================== WORKSHEETS ===================== */
   .ws-intro{font-size:13px;color:var(--ink-soft);margin:2px 0 14px;max-width:82ch}
@@ -496,7 +523,7 @@
     <div class="filters reveal" id="filters"><span class="lbl">Show</span></div>
 
     <div class="view" id="view-calendar">
-      <div class="cal-note">Your six weeks at a glance — class meetings, quizzes, exams &amp; every due assignment, color-coded. Use <b>Show</b> above to toggle categories.</div>
+      <div class="cal-note">Week-by-week timetable — classes are placed by the hour so you can see <b>when to show up</b>; deadlines (pre/post-lab, quizzes, NMR videos, worksheets) sit alongside so 1&nbsp;PM collisions are obvious. Use ◀ ▶ or the week chips to move between the six weeks; <b>Show</b> toggles categories.</div>
       <div id="calendar"></div>
     </div>
 
@@ -1338,43 +1365,98 @@ function setView(v){
   try{ localStorage.setItem('orgo-view2',v); }catch(e){}
 }
 
-/* ---------- 6-week calendar grid ---------- */
-function calLabel(ev){
-  if(ev.cat==='exam'||ev.cat==='quiz') return ev.ttl;
-  if(ev.cat==='spec') return 'NMR videos';
-  return ev.kind;
+/* ---------- calendar: time-grid week view (inspired by the old planner) ---------- */
+const GH0=9, GH1=18, HPX=46;      // grid 9am–6pm
+let CAL_WEEK=1;
+function to24(s){ const m=String(s).match(/(\d{1,2}):?(\d{2})?/); if(!m) return null; let h=+m[1], mi=+(m[2]||0); if(h<8) h+=12; return h+mi/60; }
+function fmtHour(h){ return (h%12||12)+' '+(h<12?'AM':'PM'); }
+function calLabel(ev){ return ev.cat==='exam'? ev.ttl : ev.kind; }
+function blockTimes(ev){
+  const kindEnd={'Lecture':'11:45','Recitation':'11:50','Lab lecture':'1:50','Lab':'4:50'};
+  if(ev.cat==='exam'){ if(ev.time&&ev.time.includes('–')){const[a,b]=ev.time.split('–');return[to24(a),to24(b)];} const s=to24(ev.time||'10:00'); return [s,s+2]; }
+  if(kindEnd[ev.kind]) return [to24(ev.time||'10:00'), to24(kindEnd[ev.kind])];
+  return null;
+}
+function packBlocks(blocks){
+  blocks.sort((a,b)=> a.s-b.s || a.e-b.e);
+  const colEnds=[];
+  blocks.forEach(b=>{ let placed=false;
+    for(let i=0;i<colEnds.length;i++){ if(b.s>=colEnds[i]-1e-6){ colEnds[i]=b.e; b.col=i; placed=true; break; } }
+    if(!placed){ b.col=colEnds.length; colEnds.push(b.e); }
+  });
+  const nc=Math.max(1,colEnds.length); blocks.forEach(b=>b.nc=nc); return blocks;
 }
 function renderCalendar(){
-  const host=$('#calendar'); const t=today();
-  const dows=['Mon','Tue','Wed','Thu','Fri'];
-  const wsByDate={}; WORKSHEETS.forEach(w=>{ (wsByDate[w.due]=wsByDate[w.due]||[]).push(w); });
-  let h=`<div class="cal-scroll"><div class="cal"><div class="cal-headrow"><div></div>${dows.map(d=>`<div class="cal-dow">${d}</div>`).join('')}</div>`;
-  WEEKS.forEach(w=>{
-    h+=`<div class="cal-row"><div class="cal-wk"><span class="cw-n">Wk ${w.n}</span><span class="cw-d">${w.range.split(' – ')[0]}</span></div>`;
-    w.days.forEach(day=>{
-      const d=parseDate(day.date); const isT=dayDiff(d,t)===0;
-      const chips=day.evs.map(ev=>{
-        if(ev.holiday) return `<div class="cal-holiday" data-cat="${ev.cat}">${ev.ttl}</div>`;
-        const c=CATS[ev.cat]; const rm=ROOMS[ev.kind]?' · '+ROOMS[ev.kind]:'';
-        const time=ev.time?ev.time.split('–')[0]:'';
-        return `<span class="cal-chip" data-cat="${ev.cat}" style="--cc:${c.color}" title="${(ev.ttl||'').replace(/"/g,'')}${rm}">${time?`<span class="cc-t">${time}</span>`:''}${calLabel(ev)}</span>`;
-      }).join('');
-      const dueHTML=day.evs.filter(e=>e.due).map(e=>{
-        const c=CATS[e.cat].color;
-        return e.due.split(' · ').map(p=>{
-          const name=p.replace(/\s+due\s+.*/i,'').replace(/^watch\s+/i,'');
-          return `<span class="cal-due" data-cat="${e.cat}" style="--cc:${c}" title="${p.replace(/"/g,'')}">📋 ${name}</span>`;
-        }).join('');
-      }).join('');
-      const wsHTML=(wsByDate[day.date]||[]).map(ws=>`<span class="cal-due" data-cat="textbook" style="--cc:${CATS.textbook.color}" title="Recommended worksheet: ${ws.title.replace(/"/g,'')}">📝 ${ws.title.slice(0,24)}</span>`).join('');
-      const safety=day.evs.some(ev=>ev.cat==='lab'&&ev.kind==='Lab')?`<div class="cal-safety">🥽 goggles · coat · pants · notebook — Chevron 419</div>`:'';
-      const empty=(!chips&&!dueHTML&&!wsHTML);
-      h+=`<div class="cal-day${isT?' is-today':''}${empty?' empty':''}"><div class="cal-date"><span>${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</span>${isT?'<span class="cd-t">TODAY</span>':''}</div>${safety}${chips}${dueHTML}${wsHTML}</div>`;
-    });
-    h+=`</div>`;
+  const host=$('#calendar'); const t=today(); const nowD=now();
+  const cw=WEEKS.find(w=> t>=parseDate(w.start)&&t<=parseDate(w.end));
+  if(!renderCalendar._init){ CAL_WEEK=cw?cw.n:1; renderCalendar._init=true; }
+  const w=WEEKS[CAL_WEEK-1];
+  const z=n=>(n<10?'0':'')+n, iso=d=>`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;
+  const mon=parseDate(w.start);
+  const dates=Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
+  const dows=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const evByDate={}; w.days.forEach(day=> evByDate[day.date]=day.evs);
+  const byDate={}; dates.forEach(d=>byDate[iso(d)]={timed:[],allday:[]});
+  allDeadlines().forEach(([dt,cat,title])=>{
+    const d=parseDateTime(dt), k=iso(d); if(!(k in byDate)||cat==='exam') return;
+    const hr=d.getHours()+d.getMinutes()/60;
+    if(hr>=GH0 && hr<GH1 && d.getHours()!==23) byDate[k].timed.push({hr,cat,title});
+    else byDate[k].allday.push({cat,title});
   });
-  h+=`</div></div>`;
-  host.innerHTML=h; applyFilters();
+
+  let nav=`<div class="cal-nav">
+    <button class="nav-btn" id="calPrev" ${CAL_WEEK<=1?'disabled':''}>◀</button>
+    <span class="nav-title">Week ${w.n} · ${w.range}</span>
+    <button class="nav-btn" id="calNext" ${CAL_WEEK>=6?'disabled':''}>▶</button>
+    <div class="wk-dots">${WEEKS.map(x=>`<button class="wk-dot${x.n===CAL_WEEK?' active':''}${cw&&x.n===cw.n?' now':''}" data-wk="${x.n}">Wk ${x.n}</button>`).join('')}</div></div>`;
+
+  let head=`<div class="wv-head"><div class="wv-corner"></div>`;
+  dates.forEach((d,i)=>{ const isT=dayDiff(d,t)===0, wknd=i>=5;
+    const labDay=(evByDate[iso(d)]||[]).some(e=>e.cat==='lab'&&e.kind==='Lab');
+    head+=`<div class="wv-dh${isT?' is-today':''}${wknd?' wknd':''}"><div class="dh-dow">${dows[i]}</div><div class="dh-date">${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</div>${labDay?'<div class="dh-safe">🥽 gear · 419</div>':''}</div>`;
+  });
+  head+=`</div>`;
+
+  let ad=`<div class="wv-allday"><div class="wv-adlabel">due</div>`;
+  dates.forEach((d,i)=>{ const k=iso(d), wknd=i>=5;
+    const chips=byDate[k].allday.map(x=>{ const c=CATS[x.cat].color;
+      return `<span class="wv-adchip" data-cat="${x.cat}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;
+    }).join('');
+    ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;
+  });
+  ad+=`</div>`;
+
+  const H=(GH1-GH0)*HPX;
+  let gut=`<div class="wv-gutter" style="position:relative;height:${H}px">`;
+  for(let hh=GH0; hh<GH1; hh++) gut+=`<div class="wv-hour" style="position:absolute;top:${(hh-GH0)*HPX-5}px;right:0">${fmtHour(hh)}</div>`;
+  gut+=`</div>`;
+  let cols='';
+  dates.forEach((d,i)=>{ const k=iso(d), isT=dayDiff(d,t)===0, wknd=i>=5;
+    let cell=`<div class="wv-col${isT?' is-today':''}${wknd?' wknd':''}" style="height:${H}px">`;
+    for(let hh=GH0; hh<=GH1; hh++) cell+=`<div class="wv-hline" style="top:${(hh-GH0)*HPX}px"></div>`;
+    const blocks=[];
+    (evByDate[k]||[]).forEach(ev=>{ if(ev.holiday){ cell+=`<div class="wv-holiday">${ev.ttl}</div>`; return; }
+      const bt=blockTimes(ev); if(bt&&bt[0]!=null) blocks.push({s:bt[0],e:bt[1],ev}); });
+    packBlocks(blocks);
+    blocks.forEach(b=>{ const ev=b.ev, c=CATS[ev.cat].color;
+      const laneW=60, colW=laneW/b.nc, left=1+b.col*colW, top=(b.s-GH0)*HPX, ht=Math.max(20,(b.e-b.s)*HPX-2);
+      const rm=ROOMS[ev.kind]?`<div class="we-room">📍 ${ROOMS[ev.kind]}</div>`:'';
+      cell+=`<div class="wv-ev${ev.cat==='exam'?' exam':''}" data-cat="${ev.cat}" style="--cc:${c};top:${top}px;height:${ht}px;left:${left}%;width:${colW-1}%" title="${(ev.ttl||'').replace(/"/g,'')}"><div class="we-time">${ev.time||''}</div><div class="we-ttl">${calLabel(ev)}</div>${ht>46?rm:''}</div>`;
+    });
+    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{ const c=CATS[x.cat].color;
+      const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);
+      cell+=`<div class="wv-dl" data-cat="${x.cat}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;
+    });
+    if(isT){ const hr=nowD.getHours()+nowD.getMinutes()/60; if(hr>=GH0&&hr<=GH1) cell+=`<div class="wv-now" style="top:${(hr-GH0)*HPX}px;left:0;right:0"></div>`; }
+    cell+=`</div>`; cols+=cell;
+  });
+
+  host.innerHTML = nav + `<div class="wv-scroll"><div class="wv-inner">${head}${ad}<div class="wv-grid">${gut}${cols}</div></div></div>`;
+  const pv=$('#calPrev'), nx=$('#calNext');
+  if(pv) pv.addEventListener('click',()=>{ if(CAL_WEEK>1){CAL_WEEK--;renderCalendar();} });
+  if(nx) nx.addEventListener('click',()=>{ if(CAL_WEEK<6){CAL_WEEK++;renderCalendar();} });
+  $$('.wk-dot').forEach(b=>b.addEventListener('click',()=>{ CAL_WEEK=+b.dataset.wk; renderCalendar(); }));
+  applyFilters();
 }
 
 /* ---------- worksheets tab ---------- */
