@@ -463,132 +463,192 @@
     .due .when{flex-basis:74px}
     .hero h1{font-size:30px}
   }
+  /* ===================== WEBSITE SHELL (redesign) ===================== */
+  [hidden]{display:none !important}
+  .app{display:flex;min-height:100vh;align-items:stretch}
+  .sidebar{width:252px;flex:none;position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--card);border-right:1px solid var(--rule);padding:14px 10px;display:flex;flex-direction:column;gap:1px;z-index:60}
+  .sb-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 12px}
+  .sb-logo{font-size:22px}
+  .sb-brand b{font-family:var(--font-display);font-weight:var(--display-wt);font-size:16px;display:block;line-height:1.1}
+  .sb-brand span{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block}
+  .sb-group{font-family:var(--font-mono);font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);padding:13px 10px 4px}
+  .sb-group.c-ii{color:var(--c-lecture)} .sb-group.c-lab{color:var(--c-lab)}
+  .sb-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;border:0;background:transparent;color:var(--ink-soft);padding:8px 10px;border-radius:9px}
+  [data-theme="carbon"] .sb-item{border-radius:0}
+  .sb-item .ic{font-size:15px;width:20px;text-align:center}
+  .sb-item:hover{background:var(--card-2);color:var(--ink)}
+  .sb-item.active{background:color-mix(in srgb,var(--accent) 15%,var(--card));color:var(--ink);font-weight:700}
+  .sb-foot{margin-top:auto;display:flex;gap:12px;padding:12px 10px 2px;border-top:1px solid var(--rule-soft)}
+  .sb-foot a{font-size:11.5px;font-weight:600;color:var(--accent-ink);text-decoration:none}
+  .main-wrap{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;padding:10px clamp(14px,2.5vw,26px);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:none;border-bottom:1px solid var(--rule)}
+  .ham{font-size:20px;cursor:pointer;border:0;background:transparent;color:var(--ink);padding:2px 6px;line-height:1}
+  .tb-title{font-family:var(--font-display);font-weight:var(--display-wt);font-size:21px;margin:0;letter-spacing:-.01em}
+  .tb-spacer{flex:1}
+  .topbar .filters{margin:0}
+  .content{flex:1;padding:clamp(16px,2.4vw,26px) clamp(14px,3vw,32px) 72px}
+  .scrim{display:none}
+  @media (max-width:959px){
+    .sidebar{position:fixed;top:0;left:0;height:100vh;transform:translateX(-101%);transition:transform var(--motion-med) var(--ease-out);box-shadow:var(--shadow-lg)}
+    .app.sb-open .sidebar{transform:none}
+    .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:55;opacity:0;pointer-events:none;transition:opacity var(--motion-med)}
+    .app.sb-open .scrim{opacity:1;pointer-events:auto}
+  }
+  @media (min-width:960px){ .ham{display:none} }
+
+  .sec-intro{font-size:13.5px;color:var(--ink-soft);max-width:92ch;margin:0 0 16px;line-height:1.55}
+  .sub-h{font-family:var(--font-display);font-weight:var(--display-wt);font-size:18px;margin:24px 0 10px}
+  .sec-note{font-size:11.5px;color:var(--ink-faint);margin-top:16px}
+  .site-foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule-soft);color:var(--ink-faint);font-size:11.5px;line-height:1.65;max-width:92ch}
+
+  /* Dashboard */
+  .dash-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:18px}
+  .dash-hi{font-family:var(--font-display);font-weight:var(--display-wt);font-size:clamp(22px,3vw,30px);margin:0;line-height:1.05}
+  .dash-sub{color:var(--ink-soft);font-size:14.5px;margin:5px 0 0}
+  .cd-bar{display:flex;gap:8px;flex-wrap:wrap}
+  .cd-chip{border:1px solid var(--rule);border-radius:12px;padding:7px 13px;background:var(--card);text-align:center;min-width:100px}
+  [data-theme="carbon"] .cd-chip{border-radius:0}
+  .cd-n{display:block;font-family:var(--font-mono);font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink-faint)}
+  .cd-c{display:block;font-family:var(--font-display);font-weight:var(--display-wt);font-size:16px;color:var(--c-exam)}
+  .cd-d{display:block;font-family:var(--font-mono);font-size:9px;color:var(--ink-faint)}
+  .cd-done{color:var(--ink-faint);font-family:var(--font-mono);font-size:12px}
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px;align-items:start}
+  .dash-col{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow-sm)}
+  [data-theme="carbon"] .dash-col{border-radius:0}
+  .dash-col.urgent{border-color:color-mix(in srgb,var(--c-exam) 42%,var(--rule));box-shadow:0 0 0 1px color-mix(in srgb,var(--c-exam) 22%,transparent),var(--shadow-sm)}
+  .dash-col-h{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:var(--display-wt);font-size:18px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--rule-soft)}
+  .dash-cnt{font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fff;background:var(--ink-faint);border-radius:999px;padding:1px 9px}
+  .dash-col.urgent .dash-cnt{background:var(--c-exam)}
+  .dash-hint{margin-left:auto;font-family:var(--font-mono);font-size:9px;color:var(--ink-faint);font-weight:400;letter-spacing:.03em}
+  .dash-empty{color:var(--ink-faint);font-size:12.5px;font-style:italic;padding:10px 2px}
+  .dl{display:flex;gap:10px;align-items:stretch;padding:9px 2px;border-top:1px solid var(--rule-soft)}
+  .dl:first-of-type{border-top:0}
+  .dl-bar{flex:0 0 4px;border-radius:3px}
+  .dl-when{flex:0 0 80px;font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);text-align:right;align-self:center;line-height:1.3}
+  .dl-when b{display:block;font-size:12px;color:var(--ink)}
+  .dl.urgent .dl-when b{color:var(--c-exam)}
+  .dl-body{flex:1;min-width:0;align-self:center}
+  .dl-t{font-weight:600;font-size:13.5px;line-height:1.25}
+  .dl.big .dl-t{font-size:15px;font-weight:700}
+  .dl-m{font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);margin-top:1px}
+  .dl-tag{align-self:center;font-family:var(--font-mono);font-size:8.5px;font-weight:700;text-transform:uppercase;color:#fff;padding:3px 7px;border-radius:999px;white-space:nowrap}
+  [data-theme="carbon"] .dl-tag{border-radius:0}
+
+  /* resource + chapter + lab cards */
+  .rc-grid,.ch-grid,.lab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:12px}
+  .rc{display:flex;align-items:center;gap:10px;justify-content:space-between;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast)}
+  [data-theme="carbon"] .rc,[data-theme="carbon"] .ch-card,[data-theme="carbon"] .lab-card,[data-theme="carbon"] .nmr-due-card{border-radius:0}
+  .rc:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .rc-body{min-width:0}
+  .rc-t{font-weight:700;font-size:13.5px;line-height:1.25}
+  .rc-ext{color:var(--ink-faint);font-size:11px;font-weight:400}
+  .rc-m{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
+  .by{flex:none;font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--ink-soft);background:var(--card-2);border:1px solid var(--rule-soft);border-radius:999px;padding:4px 9px;white-space:nowrap;text-align:center}
+  [data-theme="carbon"] .by{border-radius:0}
+  .by.soon{color:#fff;background:var(--c-textbook);border-color:transparent}
+  .by.past{color:#fff;background:var(--c-exam);border-color:transparent}
+  .ch-card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:14px 15px;transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast)}
+  .ch-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--accent)}
+  .ch-n{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--accent-ink)}
+  .ch-t{font-family:var(--font-display);font-weight:var(--display-wt);font-size:16px;margin:3px 0 9px;line-height:1.15}
+  .ch-open{font-size:11.5px;color:var(--accent-ink);font-weight:600}
+  .lab-card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:12px 14px}
+  .lab-card.today{border-color:var(--today);box-shadow:inset 0 0 0 1px var(--today)}
+  .lab-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .lab-n{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--c-lab)}
+  .lab-date{font-family:var(--font-mono);font-size:10px;color:var(--ink-faint)}
+  .lab-title{font-family:var(--font-display);font-weight:var(--display-wt);font-size:15px;margin:3px 0 8px;line-height:1.15}
+  .lab-due{display:flex;flex-wrap:wrap;gap:5px}
+  .lab-pill{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 8px;border-radius:999px;border:1px solid var(--rule-soft);white-space:nowrap}
+  [data-theme="carbon"] .lab-pill{border-radius:0}
+  .lab-pill.pre{color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 11%,var(--card));border-color:transparent}
+  .lab-pill.post{color:var(--ink-soft)}
+  .lab-pill.quiz{color:#fff;background:var(--c-quiz);border-color:transparent}
+  .lab-extra{display:inline-block;margin-top:9px;font-size:11.5px;color:var(--accent-ink);text-decoration:none;font-weight:600}
+
+  /* worksheet tweaks for text-based problems */
+  .ws-probs{font-size:12.5px;color:var(--ink);line-height:1.55}
+  .ws-lab{font-family:var(--font-mono);font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink-faint)}
+  .ws-probs .pl{white-space:nowrap;margin-right:8px}
+  .ws-inch{font-size:12px;color:var(--ink-soft);margin-top:2px;padding-top:7px;border-top:1px dashed var(--rule-soft);line-height:1.5}
+  .ws-due.past{background:var(--c-exam)}
+
+  /* NMR + week study */
+  .nmr-due{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:6px}
+  .nmr-due-card{background:color-mix(in srgb,var(--c-spec) 8%,var(--card));border:1px solid color-mix(in srgb,var(--c-spec) 32%,var(--rule));border-radius:12px;padding:12px 15px}
+  .nmr-due-card b{display:block;font-size:14px}
+  .nmr-due-card span{font-size:12px;color:var(--ink-soft)}
+  .wk-study{margin:8px 6px 4px;padding:12px 14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--accent) 5%,var(--card));border:1px dashed var(--rule)}
+  [data-theme="carbon"] .wk-study{border-style:solid;border-radius:0}
+  .wk-study-h{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .wk-study-g p{margin:0 0 6px;font-size:12.5px;color:var(--ink-soft);line-height:1.45}
+  .wk-ws{margin-top:8px;font-size:12px}
+  .wk-ws a{color:var(--accent-ink)}
+  .week{margin:0 0 18px}
+
 </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="brand">
-      <b>Orgo&nbsp;II&nbsp;+&nbsp;Lab</b>
-      <span class="term">Study Planner · Summer 2026</span>
-    </div>
-    <div class="tb-actions">
-      <div class="searchwrap"><span class="si">🔍</span><input class="searchbox" id="search" type="search" placeholder="Search topics…  ( / )" autocomplete="off"></div>
-      <button class="btn solid" id="jumpToday">Jump to today</button>
-      <div class="seg" role="group" aria-label="Expand weeks">
-        <button id="expandAll" type="button">Expand all</button>
-        <button id="collapseAll" type="button">Collapse</button>
+  <div class="app" id="app">
+    <div class="scrim" id="scrim"></div>
+    <aside class="sidebar" id="sidebar" aria-label="Menu">
+      <div class="sb-brand"><span class="sb-logo">🧪</span><div><b>Orgo Planner</b><span>Summer 2026</span></div></div>
+      <nav class="sb-nav" id="sbNav">
+        <div class="sb-group">Overview</div>
+        <button class="sb-item" data-sec="dashboard"><span class="ic">🏠</span>Dashboard</button>
+        <button class="sb-item" data-sec="calendar"><span class="ic">🗓️</span>Calendar</button>
+        <button class="sb-item" data-sec="schedule"><span class="ic">🗒️</span>Week-by-week</button>
+        <div class="sb-group c-ii">Orgo II · Chem 0320</div>
+        <button class="sb-item" data-sec="worksheets"><span class="ic">📝</span>Practice worksheets</button>
+        <button class="sb-item" data-sec="recitation"><span class="ic">✍️</span>Recitation worksheets</button>
+        <button class="sb-item" data-sec="textbook"><span class="ic">📚</span>Textbook problems</button>
+        <button class="sb-item" data-sec="answers"><span class="ic">🔑</span>Answer keys</button>
+        <button class="sb-item" data-sec="reactions"><span class="ic">⚗️</span>Reaction summaries</button>
+        <button class="sb-item" data-sec="exams"><span class="ic">📕</span>Past exams &amp; reference</button>
+        <div class="sb-group c-lab">Orgo Lab · Chem 0345</div>
+        <button class="sb-item" data-sec="lab"><span class="ic">🧫</span>Lab activities</button>
+        <button class="sb-item" data-sec="extra"><span class="ic">📄</span>Extra practice</button>
+        <button class="sb-item" data-sec="nmr"><span class="ic">📺</span>NMR videos &amp; slides</button>
+        <button class="sb-item" data-sec="labreview"><span class="ic">📋</span>Lab reviews</button>
+      </nav>
+      <div class="sb-foot">
+        <a href="https://canvas.pitt.edu" target="_blank" rel="noopener">Canvas ↗</a>
+        <a href="https://app.labflow.com" target="_blank" rel="noopener">Labflow ↗</a>
       </div>
-      <div class="seg" id="themeSeg" role="group" aria-label="Theme">
-        <button data-theme-set="sage" type="button">Sage</button>
-        <button data-theme-set="carbon" type="button">Carbon</button>
-        <button data-theme-set="midnight" type="button">Midnight</button>
-      </div>
-    </div>
-  </div>
+    </aside>
 
-  <div class="wrap">
-    <div class="hero reveal">
-      <h1>Six weeks of orgo, laid out day by day.</h1>
-      <p>A combined plan for <b>Organic Chemistry II</b> (lecture) and <b>Organic Chemistry Lab</b> —
-         what to read before each class, which textbook problems to grind, when every pre-lab, post-lab,
-         quiz, and exam is due. Built to glance at, not to fuss with.</p>
-      <div class="courses">
-        <span class="course-tag"><span class="dot" style="background:var(--c-lecture)"></span>Orgo II · Chem 0320 · lecture M/T/Th/F 10:00, recitation W 11:00</span>
-        <span class="course-tag"><span class="dot" style="background:var(--c-lab)"></span>Orgo Lab · Chem 0345 · lab lecture M/W 1:00, lab T/Th 1:00–4:50</span>
-      </div>
-      <div class="qlbar">
-        <a class="ql" href="https://canvas.pitt.edu" target="_blank" rel="noopener"><span class="ico">🎓</span>Canvas <span class="ext">↗</span></a>
-        <a class="ql" href="https://app.labflow.com" target="_blank" rel="noopener"><span class="ico">🧪</span>Labflow <span class="ext">↗</span></a>
-        <a class="ql" href="assets/resources/reaction-library.pdf" target="_blank" rel="noopener"><span class="ico">📖</span>Reaction Library</a>
-        <a class="ql" href="assets/resources/nmr-workshop1-worksheet.pdf" target="_blank" rel="noopener"><span class="ico">📈</span>NMR reference</a>
-        <button class="ql" id="icsExport"><span class="ico">📅</span>Export deadlines (.ics)</button>
-      </div>
-    </div>
-
-    <div class="rail reveal" id="rail">
-      <div class="rail-head">
-        <span class="stamp">Jun 29 → Aug 7 · 6 weeks</span>
-        <span class="rail-head-title" style="font-family:var(--font-display);font-weight:var(--display-wt);font-size:14px">Term progress</span>
-        <span class="now" id="nowLabel"></span>
-      </div>
-      <div class="rail-weeks" id="railWeeks"></div>
-    </div>
-
-    <div class="tabbar reveal" id="tabbar" role="tablist">
-      <button class="tab" data-view="calendar" aria-selected="true">🗓️ Calendar</button>
-      <button class="tab" data-view="worksheets" aria-selected="false">📝 Worksheets</button>
-      <button class="tab" data-view="spread" aria-selected="false">📋 Assignment spread</button>
-    </div>
-
-    <div class="filters reveal" id="filters"><span class="lbl">Show</span></div>
-
-    <div class="view" id="view-calendar">
-      <div class="cal-note">Week-by-week timetable — classes are placed by the hour so you can see <b>when to show up</b>; deadlines (pre/post-lab, quizzes, NMR videos, worksheets) sit alongside so 1&nbsp;PM collisions are obvious. Use ◀ ▶ or the week chips to move between the six weeks; <b>Show</b> toggles categories.</div>
-      <div id="calendar"></div>
-    </div>
-
-    <div class="view" id="view-worksheets" hidden>
-      <div id="worksheets"></div>
-    </div>
-
-    <div class="view" id="view-spread" hidden>
-    <section class="todo reveal" id="todo" aria-live="polite">
-      <div class="todo-head">
-        <h2>✅ To do</h2>
-        <span class="todo-sub" id="todoSub"></span>
-        <span class="spacer"></span>
-        <span class="todo-nextexam" id="todoNextExam"></span>
-      </div>
-      <div class="todo-board" id="todoBoard"></div>
-    </section>
-
-    <section class="examprep reveal" id="examprep">
-      <div class="ep-head" id="epHead">
-        <h2>📕 Exam prep</h2>
-        <span class="ep-sub" id="epSub"></span>
-        <span class="spacer"></span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="ep-body" id="epBody"></div>
-    </section>
-
-    <div id="weeks"></div>
-    </div><!-- /view-spread -->
-
-    <div class="legend reveal" id="legend"></div>
-
-    <footer class="reveal">
-      <p><b>How to read this.</b> Lecture chapters follow the official Summer 2026 schedule (Vollhardt &amp; Schore,
-        <i>Organic Chemistry: Structure &amp; Function</i>, 8th ed.). Textbook problem numbers are the real end-of-chapter
-        problems for each chapter. Lab pre-lab assessments are due <b>1:00 PM on the lab day</b>; post-lab assessments are due
-        <b>1:00 PM exactly one week later</b> (on Labflow). Lab quizzes are taken during the Mon/Wed lab lecture on Canvas.</p>
-      <p><b>Honest caveats.</b> Exam coverage shown as "through Ch&nbsp;__" is the syllabus's tentative call and is confirmed in class;
-        in-class exam dates can shift by a day. Recitation worksheets are matched to each week by topic from the standard problem set.
-        Everything here is a study aid — Canvas and Labflow are the source of truth for due dates.</p>
-    </footer>
-  </div>
-
-  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Textbook viewer">
-    <div class="viewer-panel">
-      <div class="viewer-top">
-        <span class="vt-title" id="vTitle">Chapter</span>
-        <span class="vt-sub" id="vSub"></span>
-        <span class="spacer"></span>
-        <div class="seg" role="group" aria-label="Problems, solutions or reactions">
-          <button id="vModeP" type="button">Problems</button>
-          <button id="vModeS" type="button">🔑 Solutions</button>
-          <button id="vModeR" type="button">⚗️ Reactions</button>
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="ham" id="ham" aria-label="Menu">☰</button>
+        <h1 class="tb-title" id="secTitle">Dashboard</h1>
+        <div class="tb-spacer"></div>
+        <div class="searchwrap"><span class="si">🔍</span><input class="searchbox" id="search" type="search" placeholder="Search…  ( / )" autocomplete="off"></div>
+        <div class="filters" id="filters" hidden><span class="lbl">Show</span></div>
+        <div class="seg" id="themeSeg" role="group" aria-label="Theme">
+          <button data-theme-set="sage" type="button">Sage</button>
+          <button data-theme-set="carbon" type="button">Carbon</button>
+          <button data-theme-set="midnight" type="button">Midnight</button>
         </div>
-        <button class="v-close" id="vClose" aria-label="Close">✕</button>
-      </div>
-      <div class="viewer-scroll" id="vScroll"><img class="viewer-img" id="vImg" alt="textbook page"></div>
-      <div class="viewer-bar">
-        <button class="v-btn" id="vPrev">◀ Prev</button>
-        <span class="v-count" id="vCount"></span>
-        <button class="v-btn" id="vNext">Next ▶</button>
-        <button class="v-btn done-btn" id="vDone">✓ Mark done</button>
-        <a class="v-openext" id="vExt" target="_blank" rel="noopener">Open image in new tab ↗</a>
-      </div>
+      </header>
+      <main class="content" id="content">
+        <section class="sec" id="sec-dashboard"></section>
+        <section class="sec" id="sec-calendar" hidden><div id="calendar"></div></section>
+        <section class="sec" id="sec-schedule" hidden><div id="weeks"></div></section>
+        <section class="sec" id="sec-worksheets" hidden></section>
+        <section class="sec" id="sec-recitation" hidden></section>
+        <section class="sec" id="sec-textbook" hidden></section>
+        <section class="sec" id="sec-answers" hidden></section>
+        <section class="sec" id="sec-reactions" hidden></section>
+        <section class="sec" id="sec-exams" hidden></section>
+        <section class="sec" id="sec-lab" hidden></section>
+        <section class="sec" id="sec-extra" hidden></section>
+        <section class="sec" id="sec-nmr" hidden></section>
+        <section class="sec" id="sec-labreview" hidden></section>
+        <footer class="site-foot">
+          Recommended dates are guidance, timed to land <b>before</b> deadlines so busy weeks don't sink you.
+          Canvas &amp; Labflow are the source of truth. Textbook: Vollhardt &amp; Schore, <i>Organic Chemistry</i>, 8th ed.
+        </footer>
+      </main>
     </div>
   </div>
 
@@ -646,8 +706,8 @@ const DEADLINES = [
   ['2026-07-29T13:00','quiz','Quiz 9','Canvas'],
   ['2026-08-03T13:00','quiz','Quiz 10','Canvas'],
   // NMR video assignments (lab, on Canvas) — watch by these dates
-  ['2026-07-02T13:00','spec','📺 Watch NMR Video Series 1 (Videos 1–4) — before ¹H NMR Workshop 1','Canvas'],
-  ['2026-07-13T13:00','spec','📺 Watch NMR Video Series 2 (Videos 1–5) — required before Mon Jul 13 lab lecture','Canvas'],
+  ['2026-07-01T18:00','spec','📺 NMR Video Series 1 (Videos 1–4) — watch on Canvas before ¹H NMR Workshop 1','Canvas'],
+  ['2026-07-12T18:00','spec','📺 NMR Video Series 2 (Videos 1–5) — watch on Canvas before Mon Jul 13 lab lecture','Canvas'],
   // lecture exams
   ['2026-07-13T10:00','exam','Exam 1 — Orgo II (through ~Ch 15)','Chevron 152'],
   ['2026-07-23T10:00','exam','Exam 2 — Orgo II (Ch 16 through 18)','Chevron 152'],
@@ -910,20 +970,7 @@ const WEEKS = [
     }
   },
 ];
-/* ---- textbook problem + solution image manifest ----
-   Per chapter: po = problem#→PDF page (textbook), pp = all problem pages,
-   so = problem#→PDF page (solutions), sp = all solution pages. */
-const PROB = {"14":{"po":{"32":1898,"33":1898,"34":1898,"35":1898,"36":1899,"37":1899,"38":1899,"39":1899,"40":1900,"43":1901,"44":1901,"46":1902,"47":1902,"48":1902,"49":1902,"50":1902,"51":1903,"52":1903,"53":1903,"54":1903,"55":1903,"56":1903,"57":1904,"58":1904,"59":1904,"60":1905,"61":1905,"62":1906,"63":1906,"64":1906,"66":1907,"68":1908,"70":1909,"71":1909,"72":1909,"75":1911,"76":1911,"78":1912,"79":1912,"80":1912},"pp":[1898,1899,1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912],"so":{"32":599,"33":599,"34":601,"35":601,"36":602,"37":602,"38":603,"39":603,"40":604,"43":608,"44":608,"46":608,"47":609,"48":610,"49":610,"50":611,"51":612,"52":612,"53":615,"54":615,"55":616,"56":616,"57":616,"58":617,"59":618,"60":618,"61":619,"62":621,"63":621,"64":622,"66":625,"68":625,"70":627,"71":627,"72":627,"75":630,"76":630,"78":631,"79":631,"80":631},"sp":[599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637]},"23":{"po":{"32":2969,"33":2970,"34":2970,"37":2972,"40":2972,"44":2974,"46":2975,"47":2976,"48":2977,"53":2980,"54":2980,"55":2981,"27":2967,"28":2967,"29":2968,"30":2968,"31":2969},"pp":[2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981],"so":{"27":912,"28":913,"29":914,"30":915,"31":915,"32":916,"33":916,"34":918,"37":919,"40":920,"44":923,"46":923,"47":924,"48":926,"53":930,"54":930,"55":930},"sp":[912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,931,932,933,934,935,936,937]},"20":{"po":{"30":2633,"31":2633,"32":2634,"33":2634,"34":2634,"35":2635,"36":2635,"37":2636,"38":2636,"39":2636,"40":2636,"41":2636,"42":2636,"43":2636,"44":2637,"45":2637,"46":2637,"47":2638,"48":2639,"49":2639,"50":2640,"51":2640,"52":2640,"53":2640,"54":2640,"55":2640,"56":2641,"57":2641,"58":2642,"60":2643,"67":2648},"pp":[2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648],"so":{"30":808,"31":809,"32":809,"33":811,"34":812,"35":812,"36":812,"37":814,"38":814,"39":815,"40":816,"41":816,"42":818,"43":818,"44":819,"45":820,"46":820,"47":821,"48":822,"49":823,"50":823,"51":824,"52":824,"53":824,"54":825,"55":825,"56":826,"57":826,"58":826,"60":827,"67":829},"sp":[808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839]},"21":{"po":{"27":2744,"28":2744,"29":2744,"30":2745,"34":2746,"35":2746,"36":2747,"37":2747,"38":2748,"39":2748,"40":2749,"41":2749,"44":2751,"45":2751,"46":2751,"47":2751,"49":2752,"50":2753,"51":2753,"53":2754,"54":2755,"55":2755},"pp":[2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755],"so":{"27":840,"28":841,"29":841,"30":842,"34":846,"35":847,"36":847,"37":848,"38":849,"39":849,"40":850,"41":851,"44":853,"45":853,"46":855,"47":855,"49":857,"50":857,"51":858,"53":860,"54":861,"55":862},"sp":[840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,868,869,870,871,872,873,874,875]},"17":{"po":{"32":2296,"33":2297,"34":2297,"35":2298,"36":2298,"37":2298,"38":2298,"39":2299,"40":2299,"27":2294,"28":2294,"29":2295,"30":2295,"31":2296},"pp":[2294,2295,2296,2297,2298,2299],"so":{"27":701,"28":703,"29":703,"30":703,"31":703,"32":703,"33":703,"34":703,"35":703,"36":703,"37":703,"38":703,"39":703,"40":703},"sp":[701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729,730,731,732,733,734,735,736,737,738,739,740]},"19":{"po":{"27":2526,"28":2527,"29":2527,"30":2527,"31":2528,"32":2528,"33":2532,"34":2532,"35":2532,"36":2532,"37":2533,"38":2533,"39":2534,"40":2534,"41":2534,"44":2535,"45":2535,"46":2536,"47":2536,"48":2537,"50":2537,"51":2538,"52":2538,"56":2541,"58":2542},"pp":[2526,2527,2528,2529,2530,2531,2532,2533,2534,2535,2536,2537,2538,2539,2540,2541,2542],"so":{"27":783,"28":784,"29":784,"30":784,"31":784,"32":785,"33":787,"34":787,"35":788,"36":788,"37":789,"38":789,"39":790,"40":791,"41":792,"44":793,"45":793,"46":794,"47":794,"48":795,"50":796,"51":797,"52":797,"56":800,"58":801},"sp":[782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,798,799,800,801,802,803,804,805,806,807]},"15":{"po":{"36":2066,"37":2067,"38":2068,"39":2068,"40":2068,"41":2068,"42":2069,"43":2070,"47":2073,"48":2075,"49":2075,"50":2075,"51":2075,"52":2076,"53":2076,"54":2076,"55":2076,"56":2077,"57":2077,"58":2078,"59":2079,"60":2079,"61":2080,"62":2080,"63":2080,"64":2080,"65":2081},"pp":[2066,2067,2068,2069,2070,2071,2072,2073,2074,2075,2076,2077,2078,2079,2080,2081],"so":{"36":638,"37":638,"38":639,"39":639,"40":639,"41":640,"42":640,"43":641,"47":644,"48":644,"49":646,"50":646,"51":647,"52":647,"53":649,"54":649,"55":650,"56":650,"57":652,"58":652,"59":653,"60":654,"61":654,"62":655,"63":656,"64":657,"65":658},"sp":[638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665]},"18":{"po":{"32":2407,"33":2407,"34":2407,"35":2407,"36":2408,"37":2408,"38":2409,"39":2409,"40":2409,"41":2409,"42":2409,"43":2409,"44":2410,"45":2410,"46":2410,"47":2410,"48":2411,"49":2411,"50":2411,"51":2412,"52":2412,"55":2415,"56":2415,"57":2416,"58":2417,"59":2417,"60":2418},"pp":[2407,2408,2409,2410,2411,2412,2413,2414,2415,2416,2417,2418],"so":{"32":741,"33":742,"34":743,"35":745,"36":745,"37":746,"38":746,"39":746,"40":747,"41":747,"42":747,"43":748,"44":750,"45":750,"46":750,"47":751,"48":751,"49":752,"50":753,"51":754,"52":755,"55":757,"56":760,"57":761,"58":762,"59":763,"60":764},"sp":[741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781]},"22":{"po":{"37":2881,"38":2881,"39":2881,"40":2881,"41":2881,"42":2881,"43":2881,"44":2882,"45":2882,"46":2883,"47":2883,"48":2884,"49":2884,"57":2888,"58":2889,"59":2890,"60":2891,"61":2892,"66":2896,"67":2896,"68":2896,"69":2896},"pp":[2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896],"so":{"37":876,"38":876,"39":877,"40":878,"41":878,"42":878,"43":879,"44":879,"45":879,"46":881,"47":881,"48":882,"49":883,"57":886,"58":887,"59":887,"60":889,"61":889,"66":894,"67":896,"68":896,"69":897},"sp":[876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891,892,893,894,895,896,897,898,899,900,901,902,903,904,905,906,907,908,909,910,911]},"16":{"po":{"30":2166,"31":2166,"32":2166,"33":2167,"34":2168,"35":2168,"36":2168,"37":2168,"38":2168,"39":2168,"40":2168,"41":2169,"42":2171,"43":2172,"44":2174,"45":2175,"46":2176,"47":2177,"49":2177,"50":2180,"51":2180,"52":2181,"53":2181,"55":2181,"56":2182,"58":2182},"pp":[2166,2167,2168,2169,2170,2171,2172,2173,2174,2175,2176,2177,2178,2179,2180,2181,2182],"so":{"30":666,"31":666,"32":667,"33":667,"34":668,"35":669,"36":669,"37":670,"38":671,"39":671,"40":674,"41":675,"42":676,"43":678,"44":679,"45":681,"46":682,"47":682,"49":682,"50":684,"51":684,"52":686,"53":687,"55":688,"56":688,"58":690},"sp":[666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700]}};
-const WORKSHEETS = [{"id":"ws1","title":"Resonance & Allylic Reactivity","topic":"\u00a714.1\u201314.4 \u00b7 resonance, allylic radicals/cations, NBS halogenation, allylic SN1/SN2","due":"2026-07-01","exam":"Exam 1","probs":{"14":[32,33,34,35,36,37,38,39,40,54,60,79]},"pdf":"ws1.pdf"},{"id":"ws2","title":"Conjugated Dienes: 1,2- vs 1,4-Addition & Kinetic/Thermodynamic Control","topic":"\u00a714.5\u201314.6 \u00b7 electrophilic addition to dienes, kinetic vs thermodynamic products","due":"2026-07-03","exam":"Exam 1","probs":{"14":[43,46,47,48,49,50,51,52,53,75]},"pdf":"ws2.pdf"},{"id":"nmrA","title":"\u00b9H NMR Fundamentals & the n+1 Rule","topic":"After NMR Video Series 1 (Videos 1\u20134): degrees of unsaturation, chemical shift, integration, n+1 splitting","due":"2026-07-05","exam":"Exam 1","nmr":true,"resources":["nmr-workshop1-worksheet.pdf","nmr1-1-intro-theory.pdf","nmr1-2-signals-integration.pdf","nmr1-3-chemical-shift.pdf","nmr1-4-splitting.pdf"],"probs":{"15":[43],"17":[29,31]},"pdf":"nmrA.pdf"},{"id":"ws3","title":"Diels-Alder, Pericyclic Reactions & UV / \u03c0-MOs","topic":"\u00a714.7\u201314.11 \u00b7 Diels-Alder, dienophiles, electrocyclic, molecular orbitals, UV spectroscopy","due":"2026-07-07","exam":"Exam 1","probs":{"14":[44,55,56,57,58,59,61,62,63,64,66,68,70,71,72,76,78,80]},"pdf":"ws3.pdf"},{"id":"ws4","title":"Benzene, Aromaticity & H\u00fcckel's Rule","topic":"\u00a715.1\u201315.7 \u00b7 benzene structure, aromaticity, H\u00fcckel's rule, naming aromatics, annulenes","due":"2026-07-10","exam":"Exam 1","probs":{"15":[36,37,38,39,41,42,58,59,60,61,62,63,64,65]},"pdf":"ws4.pdf"},{"id":"ws5","title":"Electrophilic Aromatic Substitution (EAS)","topic":"\u00a715.8\u201316.1 \u00b7 halogenation, nitration, sulfonation, Friedel-Crafts alkylation & acylation","due":"2026-07-15","exam":"Exam 2","probs":{"15":[47,48,49,50,51,52,53,54,55,56,57],"16":[43,52]},"pdf":"ws5.pdf"},{"id":"nmrB","title":"Complex Splitting, Aromatic Coupling & Diastereotopic Protons","topic":"After NMR Video Series 2 (Videos 1\u20135): mixtures, solvents, complex splitting, long-range coupling, diastereotopicity","due":"2026-07-16","exam":"Exam 2","nmr":true,"resources":["nmr2-1-mixtures.pdf","nmr2-2-solvents.pdf","nmr2-3-complex-splitting.pdf","nmr2-4-long-range-coupling.pdf"],"probs":{"15":[40,64,65],"16":[49]},"pdf":"nmrB.pdf"},{"id":"ws6","title":"Directing Effects & Multi-substituted Aromatic Synthesis","topic":"\u00a716.1\u201316.5 \u00b7 activators/deactivators, o/p vs m directors, substituent effects, naphthalene, multistep synthesis","due":"2026-07-17","exam":"Exam 2","probs":{"16":[30,31,32,33,34,35,36,37,38,39,40,41,42,44,45,46,47,50,51,53,55,56,58]},"pdf":"ws6.pdf"},{"id":"ws7","title":"Aldehydes & Ketones \u2014 Structure, Spectra & Nucleophilic Addition","topic":"\u00a716.6\u201317.13 \u00b7 naming, spectroscopy, oxidation/prep, nucleophilic addition, hydrates, acetals","due":"2026-07-18","exam":"Exam 2","probs":{"17":[27,28,29,30,31,32,33,34,35,36,37,38,39,40]},"pdf":"ws7.pdf"},{"id":"ws8","title":"Enols, Enolates, Aldol & Michael Addition","topic":"\u00a718 \u00b7 \u03b1-acidity, enols/enolates, alkylation, enamines, aldol condensation, conjugate (Michael) addition, Robinson annulation","due":"2026-07-21","exam":"Exam 2","probs":{"18":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,55,56,57,58,59,60]},"pdf":"ws8.pdf"},{"id":"ws9","title":"Carboxylic Acids \u2014 Naming, Acidity, Preparation & Reactions","topic":"\u00a719 \u00b7 naming, acidity, spectroscopy, preparation, addition/elimination, Hell-Volhard-Zelinsky","due":"2026-07-24","exam":"Exam 3","probs":{"19":[27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,44,45,46,47,48,50,51,52,56,58]},"pdf":"ws9.pdf"},{"id":"ws10","title":"Acid Derivatives I \u2014 Acyl Halides, Anhydrides & Esters","topic":"\u00a720.1\u201320.4 \u00b7 relative reactivity, nucleophilic acyl substitution, hydrolysis, transesterification","due":"2026-07-28","exam":"Exam 3","probs":{"20":[30,31,32,33,34,35,36,37,38,39,40,42,44,45,52,53]},"pdf":"ws10.pdf"},{"id":"ws11","title":"Acid Derivatives II \u2014 Amides, Nitriles & Hofmann Rearrangement","topic":"\u00a720.4\u201320.9 \u00b7 esters & amides, lactones/lactams, Hofmann rearrangement, nitriles","due":"2026-07-30","exam":"Exam 3","probs":{"20":[41,43,46,47,48,49,50,51,54,55,56,57,58,60,67]},"pdf":"ws11.pdf"},{"id":"ws12","title":"Amines \u2014 Structure, Basicity & Synthesis","topic":"\u00a721 \u00b7 naming, basicity, synthesis (reductive amination, Gabriel), Hofmann elimination, Mannich","due":"2026-08-01","exam":"Exam 3","probs":{"21":[27,28,29,30,34,35,36,37,38,39,40,41,44,45,46,47,49,50,51,53,54,55]},"pdf":"ws12.pdf"},{"id":"ws13","title":"Benzylic Reactivity, Phenols & Diazonium Salts","topic":"\u00a722 \u00b7 benzylic oxidation/halogenation, Birch, nucleophilic aromatic substitution, phenols, diazonium & Sandmeyer","due":"2026-08-04","exam":"Final","probs":{"22":[37,38,39,40,41,42,43,44,45,46,47,48,49,57,58,59,60,61,66,67,68,69]},"pdf":"ws13.pdf"},{"id":"ws14","title":"Ester Enolates, Claisen & \u03b2-Dicarbonyl Synthesis","topic":"\u00a723 \u00b7 Claisen & Dieckmann condensation, acetoacetic & malonic ester synthesis, Michael additions","due":"2026-08-05","exam":"Final","probs":{"23":[27,28,29,30,31,32,33,34,37,40,44,46,47,48,53,54,55]},"pdf":"ws14.pdf"}];
-const ROOMS = {"Lecture":"Chevron 152","Recitation":"Chevron 152","Lab lecture":"Chevron 135","Lab":"Chevron 419"};
-/* Reaction & concept summary pages (textbook "New Reactions / Important Concepts") */
-const RXP = {"14":[1893,1894,1895,1896,1897],"15":[2061,2062,2063,2064,2065],"16":[2162,2163,2164,2165],"17":[2285,2286,2287,2288,2289,2290,2291,2292,2293],"18":[2401,2402,2403,2404,2405,2406],"19":[2519,2520,2521,2522,2523,2524,2525],"20":[2625,2626,2627,2628,2629,2630,2631,2632],"21":[2738,2739,2740,2741,2742,2743],"22":[2872,2873,2874,2875,2876,2877,2878,2879,2880],"23":[2963,2964,2965,2966]};
-const TB_DIR='assets/textbook/', SOL_DIR='assets/solutions/';
-const tbSrc=(ch,p)=>`${TB_DIR}tb-ch${ch}-p${p}.jpg`;
-const solSrc=(ch,p)=>`${SOL_DIR}sol-ch${ch}-p${p}.jpg`;
-const rxSrc=(ch,p)=>`${TB_DIR}rx-ch${ch}-p${p}.jpg`;
-
-/* Exam coverage — drives the exam-prep panel + next-exam countdown */
+/* Exam coverage — next-exam countdown on the dashboard */
 const EXAMS = [
   {name:'Exam 1', date:'2026-07-13T10:00', covers:'through ~Ch 15', chapters:[14,15], past:'past-exam-1.pdf'},
   {name:'Exam 2', date:'2026-07-23T10:00', covers:'Ch 16 through 18', chapters:[16,17,18], past:'past-exam-2.pdf'},
@@ -931,627 +978,336 @@ const EXAMS = [
   {name:'Final Exam', date:'2026-08-07T10:00', covers:'cumulative · Ch 14–23', chapters:[14,15,16,17,18,19,20,21,22,23], past:null, note:'Cumulative — lean on the Reaction Library + all three past exams.'},
 ];
 
-/* ---- "done" state for problem check-off (localStorage) ---- */
-let DONE=new Set();
-try{ const s=localStorage.getItem('orgo-done'); if(s) DONE=new Set(JSON.parse(s)); }catch(e){}
-const doneKey=(ch,n)=>ch+':'+n;
-const isDone=(ch,n)=>DONE.has(doneKey(ch,n));
-function saveDone(){ try{ localStorage.setItem('orgo-done',JSON.stringify([...DONE])); }catch(e){} }
-function toggleDone(ch,n){ const k=doneKey(ch,n); DONE.has(k)?DONE.delete(k):DONE.add(k); saveDone(); refreshProb(ch); }
+const WORKSHEETS = [{"id":"ws1","title":"Resonance & Allylic Reactivity","topic":"§14.1–14.4 · resonance, allylic radicals/cations, NBS halogenation, allylic SN1/SN2","due":"2026-07-01","exam":"Exam 1","probs":{"14":[32,33,34,36,37,38,39,41,54,60]},"inch":{},"pdf":"ws1.pdf"},{"id":"ws2","title":"Conjugated Dienes: 1,2- vs 1,4-Addition & Kinetic/Thermodynamic Control","topic":"§14.5–14.6 · electrophilic addition to dienes, kinetic vs thermodynamic products","due":"2026-07-03","exam":"Exam 1","probs":{"14":[47,48,49,50,51,53,56,76]},"inch":{},"pdf":"ws2.pdf"},{"id":"nmrA","title":"¹H NMR Fundamentals & the n+1 Rule","topic":"After NMR Video Series 1 (Videos 1–4): degrees of unsaturation, chemical shift, integration, n+1 splitting","due":"2026-07-04","exam":"Exam 1","nmr":true,"resources":["nmr-workshop1-worksheet.pdf","nmr1-1-intro-theory.pdf","nmr1-2-signals-integration.pdf","nmr1-3-chemical-shift.pdf","nmr1-4-splitting.pdf"],"probs":{"15":[43],"17":[31]},"inch":{},"pdf":"nmrA.pdf"},{"id":"ws3","title":"Diels-Alder, Pericyclic Reactions & UV / π-MOs","topic":"§14.7–14.11 · Diels-Alder, dienophiles, electrocyclic, molecular orbitals, UV spectroscopy","due":"2026-07-05","exam":"Exam 1","probs":{"14":[44,45,58,61,62]},"inch":{},"pdf":"ws3.pdf"},{"id":"ws4","title":"Benzene, Aromaticity & Hückel's Rule","topic":"§15.1–15.7 · benzene structure, aromaticity, Hückel's rule, naming aromatics, annulenes","due":"2026-07-08","exam":"Exam 1","probs":{"15":[36,38,39,41,42,58,66]},"inch":{},"pdf":"ws4.pdf"},{"id":"ws5","title":"Electrophilic Aromatic Substitution (EAS)","topic":"§15.8–16.3 · halogenation, nitration, sulfonation, Friedel-Crafts alkylation & acylation","due":"2026-07-11","exam":"Exam 2","probs":{"15":[48,49,50,53,54,55,56],"16":[30,32,33,34,35,36,37,38,39,40]},"inch":{"16":[5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,23]},"pdf":"ws5.pdf"},{"id":"nmrB","title":"Complex Splitting, Aromatic Coupling & Diastereotopic Protons","topic":"After NMR Video Series 2 (Videos 1–5): mixtures, solvents, complex splitting, long-range coupling, diastereotopicity","due":"2026-07-15","exam":"Exam 2","nmr":true,"resources":["nmr2-1-mixtures.pdf","nmr2-2-solvents.pdf","nmr2-3-complex-splitting.pdf","nmr2-4-long-range-coupling.pdf"],"probs":{"15":[40],"16":[49]},"inch":{},"pdf":"nmrB.pdf"},{"id":"ws6","title":"Directing Effects & Multi-substituted Aromatic Synthesis","topic":"§16.4–16.5 · activators/deactivators, o/p vs m directors, substituent effects, naphthalene, multistep synthesis","due":"2026-07-15","exam":"Exam 2","probs":{"16":[41,42,43,44,45,54,55,56]},"inch":{},"pdf":"ws6.pdf"},{"id":"ws7","title":"Aldehydes & Ketones — Structure, Spectra & Nucleophilic Addition","topic":"§16.6–17.13 · naming, spectroscopy, oxidation/prep, nucleophilic addition, hydrates, acetals","due":"2026-07-18","exam":"Exam 2","probs":{"17":[31,32,33,34,35,36,37,38,41,43,46,48,50,52,53,58]},"inch":{"17":[1,6,7,13,14,15,16,17,18,19,20,21,25,26]},"pdf":"ws7.pdf"},{"id":"ws8","title":"Enols, Enolates, Aldol & Michael Addition","topic":"§18 · α-acidity, enols/enolates, alkylation, enamines, aldol condensation, conjugate (Michael) addition, Robinson annulation","due":"2026-07-20","exam":"Exam 2","probs":{"18":[32,33,34,35,37,38,39,40,41,42,43,44,45,46,47,50,55,56,57]},"inch":{"18":[1,2,3,4,7,8,9,10,11,12,13,14,15,18,19,23,24,26,27,29]},"pdf":"ws8.pdf"},{"id":"ws9","title":"Carboxylic Acids — Naming, Acidity, Preparation & Reactions","topic":"§19 · naming, acidity, spectroscopy, preparation, addition/elimination, Hell-Volhard-Zelinsky","due":"2026-07-24","exam":"Exam 3","probs":{"19":[27,29,30,32,33,34,37,38,39,40,41,44,45,49,52]},"inch":{"19":[1,5,7,8,9,10,11,14,16,17,18,21,22]},"pdf":"ws9.pdf"},{"id":"ws10","title":"Acid Derivatives I — Acyl Halides, Anhydrides & Esters","topic":"§20.1–20.4 · relative reactivity, nucleophilic acyl substitution, hydrolysis, transesterification","due":"2026-07-27","exam":"Exam 3","probs":{"20":[30,32,34,35,36,38,39,40,42,43,44,45]},"inch":{"20":[2,5,6,7,9,11,14,15,16,17,19,20,21]},"pdf":"ws10.pdf"},{"id":"ws11","title":"Acid Derivatives II — Amides, Nitriles & Hofmann Rearrangement","topic":"§20.5–20.9 · esters & amides, lactones/lactams, Hofmann rearrangement, nitriles","due":"2026-07-30","exam":"Exam 3","probs":{"20":[46,50,51,52,53,54,57,61,63]},"inch":{"20":[24,27,28,29]},"pdf":"ws11.pdf"},{"id":"ws12","title":"Amines — Structure, Basicity & Synthesis","topic":"§21 · naming, basicity, synthesis (reductive amination, Gabriel), Hofmann elimination, Mannich","due":"2026-08-01","exam":"Exam 3","probs":{"21":[27,28,30,35,36,39,40,41,47,50]},"inch":{"21":[3,8,14,18,19]},"pdf":"ws12.pdf"},{"id":"ws13","title":"Benzylic Reactivity, Phenols & Diazonium Salts","topic":"§22 · benzylic oxidation/halogenation, Birch, nucleophilic aromatic substitution, phenols, diazonium & Sandmeyer","due":"2026-08-03","exam":"Final","probs":{"22":[37,38,39,40,41,42,43,44,45,53,54,66]},"inch":{"22":[1,2,4,5,6,7,8,10,11,12,16,17,26,27,35]},"pdf":"ws13.pdf"},{"id":"ws14","title":"Ester Enolates, Claisen & β-Dicarbonyl Synthesis","topic":"§23 · Claisen & Dieckmann condensation, acetoacetic & malonic ester synthesis, Michael additions","due":"2026-08-05","exam":"Final","probs":{"23":[27,28,29,30,31,32,33,34,37,40,44,46,47,48,53,54,55]},"inch":{},"pdf":"ws14.pdf"}];
+const CHPDF = {"14":{"p":"ch14-problems.pdf","s":"ch14-solutions.pdf","r":"ch14-reactions.pdf"},"15":{"p":"ch15-problems.pdf","s":"ch15-solutions.pdf","r":"ch15-reactions.pdf"},"16":{"p":"ch16-problems.pdf","s":"ch16-solutions.pdf","r":"ch16-reactions.pdf"},"17":{"p":"ch17-problems.pdf","s":"ch17-solutions.pdf","r":"ch17-reactions.pdf"},"18":{"p":"ch18-problems.pdf","s":"ch18-solutions.pdf","r":"ch18-reactions.pdf"},"19":{"p":"ch19-problems.pdf","s":"ch19-solutions.pdf","r":"ch19-reactions.pdf"},"20":{"p":"ch20-problems.pdf","s":"ch20-solutions.pdf","r":"ch20-reactions.pdf"},"21":{"p":"ch21-problems.pdf","s":"ch21-solutions.pdf","r":"ch21-reactions.pdf"},"22":{"p":"ch22-problems.pdf","s":"ch22-solutions.pdf","r":"ch22-reactions.pdf"},"23":{"p":"ch23-problems.pdf","s":"ch23-solutions.pdf","r":"ch23-reactions.pdf"}};
+const CHNAME = {"14":"Delocalized π Systems","15":"Benzene & Aromaticity","16":"Reactions of Aromatic Systems (EAS)","17":"Aldehydes & Ketones","18":"Enols, Enolates & the Aldol","19":"Carboxylic Acids","20":"Carboxylic Acid Derivatives","21":"Amines","22":"Chemistry of Benzene Substituents","23":"Ester Enolates & the Claisen"};
+const ROOMS = {"Lecture":"Chevron 152","Recitation":"Chevron 152","Lab lecture":"Chevron 135","Lab":"Chevron 419"};
+const RESOURCES = {
+  recitation:[
+    {label:"Wk 3 — Regio/stereo mechanisms & short synthesis", file:"recit-wk03.pdf", topic:"Ch 14 · allylic / substitution", by:"2026-06-30"},
+    {label:"Wk 4 — 1,2 vs 1,4 dienes & Diels-Alder", file:"recit-wk04.pdf", topic:"Ch 14", by:"2026-07-02"},
+    {label:"Wk 5 — Aromaticity, Hückel & EAS electrophiles", file:"recit-wk05.pdf", topic:"Ch 15–16", by:"2026-07-07"},
+    {label:"Wk 6 — EAS mechanisms & directing effects", file:"recit-wk06.pdf", topic:"Ch 16", by:"2026-07-09"},
+    {label:"Wk 7 — Carbonyl reaction products", file:"recit-wk07.pdf", topic:"Ch 17", by:"2026-07-16"},
+    {label:"Wk 8 — Enolate / aldol products", file:"recit-wk08.pdf", topic:"Ch 18", by:"2026-07-17"},
+    {label:"Wk 11 — Acid-derivative products & reagents", file:"recit-wk11.pdf", topic:"Ch 19–20", by:"2026-07-23"},
+    {label:"Wk 12 — Ester reactions & amide acidity", file:"recit-wk12.pdf", topic:"Ch 20", by:"2026-07-28"},
+    {label:"Wk 14 — Amine basicity & synthesis", file:"recit-wk14.pdf", topic:"Ch 21", by:"2026-07-31"}
+  ],
+  exams:[
+    {label:"Past Exam 1 · Spring 2024", file:"past-exam-1.pdf", note:"Timed practice before Exam 1 (Mon Jul 13)", by:"2026-07-11"},
+    {label:"Past Exam 2 · Spring 2024", file:"past-exam-2.pdf", note:"Timed practice before Exam 2 (Thu Jul 23)", by:"2026-07-21"},
+    {label:"Past Exam 3 · Spring 2024", file:"past-exam-3.pdf", note:"Timed practice before Exam 3 (Mon Aug 3)", by:"2026-08-01"}
+  ],
+  reference:[
+    {label:"Organic Reaction Library", file:"reaction-library.pdf", note:"Every reaction in one place — the backbone for the cumulative final"},
+    {label:"Aldehydes & Ketones — Orgo I review", file:"aldehydes-review.pdf", note:"Recall what you already know before Ch 17"}
+  ],
+  extra:[
+    {label:"Activity 3 — Extraction & Recrystallization", file:"labprep-act3.pdf", by:"2026-07-05", quiz:"Quiz 2"},
+    {label:"Activity 4 — Thin-Layer Chromatography (TLC)", file:"labprep-act4.pdf", by:"2026-07-07", quiz:"Quiz 3"},
+    {label:"Activity 5 — ¹H NMR Workshop 2", file:"labprep-act5.pdf", by:"2026-07-12", quiz:"Quiz 4"},
+    {label:"Activity 6 — Dehydration of Cyclohexanol", file:"labprep-act6.pdf", by:"2026-07-14", quiz:"Quiz 5"},
+    {label:"Activity 7 — Grignard / Triphenylmethanol", file:"labprep-act7.pdf", by:"2026-07-19", quiz:"Quiz 6"},
+    {label:"Activity 8 — Markovnikov Hydrohalogenation of Carvone", file:"labprep-act8.pdf", by:"2026-07-21", quiz:"Quiz 7"},
+    {label:"Activity 9 — EAS: Bromination of Aniline", file:"labprep-act9.pdf", by:"2026-07-26", quiz:"Quiz 8"},
+    {label:"Activity 10 — Aldol Addition & Condensation", file:"labprep-act10.pdf", by:"2026-07-28", quiz:"Quiz 9"}
+  ],
+  nmrWorksheets:[
+    {label:"NMR Workshop 1 — practice problems", file:"nmr-workshop1-worksheet.pdf", note:"Do after NMR Video Series 1"}
+  ],
+  nmrSlides:[
+    {label:"Series 1 · Part 1 — Intro & Theory", file:"nmr1-1-intro-theory.pdf"},
+    {label:"Series 1 · Part 2 — Signals & Integration", file:"nmr1-2-signals-integration.pdf"},
+    {label:"Series 1 · Part 3 — Chemical Shift", file:"nmr1-3-chemical-shift.pdf"},
+    {label:"Series 1 · Part 4 — Proton Splitting (n+1 rule)", file:"nmr1-4-splitting.pdf"},
+    {label:"Series 2 · Part 1 — Spectra of Mixtures", file:"nmr2-1-mixtures.pdf"},
+    {label:"Series 2 · Part 2 — Solvents", file:"nmr2-2-solvents.pdf"},
+    {label:"Series 2 · Part 3 — Complex Splitting", file:"nmr2-3-complex-splitting.pdf"},
+    {label:"Series 2 · Part 4 — Long-range Coupling", file:"nmr2-4-long-range-coupling.pdf"}
+  ],
+  labReview:[
+    {label:"Lab Final review document", file:"lab-final-review.pdf", note:"Covers Activities 1–11"},
+    {label:"Lab midterm practice (Fall 2024)", file:"lab-midterm-practice.pdf", note:"Extra practice"},
+    {label:"Post-midterm material review", file:"lab-postmidterm-review.pdf", note:"Extra practice"}
+  ]
+};
+const LABACTS = [
+  {n:1, title:"Introduction, Safety & IR", date:"2026-06-30", pre:"2026-06-30", post:"2026-07-07", quiz:"Quiz 1 (policies · async, by Jul 1)"},
+  {n:2, title:"¹H NMR Workshop 1", date:"2026-07-02", pre:"2026-07-02", post:"2026-07-09", quiz:null},
+  {n:3, title:"Extraction & Recrystallization of Benzoic Acid", date:"2026-07-07", pre:"2026-07-07", post:"2026-07-14", quiz:"Quiz 2", extra:"labprep-act3.pdf"},
+  {n:4, title:"Thin-Layer Chromatography (TLC)", date:"2026-07-09", pre:"2026-07-09", post:"2026-07-16", quiz:"Quiz 3", extra:"labprep-act4.pdf"},
+  {n:5, title:"¹H NMR Workshop 2", date:"2026-07-14", pre:"2026-07-14", post:null, quiz:"Quiz 4", extra:"labprep-act5.pdf"},
+  {n:6, title:"Dehydration of Cyclohexanol", date:"2026-07-16", pre:"2026-07-16", post:"2026-07-23", quiz:"Quiz 5", extra:"labprep-act6.pdf"},
+  {n:7, title:"Grignard: Synthesis of Triphenylmethanol", date:"2026-07-21", pre:"2026-07-21", post:"2026-07-28", quiz:"Quiz 6", extra:"labprep-act7.pdf"},
+  {n:8, title:"Markovnikov Hydrohalogenation of Carvone", date:"2026-07-23", pre:"2026-07-23", post:"2026-07-30", quiz:"Quiz 7", extra:"labprep-act8.pdf"},
+  {n:9, title:"EAS: Bromination of Aniline & N-Acetylaniline", date:"2026-07-28", pre:"2026-07-28", post:"2026-08-04", quiz:"Quiz 8", extra:"labprep-act9.pdf"},
+  {n:10, title:"Aldol Addition & Condensation (Crossed Aldol)", date:"2026-07-30", pre:"2026-07-30", post:"2026-08-06", quiz:"Quiz 9", extra:"labprep-act10.pdf"},
+  {n:11, title:"Forensic Chemistry: Synthesis of Luminol", date:"2026-08-04", pre:"2026-08-04", post:null, quiz:"Quiz 10"}
+];
 
 /* ====================== END DATA ====================== */
-
-const $ = (s,r=document)=>r.querySelector(s);
-const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
-const pad = n=>String(n).padStart(2,'0');
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const pad=n=>String(n).padStart(2,'0');
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function parseDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function parseDateTime(s){const[d,t]=s.split('T');const[y,mo,da]=d.split('-').map(Number);const[h,mi]=t.split(':').map(Number);return new Date(y,mo-1,da,h,mi);}
+function today(){if(TODAY_OVERRIDE)return parseDate(TODAY_OVERRIDE);const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());}
+function now(){return TODAY_OVERRIDE?(()=>{const d=parseDate(TODAY_OVERRIDE);d.setHours(9);return d;})():new Date();}
+function dayDiff(a,b){return Math.round((a-b)/86400000);}
+function fmtShort(d){return DOW[d.getDay()]+' '+MON[d.getMonth()]+' '+d.getDate();}
+function timeStr(d){let h=d.getHours(),mi=d.getMinutes();const ap=h>=12?'PM':'AM';h=h%12||12;return mi?`${h}:${pad(mi)} ${ap}`:`${h} ${ap}`;}
+function startOfWeekMon(d){const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));x.setHours(0,0,0,0);return x;}
+function relDay(due){const t=today();const dd=new Date(due.getFullYear(),due.getMonth(),due.getDate());const diff=dayDiff(dd,t);
+  let big,small;const tm=(due.getHours()||due.getMinutes())?timeStr(due):'';
+  if(diff<0){big='overdue';small=fmtShort(dd);}
+  else if(diff===0){big='TODAY';small=tm;}
+  else if(diff===1){big='Tomorrow';small=tm;}
+  else if(diff<7){big=DOW[due.getDay()];small=`${MON[due.getMonth()].slice(0,3)} ${due.getDate()}${tm?' · '+tm:''}`;}
+  else{big=`${MON[due.getMonth()].slice(0,3)} ${due.getDate()}`;small=`in ${diff}d`;}
+  return {big,small,diff};}
+const RES=f=>`assets/resources/${f}`, WSF=f=>`assets/worksheets/${f}`, PDFF=f=>`assets/pdf/${f}`;
 
-function parseDate(s){ // 'YYYY-MM-DD' -> local Date at midnight
-  const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d);
-}
-function parseDateTime(s){
-  const [d,t]=s.split('T'); const [y,mo,da]=d.split('-').map(Number);
-  const [h,mi]=t.split(':').map(Number); return new Date(y,mo-1,da,h,mi);
-}
-function today(){
-  if(TODAY_OVERRIDE) return parseDate(TODAY_OVERRIDE);
-  const n=new Date(); return new Date(n.getFullYear(),n.getMonth(),n.getDate());
-}
-function now(){
-  if(TODAY_OVERRIDE){ const d=parseDate(TODAY_OVERRIDE); d.setHours(0,0,1); return d; }
-  return new Date();
-}
-function dayDiff(a,b){ return Math.round((a-b)/86400000); } // a-b in days
-function fmtShort(d){ return DOW[d.getDay()]+' '+MON[d.getMonth()]+' '+d.getDate(); }
+/* deadlines incl recommended worksheet dues */
+function worksheetDeadlines(){return WORKSHEETS.map(w=>[w.due+'T23:59','textbook','📝 '+(w.nmr?'NMR ':'')+'Worksheet: '+w.title+' (recommended)','Practice']);}
+function allDeadlines(){return DEADLINES.concat(worksheetDeadlines());}
+function nextExam(){const n=now();return EXAMS.find(e=>parseDateTime(e.date)>=n)||null;}
+function examCountdown(e){const d=parseDate(e.date.split('T')[0]),diff=dayDiff(d,today());return diff<0?'done':diff===0?'today':diff===1?'tomorrow':`in ${diff} days`;}
 
-function relWhen(due){
-  const t0=today();
-  const dueDay=new Date(due.getFullYear(),due.getMonth(),due.getDate());
-  const diff=dayDiff(dueDay,t0);
-  let big, small;
-  if(diff<0){ big='past'; small=''; }
-  else if(diff===0){ big='Today'; small=timeStr(due); }
-  else if(diff===1){ big='Tomorrow'; small=timeStr(due); }
-  else if(diff<7){ big='in '+diff+'d'; small=DOW[due.getDay()]+' '+timeStr(due); }
-  else { big=MON[due.getMonth()]+' '+due.getDate(); small='in '+diff+'d'; }
-  return {big,small,diff};
-}
-function timeStr(d){
-  let h=d.getHours(), mi=d.getMinutes(); const ap=h>=12?'PM':'AM';
-  h=h%12||12; return mi? `${h}:${pad(mi)} ${ap}` : `${h} ${ap}`;
-}
-
-/* ---------- term progress rail ---------- */
-function renderRail(){
-  const host=$('#railWeeks'); const t=today();
-  host.innerHTML='';
-  WEEKS.forEach(w=>{
-    const s=parseDate(w.start), e=parseDate(w.end);
-    const cur = t>=s && t<=e;
-    const done = t>e;
-    const el=document.createElement('div');
-    el.className='rw'+(cur?' current':'')+(done?' done':'');
-    el.innerHTML=`<div class="wk">Week ${w.n}</div><div class="dt">${w.range.split(' – ')[0]}</div>`;
-    el.addEventListener('click',()=>{ openWeek(w.n,true); });
-    host.appendChild(el);
-  });
-  const t0=today();
-  const termStart=parseDate('2026-06-29'), termEnd=parseDate('2026-08-07');
-  let label;
-  if(t0<termStart) label='Term starts '+fmtShort(termStart);
-  else if(t0>termEnd) label='Term complete';
-  else { const cw=WEEKS.find(w=> t0>=parseDate(w.start)&&t0<=parseDate(w.end));
-         label = cw? `Currently: Week ${cw.n} · ${fmtShort(t0)}` : fmtShort(t0); }
-  $('#nowLabel').textContent=label;
-}
-
-/* ---------- to-do board (Today · This week · Next week) ---------- */
-function startOfWeekMon(d){ const x=new Date(d); x.setDate(x.getDate()-((x.getDay()+6)%7)); x.setHours(0,0,0,0); return x; }
-function todoItemHTML(x){
-  const d=x.due, c=CATS[x.cat];
-  const day=`${DOW[d.getDay()]} ${MON[d.getMonth()]} ${d.getDate()}`;
-  return `<div class="todo-item" data-cat="${x.cat}">
-    <div class="ti-bar" style="background:${c.color}"></div>
-    <div class="ti-body"><div class="ti-title">${x.title}</div><div class="ti-meta">${day} · ${timeStr(d)} · ${x.loc}</div></div>
-    <div class="ti-tag" style="background:${c.color}">${c.label}</div></div>`;
-}
-function renderUpNext(){
-  const board=$('#todoBoard'); const n=now(), t=today();
-  const thisMon=startOfWeekMon(t);
-  const thisSun=new Date(thisMon); thisSun.setDate(thisMon.getDate()+6);
-  const nextMon=new Date(thisMon); nextMon.setDate(thisMon.getDate()+7);
-  const nextSun=new Date(nextMon); nextSun.setDate(nextMon.getDate()+6);
-  const dayOf=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
-  const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc}))
-    .filter(x=>x.due>=n).sort((a,b)=>a.due-b.due);
-  const cols=[
-    {key:'today',    title:'Today',     date:fmtShort(t), urgent:true, items:[]},
-    {key:'thisweek', title:'This week', date:'through '+fmtShort(thisSun), items:[]},
-    {key:'nextweek', title:'Next week', date:fmtShort(nextMon)+' – '+fmtShort(nextSun), items:[]},
-  ];
-  let later=0;
-  items.forEach(x=>{ const d=dayOf(x.due);
-    if(+d===+t) cols[0].items.push(x);
-    else if(d>t && d<=thisSun) cols[1].items.push(x);
-    else if(d>=nextMon && d<=nextSun) cols[2].items.push(x);
-    else later++;
-  });
-  if(!items.length){ board.innerHTML='<div class="all-clear">🎉 Nothing left on the calendar — term complete.</div>'; $('#todoSub').textContent=''; $('#todoNextExam').textContent=''; return; }
-  board.innerHTML = cols.map(c=>{
-    const inner = c.items.length ? c.items.map(todoItemHTML).join('')
-      : `<div class="todo-empty">${c.key==='today'?'Nothing due today 🎉':'Nothing scheduled'}</div>`;
-    return `<div class="todo-col${c.urgent&&c.items.length?' urgent':''}">
-      <div class="todo-col-head"><span class="tc-title">${c.title}</span><span class="tc-date">${c.date}</span><span class="tc-count">${c.items.length}</span></div>
-      ${inner}</div>`;
-  }).join('');
-  const total=cols.reduce((s,c)=>s+c.items.length,0);
-  $('#todoSub').textContent = `${total} due in the next 2 weeks${later?` · +${later} further out`:''} · as of ${fmtShort(t)}`;
-  const ne=nextExam();
-  $('#todoNextExam').textContent = ne ? `📕 Next exam: ${ne.name} · ${examCountdown(ne)}` : 'exams complete 🎉';
-  applyFilters();
-}
-
-/* ---------- filters + legend ---------- */
-const filterState={};
-Object.keys(CATS).forEach(k=>filterState[k]=true);
-function renderFilters(){
-  const host=$('#filters');
-  Object.entries(CATS).forEach(([k,c])=>{
-    const b=document.createElement('button');
-    b.className='fchip'; b.dataset.cat=k; b.setAttribute('aria-pressed','true');
+/* ---------- filters ---------- */
+const filterState={};Object.keys(CATS).forEach(k=>filterState[k]=true);
+function renderFilters(){const host=$('#filters');host.querySelectorAll('.fchip').forEach(e=>e.remove());
+  Object.entries(CATS).forEach(([k,c])=>{const b=document.createElement('button');b.className='fchip';b.dataset.cat=k;b.setAttribute('aria-pressed','true');
     b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${c.label}`;
-    b.addEventListener('click',()=>{ filterState[k]=!filterState[k]; b.setAttribute('aria-pressed',String(filterState[k])); applyFilters(); });
-    host.appendChild(b);
-  });
-  const lg=$('#legend');
-  lg.innerHTML='<span class="li" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)">Legend</span>';
-  Object.entries(CATS).forEach(([k,c])=>{
-    const courseLbl = c.course==='II'?'Orgo II':c.course==='LAB'?'Orgo Lab':'both';
-    const s=document.createElement('span'); s.className='li';
-    s.innerHTML=`<span class="dot" style="background:${c.color}"></span>${c.label} <span style="color:var(--ink-faint)">· ${courseLbl}</span>`;
-    lg.appendChild(s);
-  });
-}
-function applyFilters(){
-  $$('[data-cat]').forEach(el=>{
-    if(el.classList.contains('fchip')) return;
-    const on=filterState[el.dataset.cat];
-    el.style.display = on? '' : 'none';
-  });
-  // hide a day if all its events are hidden
-  $$('.day').forEach(d=>{
-    const evs=$$('.ev',d);
-    const anyVisible = evs.some(e=>e.style.display!=='none');
-    d.style.display = (evs.length===0||anyVisible)? '' : 'none';
-  });
-}
-
-/* ---------- weeks ---------- */
-function renderWeeks(){
-  const host=$('#weeks'); host.innerHTML=''; const t=today();
-  WEEKS.forEach(w=>{
-    const s=parseDate(w.start), e=parseDate(w.end);
-    const cur = t>=s && t<=e;
-    const sec=document.createElement('section');
-    sec.className='week reveal'+(cur?' current':'');
-    sec.id='week-'+w.n;
-    const flags=[];
-    if(w.exam) flags.push(`<span class="pill-exam">${w.exam}</span>`);
-    if(w.final) flags.push(`<span class="pill-final">Finals week</span>`);
-    if(cur) flags.unshift(`<span class="current-badge">This week</span>`);
-    sec.innerHTML=`
-      <div class="wk-head">
-        <span class="num">Week ${w.n}</span>
-        <div class="titles"><div class="rng">${w.range}</div><div class="focus">${w.focus}</div></div>
-        <div class="flags">${flags.join('')}</div>
-        <button class="wk-share" data-week="${w.n}" title="Copy a link to this week" aria-label="Copy link to week ${w.n}">🔗</button>
-        <span class="chev">▾</span>
-      </div>
-      <div class="wk-body">${daysHTML(w)}${studyHTML(w)}</div>`;
-    sec.querySelector('.wk-head').addEventListener('click',(e)=>{ if(e.target.closest('.wk-share')) return; sec.classList.toggle('open'); });
-    host.appendChild(sec);
-  });
-}
-function daysHTML(w){
-  const t=today();
-  return w.days.map(day=>{
-    const d=parseDate(day.date);
-    const isToday = dayDiff(d,t)===0;
-    const evs=day.evs.map(ev=>{
-      if(ev.holiday){
-        return `<div class="ev holiday" data-cat="${ev.cat}"><div class="accent" style="background:var(--c-holiday)"></div>
-          <div class="ev-main"><div class="ttl">${ev.ttl}</div></div></div>`;
-      }
-      const c=CATS[ev.cat];
-      return `<div class="ev" data-cat="${ev.cat}">
-        <div class="accent" style="background:${c.color}"></div>
-        <div class="ev-main">
-          <div class="ev-top">
-            <span class="kind" style="background:${c.color}">${ev.kind}</span>
-            ${ev.time?`<span class="time">${ev.time}</span>`:''}
-          </div>
-          <div class="ttl">${ev.ttl}</div>
-          ${ROOMS[ev.kind]?`<div class="room">📍 <b>${ROOMS[ev.kind]}</b></div>`:''}
-          ${ev.desc?`<div class="desc">${ev.desc}</div>`:''}
-          ${ev.due?dueChipsHTML(ev.due):''}
-        </div></div>`;
-    }).join('');
-    const isLabDay = day.evs.some(ev=>ev.cat==='lab' && ev.kind==='Lab');
-    const safety = isLabDay ? `<div class="day-safety">🥽 <b>Lab day — required in Chevron 419:</b> splash goggles · flame-resistant lab coat · long pants (no shorts/skin) · numbered notebook. Pre-lab due 1:00 PM on Labflow · 🎬 technique videos on Labflow.</div>` : '';
-    return `<div class="day${isToday?' is-today':''}">
-      <div class="date">${DOW[d.getDay()]} <b>${MON[d.getMonth()]} ${d.getDate()}</b>${isToday?'<span class="tdy">Today</span>':''}</div>
-      <div class="items">${safety}${evs}</div></div>`;
-  }).join('');
-}
-function dueChipsHTML(s){
-  return `<div class="due-items">`+ s.split(' · ').map(p=>{
-    const icon = /watch/i.test(p) ? '📺' : '📋';
-    const m = p.match(/^(.*?)\s+due\s+(.*)$/i);
-    const inner = m ? `<b>${m[1]}</b> <span class="dw">due ${m[2]}</span>` : p;
-    return `<span class="due-chip"><span class="di">${icon}</span><span class="dt">${inner}</span></span>`;
-  }).join('')+`</div>`;
-}
-function probChipsHTML(ch, probs){
-  probs=probs.filter(n=>PROB[ch]&&PROB[ch].po[n]!=null);
-  const chips=probs.map(n=>{
-    const d=isDone(ch,n);
-    return `<button class="prob-chip${d?' done':''}" data-ch="${ch}" data-n="${n}" onclick="openViewer(${ch},'p',${n})" title="Open problem ${n} (Ch ${ch})">${d?'<span class="ck">✓</span>':''}${n}</button>`;
-  }).join('');
-  const done=probs.filter(n=>isDone(ch,n)).length;
-  return `<div class="prob-row" data-chrow="${ch}">
-      <span class="prob-ch">Ch ${ch}</span>${chips}
-      <button class="akey" onclick="openViewer(${ch},'s')" title="Worked solutions for Ch ${ch}">🔑 Answer key</button>
-      <button class="akey rx" onclick="openViewer(${ch},'r')" title="Reaction & concept summary for Ch ${ch}">⚗️ Reactions</button>
-      <span class="prob-prog" data-prog="${ch}">${done}/${probs.length} done</span>
-    </div>`;
-}
-function refreshProb(ch){
-  document.querySelectorAll(`.prob-chip[data-ch="${ch}"]`).forEach(el=>{
-    const n=+el.dataset.n, d=isDone(ch,n);
-    el.classList.toggle('done',d);
-    el.innerHTML=(d?'<span class="ck">✓</span>':'')+n;
-  });
-  document.querySelectorAll(`[data-prog="${ch}"]`).forEach(p=>{
-    const chips=p.closest('.prob-row').querySelectorAll('.prob-chip');
-    const done=[...chips].filter(c=>c.classList.contains('done')).length;
-    p.textContent=`${done}/${chips.length} done`;
-  });
-}
-function studyHTML(w){
-  const st=w.study;
-  const col=(cat,title,html,note)=>`<div class="scol" data-cat="${cat}">
-      <div class="sh"><span class="dot" style="background:${CATS[cat].color}"></span>${title}</div>
-      <p>${html}</p>${note?`<div class="note">${note}</div>`:''}</div>`;
-  const tbInner = st.textbook.map(t=>probChipsHTML(t.ch,t.probs)).join('');
-  const tbCol = `<div class="scol" data-cat="textbook" style="grid-column:1/-1">
-      <div class="sh"><span class="dot" style="background:${CATS.textbook.color}"></span>Textbook problems — click a number to see it, 🔑 for the worked answer</div>
-      ${tbInner}
-      <div class="note">Real end-of-chapter problems · Vollhardt &amp; Schore 8e · your ✓ progress is saved on this device</div></div>`;
-  const resCol = st.resources ? `<div class="scol" data-cat="recit" style="grid-column:1/-1">
-      <div class="sh"><span class="dot" style="background:var(--c-recit)"></span>Resources — open in a new tab</div>
-      <div class="res-row">${st.resources.map(r=>{
-        const c=CATS[r.cat]?CATS[r.cat].color:'var(--ink-faint)';
-        return `<a class="res-chip" data-cat="${r.cat}" href="assets/resources/${r.file}" target="_blank" rel="noopener"><span class="dot" style="background:${c}"></span>${r.label} <span class="ext">↗</span></a>`;
-      }).join('')}</div></div>` : '';
-  return `<div class="study">
-    <h4>◆ This week’s study</h4>
-    <div class="study-grid">
-      ${tbCol}
-      ${col('synth','Synthesis & retrosynthesis',st.synth)}
-      ${col('spec','Spectroscopy (IR / NMR)',st.spec)}
-      ${col('recit','Recitation worksheet',st.recit)}
-      ${col('quiz','Quizzes & exams',st.quiz)}
-      ${col('lecture','Keep warm (cumulative)',st.review)}
-      ${resCol}
-    </div></div>`;
-}
-
-/* ---------- open/scroll helpers ---------- */
-function openWeek(n,scroll){
-  const sec=$('#week-'+n); if(!sec) return;
-  sec.classList.add('open');
-  if(scroll) sec.scrollIntoView({behavior:'smooth',block:'start'});
-}
-function jumpToday(){
-  setView('spread');
-  const t=today();
-  const cw=WEEKS.find(w=> t>=parseDate(w.start)&&t<=parseDate(w.end));
-  if(cw){ openWeek(cw.n,false);
-    const td=$('.day.is-today');
-    if(td){ td.scrollIntoView({behavior:'smooth',block:'center'}); return; }
-    $('#week-'+cw.n).scrollIntoView({behavior:'smooth',block:'start'});
-  } else {
-    $('#todo').scrollIntoView({behavior:'smooth',block:'start'});
-  }
-}
+    b.addEventListener('click',()=>{filterState[k]=!filterState[k];b.setAttribute('aria-pressed',String(filterState[k]));applyFilters();});host.appendChild(b);});}
+function applyFilters(){$$('[data-cat]').forEach(el=>{if(el.classList.contains('fchip'))return;el.style.display=filterState[el.dataset.cat]?'':'none';});}
 
 /* ---------- theme ---------- */
-function setTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  try{ localStorage.setItem('orgo-planner-theme',t); }catch(e){}
-  $$('#themeSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)));
-}
-function initTheme(){
-  let t='sage';
-  try{ const s=localStorage.getItem('orgo-planner-theme'); if(s) t=s; }catch(e){}
-  setTheme(t);
-}
+function setTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('orgo-theme',t);}catch(e){}
+  $$('#themeSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)));}
+function initTheme(){let t='sage';try{const s=localStorage.getItem('orgo-theme');if(s)t=s;}catch(e){}setTheme(t);}
 
-/* ---------- image viewer (lightbox): problems <-> answer key ---------- */
-let VIEW={ch:null,mode:'p',pages:[],idx:0,prob:null};
-function buildViewerPages(){ const c=PROB[VIEW.ch]; VIEW.pages = (VIEW.mode==='p'?c.pp:VIEW.mode==='s'?c.sp:RXP[VIEW.ch]).slice(); }
-function pageOfProb(){ if(VIEW.prob==null||VIEW.mode==='r') return null; const c=PROB[VIEW.ch]; return VIEW.mode==='p'? c.po[VIEW.prob] : c.so[VIEW.prob]; }
-function openViewer(ch,mode,prob){
-  if(!PROB[ch]) return;
-  VIEW.ch=ch; VIEW.mode=mode||'p'; VIEW.prob=(prob==null?null:prob);
-  buildViewerPages();
-  const target=pageOfProb();
-  VIEW.idx = target!=null ? Math.max(0,VIEW.pages.indexOf(target)) : 0;
-  $('#viewer').classList.add('open'); document.body.style.overflow='hidden';
-  renderViewer();
-}
-if(typeof window!=='undefined') window.openViewer=openViewer;
-function renderViewer(){
-  const ch=VIEW.ch, page=VIEW.pages[VIEW.idx];
-  const src = VIEW.mode==='p'? tbSrc(ch,page) : VIEW.mode==='s'? solSrc(ch,page) : rxSrc(ch,page);
-  const modeLabel = VIEW.mode==='p'?'Problems':VIEW.mode==='s'?'Solutions (answer key)':'Reactions & concepts';
-  $('#vImg').src=src; $('#vScroll').scrollTop=0;
-  $('#vTitle').textContent = `Chapter ${ch} · ${modeLabel}`;
-  $('#vSub').textContent = (VIEW.prob!=null&&VIEW.mode!=='r'?`focus: Q${VIEW.prob} · `:'')+'Vollhardt & Schore 8e';
-  $('#vCount').textContent = `page ${VIEW.idx+1} / ${VIEW.pages.length}`;
-  $('#vPrev').disabled = VIEW.idx<=0;
-  $('#vNext').disabled = VIEW.idx>=VIEW.pages.length-1;
-  $('#vExt').href = src;
-  $('#vModeP').setAttribute('aria-pressed', String(VIEW.mode==='p'));
-  $('#vModeS').setAttribute('aria-pressed', String(VIEW.mode==='s'));
-  $('#vModeR').setAttribute('aria-pressed', String(VIEW.mode==='r'));
-  const db=$('#vDone');
-  if(VIEW.prob!=null && VIEW.mode==='p'){
-    db.style.display=''; const d=isDone(ch,VIEW.prob);
-    db.classList.toggle('is-done',d); db.textContent = d?`✓ Q${VIEW.prob} done`:`Mark Q${VIEW.prob} done`;
-  } else db.style.display='none';
-}
-function viewerNav(d){ VIEW.idx=Math.min(VIEW.pages.length-1,Math.max(0,VIEW.idx+d)); renderViewer(); }
-function viewerMode(m){ if(m===VIEW.mode) return; VIEW.mode=m; buildViewerPages();
-  const t=pageOfProb(); VIEW.idx = t!=null? Math.max(0,VIEW.pages.indexOf(t)):0; renderViewer(); }
-function closeViewer(){ $('#viewer').classList.remove('open'); document.body.style.overflow=''; }
-
-/* ---------- deadlines -> .ics ---------- */
-const p2=n=>String(n).padStart(2,'0');
-const icsDate=d=>`${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}T${p2(d.getHours())}${p2(d.getMinutes())}00`;
-const icsEsc=s=>String(s).replace(/([,;\\])/g,'\\$1').replace(/\n/g,'\\n');
-function exportICS(){
-  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Orgo Summer 2026 Planner//EN','CALSCALE:GREGORIAN'];
-  DEADLINES.forEach(([dt,cat,title,loc],i)=>{
-    const s=parseDateTime(dt), e=new Date(s.getTime()+30*60000);
-    const emoji = cat==='exam'?'📕':cat==='quiz'?'📝':'🧪';
-    L.push('BEGIN:VEVENT','UID:orgo-'+i+'-2267@planner','DTSTAMP:'+icsDate(new Date()),
-      'DTSTART:'+icsDate(s),'DTEND:'+icsDate(e),
-      'SUMMARY:'+icsEsc(emoji+' '+title),'LOCATION:'+icsEsc(loc||''),
-      'DESCRIPTION:'+icsEsc('Orgo Summer 2026 · '+CATS[cat].label),'END:VEVENT');
-  });
-  L.push('END:VCALENDAR');
-  const blob=new Blob([L.join('\r\n')],{type:'text/calendar'});
-  const url=URL.createObjectURL(blob), a=document.createElement('a');
-  a.href=url; a.download='orgo-summer-2026-deadlines.ics'; document.body.appendChild(a); a.click();
-  a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1500);
-}
-
-/* ---------- search: expand + highlight weeks containing the term ---------- */
-function clearSearch(){ $$('.search-hit').forEach(e=>e.classList.remove('search-hit')); }
-function runSearch(q){
-  q=(q||'').trim().toLowerCase(); clearSearch();
-  if(q.length<2) return;
-  let first=null;
-  $$('.week').forEach(sec=>{
-    if(sec.textContent.toLowerCase().includes(q)){
-      sec.classList.add('open','search-hit'); if(!first) first=sec;
-    }
-  });
-  if(first) first.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-/* ---------- exam prep + next-exam countdown ---------- */
-function curatedForCh(ch){ const set=new Set(); WEEKS.forEach(w=>w.study.textbook.forEach(t=>{ if(t.ch===ch) t.probs.forEach(n=>set.add(n)); })); return [...set].sort((a,b)=>a-b); }
-function nextExam(){ const n=now(); return EXAMS.find(e=>parseDateTime(e.date)>=n)||null; }
-function examCountdown(e){ const d=parseDate(e.date.split('T')[0]), diff=dayDiff(d,today());
-  return diff<0?'done':diff===0?'today':diff===1?'tomorrow':`in ${diff} days`; }
-function fmtExamDate(e){ const d=parseDateTime(e.date); return `${DOW[d.getDay()]} ${MON[d.getMonth()]} ${d.getDate()}, ${timeStr(d)}`; }
-function renderExamPrep(){
-  const ne=nextExam();
-  $('#epSub').textContent = ne ? `next: ${ne.name} · ${examCountdown(ne)} · covers ${ne.covers}` : 'all exams complete 🎉';
-  $('#epBody').innerHTML = EXAMS.map(e=>{
-    const past = parseDateTime(e.date) < now();
-    const rxChips = e.chapters.map(ch=>`<button class="res-chip" data-cat="synth" onclick="openViewer(${ch},'r')"><span class="dot" style="background:${CATS.synth.color}"></span>Ch ${ch} reactions</button>`).join('');
-    const pastLink = e.past ? `<a class="res-chip" data-cat="exam" href="assets/resources/${e.past}" target="_blank" rel="noopener"><span class="dot" style="background:${CATS.exam.color}"></span>Practice: past ${e.name} ↗</a>` : '';
-    const rows = e.chapters.map(ch=>{ const p=curatedForCh(ch); return p.length?probChipsHTML(ch,p):''; }).join('');
-    return `<div class="ep-exam${past?' past':''}">
-      <div class="ep-exam-head"><span class="ep-name">${e.name}</span><span class="ep-meta">${fmtExamDate(e)} · covers ${e.covers}</span><span class="ep-cd">${examCountdown(e)}</span></div>
-      ${e.note?`<div class="ep-note">${e.note}</div>`:''}
-      <div class="res-row" style="margin-bottom:8px">${pastLink}${rxChips}</div>
-      ${rows}</div>`;
-  }).join('');
-}
-
-/* ---------- deep links + per-week share ---------- */
-function applyHash(){
-  const h=location.hash;
-  if(/^#week-[1-6]$/.test(h)){ setView('spread'); openWeek(+h.split('-')[1], true); }
-  else if(h==='#exam-prep'){ setView('spread'); $('#examprep').classList.add('open'); $('#examprep').scrollIntoView({behavior:'smooth',block:'start'}); }
-  else if(h==='#worksheets'){ setView('worksheets'); }
-  else if(h==='#calendar'){ setView('calendar'); }
-}
-function shareWeek(n,btn){
-  const url=location.origin+location.pathname+'#week-'+n;
-  const ok=()=>{ if(btn){ btn.classList.add('copied'); btn.textContent='✓'; setTimeout(()=>{btn.classList.remove('copied'); btn.textContent='🔗';},1200);} };
-  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok,ok);
-  else { location.hash='#week-'+n; ok(); }
-}
-
-/* ---------- worksheet-derived deadlines (recommended) ---------- */
-function worksheetDeadlines(){
-  return WORKSHEETS.map(w=>[w.due+'T23:59','textbook','📝 '+(w.nmr?'NMR ':'')+'Worksheet: '+w.title+' (recommended)','Practice']);
-}
-function allDeadlines(){ return DEADLINES.concat(worksheetDeadlines()); }
-
-/* ---------- view tabs ---------- */
-function setView(v){
-  ['calendar','worksheets','spread'].forEach(k=>{ const el=$('#view-'+k); if(el) el.hidden=(k!==v); });
-  $$('#tabbar .tab').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.view===v)));
-  $('#filters').style.display = (v==='worksheets')?'none':'';
-  if(v==='calendar') renderCalendar();
-  if(v==='worksheets') renderWorksheets();
-  try{ localStorage.setItem('orgo-view2',v); }catch(e){}
-}
-
-/* ---------- calendar: time-grid week view (inspired by the old planner) ---------- */
-const GH0=9, GH1=18, HPX=46;      // grid 9am–6pm
-let CAL_WEEK=1;
-function to24(s){ const m=String(s).match(/(\d{1,2}):?(\d{2})?/); if(!m) return null; let h=+m[1], mi=+(m[2]||0); if(h<8) h+=12; return h+mi/60; }
-function fmtHour(h){ return (h%12||12)+' '+(h<12?'AM':'PM'); }
-function calLabel(ev){ return ev.cat==='exam'? ev.ttl : ev.kind; }
-function blockTimes(ev){
-  const kindEnd={'Lecture':'11:45','Recitation':'11:50','Lab lecture':'1:50','Lab':'4:50'};
-  if(ev.cat==='exam'){ if(ev.time&&ev.time.includes('–')){const[a,b]=ev.time.split('–');return[to24(a),to24(b)];} const s=to24(ev.time||'10:00'); return [s,s+2]; }
-  if(kindEnd[ev.kind]) return [to24(ev.time||'10:00'), to24(kindEnd[ev.kind])];
-  return null;
-}
-function packBlocks(blocks){
-  blocks.sort((a,b)=> a.s-b.s || a.e-b.e);
-  const colEnds=[];
-  blocks.forEach(b=>{ let placed=false;
-    for(let i=0;i<colEnds.length;i++){ if(b.s>=colEnds[i]-1e-6){ colEnds[i]=b.e; b.col=i; placed=true; break; } }
-    if(!placed){ b.col=colEnds.length; colEnds.push(b.e); }
-  });
-  const nc=Math.max(1,colEnds.length); blocks.forEach(b=>b.nc=nc); return blocks;
-}
-function renderCalendar(){
-  const host=$('#calendar'); const t=today(); const nowD=now();
-  const cw=WEEKS.find(w=> t>=parseDate(w.start)&&t<=parseDate(w.end));
-  if(!renderCalendar._init){ CAL_WEEK=cw?cw.n:1; renderCalendar._init=true; }
-  const w=WEEKS[CAL_WEEK-1];
-  const z=n=>(n<10?'0':'')+n, iso=d=>`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;
-  const mon=parseDate(w.start);
-  const dates=Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
-  const dows=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const evByDate={}; w.days.forEach(day=> evByDate[day.date]=day.evs);
-  const byDate={}; dates.forEach(d=>byDate[iso(d)]={timed:[],allday:[]});
-  allDeadlines().forEach(([dt,cat,title])=>{
-    const d=parseDateTime(dt), k=iso(d); if(!(k in byDate)||cat==='exam') return;
-    const hr=d.getHours()+d.getMinutes()/60;
-    if(hr>=GH0 && hr<GH1 && d.getHours()!==23) byDate[k].timed.push({hr,cat,title});
-    else byDate[k].allday.push({cat,title});
-  });
-
-  let nav=`<div class="cal-nav">
-    <button class="nav-btn" id="calPrev" ${CAL_WEEK<=1?'disabled':''}>◀</button>
-    <span class="nav-title">Week ${w.n} · ${w.range}</span>
-    <button class="nav-btn" id="calNext" ${CAL_WEEK>=6?'disabled':''}>▶</button>
-    <div class="wk-dots">${WEEKS.map(x=>`<button class="wk-dot${x.n===CAL_WEEK?' active':''}${cw&&x.n===cw.n?' now':''}" data-wk="${x.n}">Wk ${x.n}</button>`).join('')}</div></div>`;
-
-  let head=`<div class="wv-head"><div class="wv-corner"></div>`;
-  dates.forEach((d,i)=>{ const isT=dayDiff(d,t)===0, wknd=i>=5;
-    const labDay=(evByDate[iso(d)]||[]).some(e=>e.cat==='lab'&&e.kind==='Lab');
-    head+=`<div class="wv-dh${isT?' is-today':''}${wknd?' wknd':''}"><div class="dh-dow">${dows[i]}</div><div class="dh-date">${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</div>${labDay?'<div class="dh-safe">🥽 gear · 419</div>':''}</div>`;
-  });
-  head+=`</div>`;
-
-  let ad=`<div class="wv-allday"><div class="wv-adlabel">due</div>`;
-  dates.forEach((d,i)=>{ const k=iso(d), wknd=i>=5;
-    const chips=byDate[k].allday.map(x=>{ const c=CATS[x.cat].color;
-      return `<span class="wv-adchip" data-cat="${x.cat}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;
-    }).join('');
-    ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;
-  });
-  ad+=`</div>`;
-
-  const H=(GH1-GH0)*HPX;
-  let gut=`<div class="wv-gutter" style="position:relative;height:${H}px">`;
-  for(let hh=GH0; hh<GH1; hh++) gut+=`<div class="wv-hour" style="position:absolute;top:${(hh-GH0)*HPX-5}px;right:0">${fmtHour(hh)}</div>`;
-  gut+=`</div>`;
-  let cols='';
-  dates.forEach((d,i)=>{ const k=iso(d), isT=dayDiff(d,t)===0, wknd=i>=5;
-    let cell=`<div class="wv-col${isT?' is-today':''}${wknd?' wknd':''}" style="height:${H}px">`;
-    for(let hh=GH0; hh<=GH1; hh++) cell+=`<div class="wv-hline" style="top:${(hh-GH0)*HPX}px"></div>`;
-    const blocks=[];
-    (evByDate[k]||[]).forEach(ev=>{ if(ev.holiday){ cell+=`<div class="wv-holiday">${ev.ttl}</div>`; return; }
-      const bt=blockTimes(ev); if(bt&&bt[0]!=null) blocks.push({s:bt[0],e:bt[1],ev}); });
-    packBlocks(blocks);
-    blocks.forEach(b=>{ const ev=b.ev, c=CATS[ev.cat].color;
-      const laneW=60, colW=laneW/b.nc, left=1+b.col*colW, top=(b.s-GH0)*HPX, ht=Math.max(20,(b.e-b.s)*HPX-2);
-      const rm=ROOMS[ev.kind]?`<div class="we-room">📍 ${ROOMS[ev.kind]}</div>`:'';
-      cell+=`<div class="wv-ev${ev.cat==='exam'?' exam':''}" data-cat="${ev.cat}" style="--cc:${c};top:${top}px;height:${ht}px;left:${left}%;width:${colW-1}%" title="${(ev.ttl||'').replace(/"/g,'')}"><div class="we-time">${ev.time||''}</div><div class="we-ttl">${calLabel(ev)}</div>${ht>46?rm:''}</div>`;
-    });
-    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{ const c=CATS[x.cat].color;
-      const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);
-      cell+=`<div class="wv-dl" data-cat="${x.cat}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;
-    });
-    if(isT){ const hr=nowD.getHours()+nowD.getMinutes()/60; if(hr>=GH0&&hr<=GH1) cell+=`<div class="wv-now" style="top:${(hr-GH0)*HPX}px;left:0;right:0"></div>`; }
-    cell+=`</div>`; cols+=cell;
-  });
-
-  host.innerHTML = nav + `<div class="wv-scroll"><div class="wv-inner">${head}${ad}<div class="wv-grid">${gut}${cols}</div></div></div>`;
-  const pv=$('#calPrev'), nx=$('#calNext');
-  if(pv) pv.addEventListener('click',()=>{ if(CAL_WEEK>1){CAL_WEEK--;renderCalendar();} });
-  if(nx) nx.addEventListener('click',()=>{ if(CAL_WEEK<6){CAL_WEEK++;renderCalendar();} });
-  $$('.wk-dot').forEach(b=>b.addEventListener('click',()=>{ CAL_WEEK=+b.dataset.wk; renderCalendar(); }));
+/* ---------- DASHBOARD ---------- */
+function dlRow(x,big){const w=relDay(x.due);const c=CATS[x.cat];
+  return `<div class="dl${big?' big':''}${w.diff<=0?' urgent':''}" data-cat="${x.cat}">
+    <div class="dl-bar" style="background:${c.color}"></div>
+    <div class="dl-when"><b>${w.big}</b>${w.small?`<span>${w.small}</span>`:''}</div>
+    <div class="dl-body"><div class="dl-t">${x.title}</div><div class="dl-m">${x.loc}</div></div>
+    <div class="dl-tag" style="background:${c.color}">${c.label}</div></div>`;}
+function renderDashboard(){
+  const host=$('#sec-dashboard');const n=now(),t=today();
+  const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc})).filter(x=>x.due>=n).sort((a,b)=>a.due-b.due);
+  const dayOf=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  const tonight=items.filter(x=>dayDiff(dayOf(x.due),t)<=1);
+  const thisSun=new Date(startOfWeekMon(t));thisSun.setDate(thisSun.getDate()+6);
+  const week=items.filter(x=>{const dd=dayOf(x.due);return dayDiff(dd,t)>1 && dd<=thisSun;});
+  const later=items.filter(x=>dayOf(x.due)>thisSun).slice(0,10);
+  const exams=EXAMS.map(e=>({...e,d:parseDateTime(e.date)})).filter(e=>e.d>=n).slice(0,3);
+  const cw=WEEKS.find(w=>t>=parseDate(w.start)&&t<=parseDate(w.end));
+  const bar=exams.map(e=>`<div class="cd-chip"><span class="cd-n">${e.name}</span><span class="cd-c">${examCountdown(e)}</span><span class="cd-d">${DOW[e.d.getDay()]} ${MON[e.d.getMonth()].slice(0,3)} ${e.d.getDate()}</span></div>`).join('');
+  host.innerHTML=`
+    <div class="dash-head">
+      <div><h2 class="dash-hi">${cw?`You're in Week ${cw.n} of 6.`:'Summer term'}</h2>
+      <p class="dash-sub">${tonight.length?`<b>${tonight.length}</b> thing${tonight.length>1?'s':''} due tonight or tomorrow — let's go.`:'Nothing due tonight. Get ahead on a worksheet.'}</p></div>
+      <div class="cd-bar">${bar||'<span class="cd-done">Exams complete 🎉</span>'}</div>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-col urgent">
+        <div class="dash-col-h">🔥 Do tonight <span class="dash-cnt">${tonight.length}</span><span class="dash-hint">due today &amp; tomorrow</span></div>
+        ${tonight.length?tonight.map(x=>dlRow(x,true)).join(''):'<div class="dash-empty">All clear for tonight ✅</div>'}
+      </div>
+      <div class="dash-col">
+        <div class="dash-col-h">📌 Rest of this week <span class="dash-cnt">${week.length}</span></div>
+        ${week.length?week.map(x=>dlRow(x)).join(''):'<div class="dash-empty">Nothing else this week</div>'}
+      </div>
+      <div class="dash-col">
+        <div class="dash-col-h">⏳ Upcoming <span class="dash-cnt">${later.length}</span></div>
+        ${later.length?later.map(x=>dlRow(x)).join(''):'<div class="dash-empty">Nothing further out</div>'}
+      </div>
+    </div>`;
   applyFilters();
 }
 
-/* ---------- worksheets tab ---------- */
-function wsProbChips(w){
-  let out='';
-  for(const ch in w.probs){
-    const cch=+ch;
-    out+=`<span class="prob-ch">Ch ${ch}</span>`;
-    out+=w.probs[ch].map(n=>{
-      const dn=isDone(cch,n);
-      return `<button class="prob-chip${dn?' done':''}" data-ch="${ch}" data-n="${n}" onclick="openViewer(${ch},'p',${n})">${dn?'<span class="ck">✓</span>':''}${n}</button>`;
-    }).join('');
-  }
-  return out;
+/* ---------- CALENDAR (time-grid week view) ---------- */
+const GH0=8,GH1=18,HPX=62;let CAL_WEEK=1;
+function to24(s){const m=String(s).match(/(\d{1,2}):?(\d{2})?/);if(!m)return null;let h=+m[1],mi=+(m[2]||0);if(h<8)h+=12;return h+mi/60;}
+function fmtHour(h){return (h%12||12)+' '+(h<12?'AM':'PM');}
+function calLabel(ev){return ev.cat==='exam'?ev.ttl:ev.kind;}
+function blockTimes(ev){const ke={'Lecture':'11:45','Recitation':'11:50','Lab lecture':'1:50','Lab':'4:50'};
+  if(ev.cat==='exam'){if(ev.time&&ev.time.includes('–')){const[a,b]=ev.time.split('–');return[to24(a),to24(b)];}const s=to24(ev.time||'10:00');return[s,s+2];}
+  if(ke[ev.kind])return[to24(ev.time||'10:00'),to24(ke[ev.kind])];return null;}
+function packBlocks(bl){bl.sort((a,b)=>a.s-b.s||a.e-b.e);const ce=[];bl.forEach(b=>{let p=false;for(let i=0;i<ce.length;i++){if(b.s>=ce[i]-1e-6){ce[i]=b.e;b.col=i;p=true;break;}}if(!p){b.col=ce.length;ce.push(b.e);}});const nc=Math.max(1,ce.length);bl.forEach(b=>b.nc=nc);return bl;}
+function renderCalendar(){
+  const host=$('#calendar');const t=today(),nowD=now();
+  const cw=WEEKS.find(w=>t>=parseDate(w.start)&&t<=parseDate(w.end));
+  if(!renderCalendar._init){CAL_WEEK=cw?cw.n:1;renderCalendar._init=true;}
+  const w=WEEKS[CAL_WEEK-1];const z=n=>(n<10?'0':'')+n,iso=d=>`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;
+  const mon=parseDate(w.start);const dates=Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
+  const dows=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];const evByDate={};w.days.forEach(day=>evByDate[day.date]=day.evs);
+  const byDate={};dates.forEach(d=>byDate[iso(d)]={timed:[],allday:[]});
+  allDeadlines().forEach(([dt,cat,title])=>{const d=parseDateTime(dt),k=iso(d);if(!(k in byDate)||cat==='exam')return;const hr=d.getHours()+d.getMinutes()/60;if(hr>=GH0&&hr<GH1&&d.getHours()!==23)byDate[k].timed.push({hr,cat,title});else byDate[k].allday.push({cat,title});});
+  let nav=`<div class="cal-nav"><button class="nav-btn" id="calPrev" ${CAL_WEEK<=1?'disabled':''}>◀</button><span class="nav-title">Week ${w.n} · ${w.range}</span><button class="nav-btn" id="calNext" ${CAL_WEEK>=6?'disabled':''}>▶</button><div class="wk-dots">${WEEKS.map(x=>`<button class="wk-dot${x.n===CAL_WEEK?' active':''}${cw&&x.n===cw.n?' now':''}" data-wk="${x.n}">Wk ${x.n}</button>`).join('')}</div></div>`;
+  let head=`<div class="wv-head"><div class="wv-corner"></div>`;
+  dates.forEach((d,i)=>{const isT=dayDiff(d,t)===0,wknd=i>=5;const labDay=(evByDate[iso(d)]||[]).some(e=>e.cat==='lab'&&e.kind==='Lab');
+    head+=`<div class="wv-dh${isT?' is-today':''}${wknd?' wknd':''}"><div class="dh-dow">${dows[i]}</div><div class="dh-date">${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</div>${labDay?'<div class="dh-safe">🥽 gear · 419</div>':''}</div>`;});
+  head+=`</div>`;
+  let ad=`<div class="wv-allday"><div class="wv-adlabel">due</div>`;
+  dates.forEach((d,i)=>{const k=iso(d),wknd=i>=5;const chips=byDate[k].allday.map(x=>{const c=CATS[x.cat].color;return `<span class="wv-adchip" data-cat="${x.cat}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;}).join('');ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;});
+  ad+=`</div>`;
+  const H=(GH1-GH0)*HPX;let gut=`<div class="wv-gutter" style="position:relative;height:${H}px">`;
+  for(let hh=GH0;hh<GH1;hh++)gut+=`<div class="wv-hour" style="position:absolute;top:${(hh-GH0)*HPX-5}px;right:0">${fmtHour(hh)}</div>`;gut+=`</div>`;
+  let cols='';
+  dates.forEach((d,i)=>{const k=iso(d),isT=dayDiff(d,t)===0,wknd=i>=5;let cell=`<div class="wv-col${isT?' is-today':''}${wknd?' wknd':''}" style="height:${H}px">`;
+    for(let hh=GH0;hh<=GH1;hh++)cell+=`<div class="wv-hline" style="top:${(hh-GH0)*HPX}px"></div>`;
+    const blocks=[];(evByDate[k]||[]).forEach(ev=>{if(ev.holiday){cell+=`<div class="wv-holiday">${ev.ttl}</div>`;return;}const bt=blockTimes(ev);if(bt&&bt[0]!=null)blocks.push({s:bt[0],e:bt[1],ev});});
+    packBlocks(blocks);blocks.forEach(b=>{const ev=b.ev,c=CATS[ev.cat].color;const laneW=60,colW=laneW/b.nc,left=1+b.col*colW,top=(b.s-GH0)*HPX,ht=Math.max(20,(b.e-b.s)*HPX-2);const rm=ROOMS[ev.kind]?`<div class="we-room">📍 ${ROOMS[ev.kind]}</div>`:'';
+      cell+=`<div class="wv-ev${ev.cat==='exam'?' exam':''}" data-cat="${ev.cat}" style="--cc:${c};top:${top}px;height:${ht}px;left:${left}%;width:${colW-1}%" title="${(ev.ttl||'').replace(/"/g,'')}"><div class="we-time">${ev.time||''}</div><div class="we-ttl">${calLabel(ev)}</div>${ht>46?rm:''}</div>`;});
+    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{const c=CATS[x.cat].color;const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);cell+=`<div class="wv-dl" data-cat="${x.cat}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;});
+    if(isT){const hr=nowD.getHours()+nowD.getMinutes()/60;if(hr>=GH0&&hr<=GH1)cell+=`<div class="wv-now" style="top:${(hr-GH0)*HPX}px;left:0;right:0"></div>`;}
+    cell+=`</div>`;cols+=cell;});
+  host.innerHTML=nav+`<div class="wv-scroll"><div class="wv-inner">${head}${ad}<div class="wv-grid">${gut}${cols}</div></div></div>`;
+  const pv=$('#calPrev'),nx=$('#calNext');if(pv)pv.addEventListener('click',()=>{if(CAL_WEEK>1){CAL_WEEK--;renderCalendar();}});if(nx)nx.addEventListener('click',()=>{if(CAL_WEEK<6){CAL_WEEK++;renderCalendar();}});
+  $$('.wk-dot').forEach(b=>b.addEventListener('click',()=>{CAL_WEEK=+b.dataset.wk;renderCalendar();}));applyFilters();
 }
-function renderWorksheets(){
-  const host=$('#worksheets'); const t=today();
-  let h=`<div class="ws-intro">Topic-aligned practice that follows the lecture schedule — each worksheet pulls the textbook problems for that exact subject, as many as apply. <b>Due dates are recommended</b> and are timed so each exam's material finishes <b>2 days before the exam</b>, leaving those days for review. Tap any problem to see it · <b>📄 Worksheet PDF</b> = one problem per page with blank working space (built for GoodNotes) · <b>🔑 Answer key</b> opens the worked solutions.</div><div class="ws-grid">`;
-  WORKSHEETS.forEach(w=>{
-    const due=parseDate(w.due); const diff=dayDiff(due,t); const overdue=diff<0;
-    const dueLbl = diff<0?'was due '+MON[due.getMonth()].slice(0,3)+' '+due.getDate()
-      : diff===0?'due today' : diff===1?'due tomorrow'
-      : `due ${DOW[due.getDay()]} ${MON[due.getMonth()].slice(0,3)} ${due.getDate()}`;
-    const nprobs=Object.values(w.probs).reduce((s,a)=>s+a.length,0);
-    const firstCh=Object.keys(w.probs)[0];
-    const res=(w.resources||[]).map(r=>`<a href="assets/resources/${r}" target="_blank" rel="noopener">${r.replace(/\.pdf$/,'').replace(/-/g,' ')}</a>`).join(' · ');
-    h+=`<div class="ws-card${w.nmr?' nmr':''}">
-      <div class="ws-top"><span class="ws-title">${w.nmr?'📺 ':''}${w.title}</span><span class="ws-due${overdue?' overdue':''}">${dueLbl}</span></div>
+
+/* ---------- WEEK-BY-WEEK (schedule) ---------- */
+function daysHTML(w){const t=today();return w.days.map(day=>{const d=parseDate(day.date);const isToday=dayDiff(d,t)===0;
+  const safety=day.evs.some(ev=>ev.cat==='lab'&&ev.kind==='Lab')?`<div class="day-safety">🥽 <b>Lab day — Chevron 419:</b> goggles · flame-resistant coat · long pants · numbered notebook. Pre-lab due 1:00 PM on Labflow.</div>`:'';
+  const evs=day.evs.map(ev=>{if(ev.holiday)return `<div class="ev holiday" data-cat="${ev.cat}"><div class="accent" style="background:var(--c-holiday)"></div><div class="ev-main"><div class="ttl">${ev.ttl}</div></div></div>`;
+    const c=CATS[ev.cat];return `<div class="ev" data-cat="${ev.cat}"><div class="accent" style="background:${c.color}"></div><div class="ev-main"><div class="ev-top"><span class="kind" style="background:${c.color}">${ev.kind}</span>${ev.time?`<span class="time">${ev.time}</span>`:''}</div><div class="ttl">${ev.ttl}</div>${ROOMS[ev.kind]?`<div class="room">📍 <b>${ROOMS[ev.kind]}</b></div>`:''}${ev.desc?`<div class="desc">${ev.desc}</div>`:''}${ev.due?dueChips(ev.due):''}</div></div>`;}).join('');
+  return `<div class="day${isToday?' is-today':''}"><div class="date">${DOW[d.getDay()]} <b>${MON[d.getMonth()]} ${d.getDate()}</b>${isToday?'<span class="tdy">Today</span>':''}</div><div class="items">${safety}${evs}</div></div>`;}).join('');}
+function dueChips(s){return `<div class="due-items">`+s.split(' · ').map(p=>{const icon=/watch/i.test(p)?'📺':'📋';const m=p.match(/^(.*?)\s+due\s+(.*)$/i);const inner=m?`<b>${m[1]}</b> <span class="dw">due ${m[2]}</span>`:p;return `<span class="due-chip"><span class="di">${icon}</span><span>${inner}</span></span>`;}).join('')+`</div>`;}
+function renderWeeks(){const host=$('#weeks');const t=today();
+  host.innerHTML=WEEKS.map(w=>{const s=parseDate(w.start),e=parseDate(w.end);const cur=t>=s&&t<=e;
+    const wsHere=WORKSHEETS.filter(x=>{const dd=parseDate(x.due);return dd>=s&&dd<=e;});
+    const wsLinks=wsHere.length?`<div class="wk-ws">📝 Worksheets due this week: ${wsHere.map(x=>`<a href="${WSF(x.pdf)}" target="_blank" rel="noopener">${x.title.split(' — ')[0].split(':')[0]}</a>`).join(' · ')}</div>`:'';
+    const st=w.study;
+    const study=`<div class="wk-study"><div class="wk-study-h">◆ Focus this week</div>
+      <div class="wk-study-g">
+        <p><b>Synthesis:</b> ${st.synth}</p><p><b>Spectroscopy:</b> ${st.spec}</p>
+        <p><b>Recitation:</b> ${st.recit}</p><p><b>Exams/quizzes:</b> ${st.quiz}</p><p><b>Keep warm:</b> ${st.review}</p>
+      </div>${wsLinks}</div>`;
+    return `<section class="week${cur?' current':''}" id="week-${w.n}"><div class="wk-head"><span class="num">Week ${w.n}</span><div class="titles"><div class="rng">${w.range}</div><div class="focus">${w.focus}</div></div>${cur?'<span class="current-badge">This week</span>':''}${w.exam?`<span class="pill-exam">${w.exam}</span>`:''}</div><div class="wk-body">${daysHTML(w)}${study}</div></section>`;}).join('');
+}
+
+/* ---------- helpers for resource lists ---------- */
+function byLabel(x){const w=x.by?relDay(parseDate(x.by)):null;return w?`<span class="by${w.diff<0?' past':w.diff<=2?' soon':''}">do by ${w.big==='TODAY'?'today':w.big==='Tomorrow'?'tomorrow':MON[parseDate(x.by).getMonth()].slice(0,3)+' '+parseDate(x.by).getDate()}</span>`:'';}
+function resCard(x,tag){return `<a class="rc" href="${RES(x.file)}" target="_blank" rel="noopener"><div class="rc-body"><div class="rc-t">${x.label} <span class="rc-ext">↗</span></div>${x.topic?`<div class="rc-m">${x.topic}</div>`:''}${x.note?`<div class="rc-m">${x.note}</div>`:''}${x.quiz?`<div class="rc-m">for ${x.quiz}</div>`:''}</div>${x.by?byLabel(x):''}</a>`;}
+
+/* ---------- WORKSHEETS ---------- */
+function probList(o){return Object.entries(o).map(([ch,ns])=>`<span class="pl"><b>Ch ${ch}</b> ${ns.join(', ')}</span>`).join('   ');}
+function renderWorksheets(){const host=$('#sec-worksheets');const t=today();
+  host.innerHTML=`<p class="sec-intro">Practice built straight from the professor's <b>Suggested Homework</b>, grouped by topic in lecture order. Each card lists the exact problems, opens a <b>worksheet PDF</b> (one problem per page + blank space for GoodNotes) and links the full chapter <b>problems</b> and <b>answer-key</b> PDFs. Recommended dates land before each exam.</p>
+    <div class="ws-grid">${WORKSHEETS.map(w=>{const due=parseDate(w.due);const wd=relDay(due);const ch=Object.keys(w.probs)[0];const cp=CHPDF[ch]||{};
+    const eoc=probList(w.probs);const inch=Object.keys(w.inch||{}).length?`<div class="ws-inch">Also do <b>in-chapter</b> (in the textbook): ${probList(w.inch)}</div>`:'';
+    const res=(w.resources||[]).map(r=>`<a href="${RES(r)}" target="_blank" rel="noopener">${r.replace(/\.pdf$/,'').replace(/-/g,' ')}</a>`).join(' · ');
+    return `<div class="ws-card${w.nmr?' nmr':''}">
+      <div class="ws-top"><span class="ws-title">${w.nmr?'📺 ':''}${w.title}</span><span class="ws-due${wd.diff<0?' past':''}">do by ${wd.big==='TODAY'?'today':wd.big==='Tomorrow'?'tomorrow':MON[due.getMonth()].slice(0,3)+' '+due.getDate()}</span></div>
       <div class="ws-topic">${w.topic}</div>
-      <div class="ws-count">${nprobs} problems · counts toward ${w.exam}</div>
-      <div class="ws-probs">${wsProbChips(w)}</div>
-      ${res?`<div class="ws-res">📊 ${res}</div>`:''}
+      <div class="ws-probs"><span class="ws-lab">End-of-chapter:</span> ${eoc}</div>${inch}
+      ${res?`<div class="ws-res">📊 Slides/worksheets: ${res}</div>`:''}
       <div class="ws-actions">
-        ${w.pdf?`<a class="ws-btn pdf" href="assets/worksheets/${w.pdf}" target="_blank" rel="noopener">📄 Worksheet PDF (GoodNotes)</a>`:''}
-        <button class="ws-btn key" onclick="openViewer(${firstCh},'s')">🔑 Answer key</button>
-      </div>
-    </div>`;
-  });
-  h+=`</div>`;
-  host.innerHTML=h; applyFilters();
+        <a class="ws-btn pdf" href="${WSF(w.pdf)}" target="_blank" rel="noopener">📄 Worksheet PDF</a>
+        ${cp.p?`<a class="ws-btn" href="${PDFF(cp.p)}" target="_blank" rel="noopener">📚 Ch ${ch} problems</a>`:''}
+        ${cp.s?`<a class="ws-btn key" href="${PDFF(cp.s)}" target="_blank" rel="noopener">🔑 Answer key</a>`:''}
+      </div></div>`;}).join('')}</div>`;
 }
+
+/* ---------- RECITATION ---------- */
+function renderRecitation(){$('#sec-recitation').innerHTML=`<p class="sec-intro">The professor's recitation worksheets, matched to each week's topic. Do them a day or two before the matching lecture/recitation.</p><div class="rc-grid">${RESOURCES.recitation.map(x=>resCard(x)).join('')}</div>`;}
+
+/* ---------- CHAPTER PDF LISTS (textbook / answers / reactions) ---------- */
+function renderChapters(sec,key,intro){$('#sec-'+sec).innerHTML=`<p class="sec-intro">${intro}</p><div class="ch-grid">${Object.keys(CHPDF).map(ch=>{const f=CHPDF[ch][key];if(!f)return '';return `<a class="ch-card" href="${PDFF(f)}" target="_blank" rel="noopener"><div class="ch-n">Ch ${ch}</div><div class="ch-t">${CHNAME[ch]}</div><div class="ch-open">Open PDF ↗</div></a>`;}).join('')}</div>`;}
+
+/* ---------- EXAMS + REFERENCE ---------- */
+function renderExams(){$('#sec-exams').innerHTML=`<p class="sec-intro">Past exams (Dr. Bell, Spring 2024) for timed practice, plus reference sheets. Each opens as a PDF.</p>
+  <h3 class="sub-h">📕 Past exams</h3><div class="rc-grid">${RESOURCES.exams.map(x=>resCard(x)).join('')}</div>
+  <h3 class="sub-h">📖 Reference</h3><div class="rc-grid">${RESOURCES.reference.map(x=>resCard(x)).join('')}</div>`;}
+
+/* ---------- LAB ACTIVITIES ---------- */
+function renderLab(){const t=today();$('#sec-lab').innerHTML=`<p class="sec-intro">All 11 lab activities in Chevron 419. <b>Pre-lab</b> is due 1:00 PM on the lab day; <b>post-lab</b> 1:00 PM one week later (Labflow). 🥽 Bring goggles, flame-resistant coat, long pants &amp; a numbered notebook.</p>
+  <div class="lab-grid">${LABACTS.map(a=>{const d=parseDate(a.date);const cur=dayDiff(d,t)===0;const pre=relDay(parseDate(a.pre));
+    return `<div class="lab-card${cur?' today':''}"><div class="lab-top"><span class="lab-n">Activity ${a.n}</span><span class="lab-date">${DOW[d.getDay()]} ${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</span></div>
+    <div class="lab-title">${a.title}</div>
+    <div class="lab-due"><span class="lab-pill pre">Pre-lab ${MON[parseDate(a.pre).getMonth()].slice(0,3)} ${parseDate(a.pre).getDate()}, 1 PM</span>${a.post?`<span class="lab-pill post">Post-lab ${MON[parseDate(a.post).getMonth()].slice(0,3)} ${parseDate(a.post).getDate()}, 1 PM</span>`:''}${a.quiz?`<span class="lab-pill quiz">${a.quiz}</span>`:''}</div>
+    ${a.extra?`<a class="lab-extra" href="${RES(a.extra)}" target="_blank" rel="noopener">📄 Extra practice ↗</a>`:''}</div>`;}).join('')}</div>`;}
+
+/* ---------- EXTRA PRACTICE ---------- */
+function renderExtra(){$('#sec-extra').innerHTML=`<p class="sec-intro">Extra practice problems for each lab activity — great prep for that week's quiz. Recommended dates are a day or two before the quiz.</p><div class="rc-grid">${RESOURCES.extra.map(x=>resCard(x)).join('')}</div>`;}
+
+/* ---------- NMR ---------- */
+function renderNMR(){const s1=DEADLINES.find(d=>d[2].includes('Series 1')),s2=DEADLINES.find(d=>d[2].includes('Series 2'));
+  const dd=e=>{const d=parseDateTime(e[0]);return `${DOW[d.getDay()]} ${MON[d.getMonth()].slice(0,3)} ${d.getDate()}`;};
+  $('#sec-nmr').innerHTML=`<p class="sec-intro">The NMR video series lives on Canvas and must be watched <b>before</b> the lab that uses it — so treat them as due the <b>day before</b>. Below: the recommended watch-by dates, plus every slide deck and the workshop worksheet (open as PDFs).</p>
+   <div class="nmr-due">
+     <div class="nmr-due-card"><b>📺 NMR Video Series 1 (Videos 1–4)</b><span>Watch on Canvas by <b>${s1?dd(s1):'Wed Jul 1'}</b> — before ¹H NMR Workshop 1</span></div>
+     <div class="nmr-due-card"><b>📺 NMR Video Series 2 (Videos 1–5)</b><span>Watch on Canvas by <b>${s2?dd(s2):'Sun Jul 12'}</b> — before ¹H NMR Workshop 2 (Mon Jul 13)</span></div>
+   </div>
+   <h3 class="sub-h">📝 Workshop worksheet</h3><div class="rc-grid">${RESOURCES.nmrWorksheets.map(x=>resCard(x)).join('')}</div>
+   <h3 class="sub-h">📊 Slide decks</h3><div class="rc-grid">${RESOURCES.nmrSlides.map(x=>resCard(x)).join('')}</div>
+   <p class="sec-note">Note: Series 2 · Part 5 (Diastereotopic Protons) is video-only on Canvas — no slide PDF was provided.</p>`;}
+
+/* ---------- LAB REVIEWS ---------- */
+function renderLabReview(){$('#sec-labreview').innerHTML=`<p class="sec-intro">Review documents for the lab final (covers Activities 1–11) and extra practice.</p><div class="rc-grid">${RESOURCES.labReview.map(x=>resCard(x)).join('')}</div>`;}
+
+/* ---------- section routing ---------- */
+const SEC_TITLE={dashboard:'Dashboard',calendar:'Calendar',schedule:'Week-by-week',worksheets:'Practice worksheets',recitation:'Recitation worksheets',textbook:'Textbook problems',answers:'Answer keys',reactions:'Reaction summaries',exams:'Past exams & reference',lab:'Lab activities',extra:'Extra practice',nmr:'NMR videos & slides',labreview:'Lab reviews'};
+const RENDERED={};
+function renderSection(sec){
+  if(sec==='dashboard')renderDashboard();
+  else if(sec==='calendar')renderCalendar();
+  else if(sec==='schedule'){if(!RENDERED.schedule){renderWeeks();RENDERED.schedule=1;}}
+  else if(sec==='worksheets'){if(!RENDERED.worksheets){renderWorksheets();RENDERED.worksheets=1;}}
+  else if(sec==='recitation'){if(!RENDERED.recitation){renderRecitation();RENDERED.recitation=1;}}
+  else if(sec==='textbook'){if(!RENDERED.textbook){renderChapters('textbook','p','Every chapter&rsquo;s end-of-chapter problems as a scrollable PDF — open in a new tab to double-check any question.');RENDERED.textbook=1;}}
+  else if(sec==='answers'){if(!RENDERED.answers){renderChapters('answers','s','Full worked solutions (Vollhardt Study Guide &amp; Solutions Manual) per chapter, as PDFs.');RENDERED.answers=1;}}
+  else if(sec==='reactions'){if(!RENDERED.reactions){renderChapters('reactions','r','The textbook&rsquo;s &ldquo;New Reactions / Important Concepts&rdquo; summary for each chapter — your reaction roadmap.');RENDERED.reactions=1;}}
+  else if(sec==='exams'){if(!RENDERED.exams){renderExams();RENDERED.exams=1;}}
+  else if(sec==='lab'){if(!RENDERED.lab){renderLab();RENDERED.lab=1;}}
+  else if(sec==='extra'){if(!RENDERED.extra){renderExtra();RENDERED.extra=1;}}
+  else if(sec==='nmr'){if(!RENDERED.nmr){renderNMR();RENDERED.nmr=1;}}
+  else if(sec==='labreview'){if(!RENDERED.labreview){renderLabReview();RENDERED.labreview=1;}}
+}
+function setSection(sec){
+  if(!SEC_TITLE[sec])sec='dashboard';
+  $$('.sec').forEach(s=>s.hidden=(s.id!=='sec-'+sec));
+  $$('#sbNav .sb-item').forEach(b=>b.classList.toggle('active',b.dataset.sec===sec));
+  $('#secTitle').textContent=SEC_TITLE[sec];
+  $('#filters').hidden=!(sec==='calendar'||sec==='schedule');
+  renderSection(sec);
+  try{localStorage.setItem('orgo-sec',sec);}catch(e){}
+  if(window.innerWidth<960)closeSidebar();
+  document.querySelector('.content').scrollTop=0;
+  if(location.hash!=='#'+sec)history.replaceState(null,'','#'+sec);
+}
+function openSidebar(){$('#app').classList.add('sb-open');}
+function closeSidebar(){$('#app').classList.remove('sb-open');}
+
+/* ---------- search (filter cards in active section) ---------- */
+function runSearch(q){q=(q||'').trim().toLowerCase();const sec=$('.sec:not([hidden])');if(!sec)return;
+  const cards=$$('.ws-card,.rc,.ch-card,.lab-card,.week',sec);
+  if(!q){cards.forEach(c=>c.style.display='');return;}
+  cards.forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'':'none');}
 
 /* ---------- boot ---------- */
 function boot(){
-  initTheme();
-  renderRail(); renderUpNext(); renderFilters(); renderWeeks(); renderExamPrep();
-  // open current week (or week 1 before term)
-  const t=today();
-  const cw=WEEKS.find(w=> t>=parseDate(w.start)&&t<=parseDate(w.end));
-  openWeek(cw? cw.n : 1,false);
-  applyFilters();
-
-  $('#jumpToday').addEventListener('click',jumpToday);
-  $('#expandAll').addEventListener('click',()=>$$('.week').forEach(s=>s.classList.add('open')));
-  $('#collapseAll').addEventListener('click',()=>$$('.week').forEach(s=>s.classList.remove('open')));
+  initTheme();renderFilters();
+  $$('#sbNav .sb-item').forEach(b=>b.addEventListener('click',()=>setSection(b.dataset.sec)));
+  $('#ham').addEventListener('click',()=>$('#app').classList.toggle('sb-open'));
+  $('#scrim').addEventListener('click',closeSidebar);
   $$('#themeSeg button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.themeSet)));
-
-  // resource / QoL wiring
-  $('#icsExport').addEventListener('click',exportICS);
-  $('#vClose').addEventListener('click',closeViewer);
-  $('#vPrev').addEventListener('click',()=>viewerNav(-1));
-  $('#vNext').addEventListener('click',()=>viewerNav(1));
-  $('#vModeP').addEventListener('click',()=>viewerMode('p'));
-  $('#vModeS').addEventListener('click',()=>viewerMode('s'));
-  $('#vModeR').addEventListener('click',()=>viewerMode('r'));
-  $('#vDone').addEventListener('click',()=>{ if(VIEW.prob!=null){ toggleDone(VIEW.ch,VIEW.prob); renderViewer(); } });
-  $('#viewer').addEventListener('click',e=>{ if(e.target.id==='viewer') closeViewer(); });
-  $('#epHead').addEventListener('click',()=>$('#examprep').classList.toggle('open'));
-  $('#weeks').addEventListener('click',e=>{ const s=e.target.closest('.wk-share'); if(s){ e.stopPropagation(); shareWeek(+s.dataset.week,s); } });
-  $$('#tabbar .tab').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
-  let v0='calendar'; try{ const s=localStorage.getItem('orgo-view2'); if(s) v0=s; }catch(e){}
-  setView(v0);
-  window.addEventListener('hashchange',applyHash);
-  const searchEl=$('#search');
-  searchEl.addEventListener('input',()=>runSearch(searchEl.value));
-  searchEl.addEventListener('keydown',e=>{ if(e.key==='Escape'){ searchEl.value=''; clearSearch(); searchEl.blur(); } });
-  document.addEventListener('keydown',e=>{
-    const vOpen=$('#viewer').classList.contains('open');
-    const typing = document.activeElement===searchEl || /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);
-    if(e.key==='Escape' && vOpen) closeViewer();
-    if(e.key==='/' && !typing && !vOpen){ e.preventDefault(); searchEl.focus(); }
-    if(e.key==='t' && !typing && !vOpen) jumpToday();
-    if(vOpen){ if(e.key==='ArrowLeft')viewerNav(-1); if(e.key==='ArrowRight')viewerNav(1); }
-  });
-
-  // reveal on scroll
-  const io=new IntersectionObserver((es)=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.08});
-  $$('.reveal').forEach(el=>io.observe(el));
-
-  applyHash();
+  const searchEl=$('#search');searchEl.addEventListener('input',()=>runSearch(searchEl.value));
+  searchEl.addEventListener('keydown',e=>{if(e.key==='Escape'){searchEl.value='';runSearch('');searchEl.blur();}});
+  document.addEventListener('keydown',e=>{const typing=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);if(e.key==='/'&&!typing){e.preventDefault();searchEl.focus();}});
+  let sec=(location.hash||'').replace('#','');
+  if(!SEC_TITLE[sec]){try{const s=localStorage.getItem('orgo-sec');if(s&&SEC_TITLE[s])sec=s;}catch(e){}}
+  setSection(SEC_TITLE[sec]?sec:'dashboard');
+  window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(SEC_TITLE[h])setSection(h);});
 }
+if(typeof module!=='undefined'){module.exports={WEEKS,DEADLINES,CATS,EXAMS,WORKSHEETS,ROOMS,CHPDF,RESOURCES,LABACTS,parseDateTime,parseDate};}
+if(typeof window!=='undefined'){document.addEventListener('DOMContentLoaded',boot);}
 
-/* expose data for smoke tests (Node) */
-if(typeof module!=='undefined'){ module.exports={WEEKS,DEADLINES,CATS,PROB,RXP,EXAMS,WORKSHEETS,ROOMS,parseDateTime,parseDate}; }
-if(typeof window!=='undefined'){ window.__PLANNER__={WEEKS,DEADLINES,CATS}; document.addEventListener('DOMContentLoaded',boot); }
 </script>
 </body>
 </html>
