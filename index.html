@@ -354,6 +354,68 @@
   .lab-tip{font-size:11.5px;color:var(--ink-faint);margin-top:2px;padding:5px 9px;border-left:2px solid color-mix(in srgb,var(--c-lab) 50%,var(--rule));background:color-mix(in srgb,var(--c-lab) 5%,transparent);border-radius:0 6px 6px 0}
   [data-theme="carbon"] .lab-tip{border-radius:0}
 
+  /* ===================== TABS + VIEWS ===================== */
+  .tabbar{display:flex;gap:4px;margin:6px 0 10px;border-bottom:2px solid var(--rule-soft)}
+  .tab{font:inherit;font-family:var(--font-display);font-size:15px;font-weight:var(--display-wt);cursor:pointer;border:0;background:transparent;color:var(--ink-faint);padding:9px 16px;border-bottom:3px solid transparent;margin-bottom:-2px}
+  .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+  .tab:hover{color:var(--ink)}
+  .cal-note{font-size:12.5px;color:var(--ink-faint);margin:2px 0 12px;max-width:80ch}
+  .view[hidden]{display:none}
+
+  /* ===================== CALENDAR GRID ===================== */
+  .cal-scroll{overflow-x:auto;padding-bottom:6px}
+  .cal{min-width:760px}
+  .cal-headrow,.cal-row{display:grid;grid-template-columns:58px repeat(5,1fr);gap:6px}
+  .cal-headrow{margin-bottom:4px}
+  .cal-dow{text-align:center;font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);padding:2px}
+  .cal-row{margin-bottom:6px}
+  .cal-wk{display:flex;flex-direction:column;justify-content:center;padding:2px;font-family:var(--font-mono);text-align:center}
+  .cal-wk .cw-n{font-size:10.5px;font-weight:700;color:var(--accent-ink)}
+  .cal-wk .cw-d{font-size:9px;color:var(--ink-faint)}
+  .cal-day{background:var(--card);border:1px solid var(--rule-soft);border-radius:9px;padding:5px 5px 6px;min-height:110px}
+  [data-theme="carbon"] .cal-day{border-radius:0}
+  .cal-day.is-today{box-shadow:inset 0 0 0 2px var(--today);border-color:var(--today)}
+  .cal-day.empty{background:transparent;border-style:dashed;opacity:.55}
+  .cal-date{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--ink-faint);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+  .cal-day.is-today .cal-date{color:var(--today)}
+  .cal-date .cd-t{font-size:8px;background:var(--today);color:#fff;padding:1px 6px;border-radius:999px}
+  .cal-safety{font-size:9px;font-weight:700;color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 13%,var(--card));border:1px solid color-mix(in srgb,var(--c-lab) 45%,var(--rule));border-radius:5px;padding:3px 5px;margin-bottom:4px;line-height:1.3}
+  .cal-chip{display:block;font-size:10.5px;line-height:1.28;padding:3px 6px;border-radius:5px;margin-bottom:3px;background:color-mix(in srgb,var(--cc) 14%,var(--card));border-left:3px solid var(--cc);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  [data-theme="carbon"] .cal-chip{border-radius:0}
+  .cal-chip .cc-t{font-family:var(--font-mono);font-size:9px;color:var(--ink-soft);margin-right:3px}
+  .cal-chip[data-cat="exam"],.cal-chip[data-cat="quiz"]{font-weight:800}
+  .cal-due{display:block;font-size:9.5px;line-height:1.25;padding:2px 6px;border-radius:4px;margin-bottom:3px;color:var(--ink);background:color-mix(in srgb,var(--cc) 10%,var(--card));border-left:2px solid var(--cc);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cal-holiday{font-size:9.5px;font-style:italic;color:var(--ink-faint);padding:3px}
+
+  /* ===================== WORKSHEETS ===================== */
+  .ws-intro{font-size:13px;color:var(--ink-soft);margin:2px 0 14px;max-width:82ch}
+  .ws-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+  .ws-card{border:1px solid var(--rule);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow-sm);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+  [data-theme="carbon"] .ws-card{border-radius:0}
+  .ws-card.nmr{background:color-mix(in srgb,var(--c-spec) 7%,var(--card));border-color:color-mix(in srgb,var(--c-spec) 30%,var(--rule))}
+  .ws-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .ws-title{font-family:var(--font-display);font-weight:var(--display-wt);font-size:17px;line-height:1.15}
+  .ws-due{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;font-weight:700;color:#fff;background:var(--c-textbook);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  [data-theme="carbon"] .ws-due{border-radius:0}
+  .ws-due.overdue{background:var(--c-exam)}
+  .ws-topic{font-size:12px;color:var(--ink-soft);line-height:1.4}
+  .ws-count{font-family:var(--font-mono);font-size:10px;color:var(--ink-faint)}
+  .ws-probs{display:flex;flex-wrap:wrap;gap:5px}
+  .ws-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:3px}
+  .ws-btn{font:inherit;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;padding:7px 12px;border-radius:9px;border:1px solid var(--rule);background:var(--chip);color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+  [data-theme="carbon"] .ws-btn{border-radius:0}
+  .ws-btn.pdf{border-color:color-mix(in srgb,var(--c-textbook) 50%,var(--rule));background:color-mix(in srgb,var(--c-textbook) 12%,var(--card));font-weight:700}
+  .ws-btn.key{border-color:color-mix(in srgb,var(--c-synth) 45%,var(--rule));background:color-mix(in srgb,var(--c-synth) 11%,var(--card))}
+  .ws-btn:hover{box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+  .ws-res{font-size:11px;color:var(--ink-faint)}
+  .ws-res a{color:var(--accent-ink)}
+
+  /* lab safety banner (assignment spread) + room line */
+  .day-safety{font-size:12.5px;font-weight:700;color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 13%,var(--card));border:1px solid color-mix(in srgb,var(--c-lab) 48%,var(--rule));border-radius:9px;padding:8px 12px;margin-bottom:6px;line-height:1.35}
+  [data-theme="carbon"] .day-safety{border-radius:0}
+  .ev .room{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-faint);margin-top:3px}
+  .ev .room b{color:var(--ink-soft);font-weight:700}
+
   /* ===================== PRINT ===================== */
   @media print{
     .topbar,.qlbar,#filters,.viewer,.wk-share,.ep-head .chev,.rail-weeks .rw,.searchwrap{display:none !important}
@@ -425,6 +487,24 @@
       <div class="rail-weeks" id="railWeeks"></div>
     </div>
 
+    <div class="tabbar reveal" id="tabbar" role="tablist">
+      <button class="tab" data-view="calendar" aria-selected="true">🗓️ Calendar</button>
+      <button class="tab" data-view="worksheets" aria-selected="false">📝 Worksheets</button>
+      <button class="tab" data-view="spread" aria-selected="false">📋 Assignment spread</button>
+    </div>
+
+    <div class="filters reveal" id="filters"><span class="lbl">Show</span></div>
+
+    <div class="view" id="view-calendar">
+      <div class="cal-note">Your six weeks at a glance — class meetings, quizzes, exams &amp; every due assignment, color-coded. Use <b>Show</b> above to toggle categories.</div>
+      <div id="calendar"></div>
+    </div>
+
+    <div class="view" id="view-worksheets" hidden>
+      <div id="worksheets"></div>
+    </div>
+
+    <div class="view" id="view-spread" hidden>
     <section class="todo reveal" id="todo" aria-live="polite">
       <div class="todo-head">
         <h2>✅ To do</h2>
@@ -445,11 +525,8 @@
       <div class="ep-body" id="epBody"></div>
     </section>
 
-    <div class="filters reveal" id="filters">
-      <span class="lbl">Show</span>
-    </div>
-
     <div id="weeks"></div>
+    </div><!-- /view-spread -->
 
     <div class="legend reveal" id="legend"></div>
 
@@ -809,7 +886,9 @@ const WEEKS = [
 /* ---- textbook problem + solution image manifest ----
    Per chapter: po = problem#→PDF page (textbook), pp = all problem pages,
    so = problem#→PDF page (solutions), sp = all solution pages. */
-const PROB = {"14":{"po":{"32":1898,"34":1898,"36":1899,"37":1899,"38":1899,"45":1901,"46":1902,"50":1902,"52":1903,"58":1904,"64":1906,"70":1909},"pp":[1898,1899,1901,1902,1903,1904,1906,1909],"so":{"32":599,"34":601,"36":602,"37":602,"38":603,"45":608,"46":608,"50":611,"52":612,"58":617,"64":622,"70":627},"sp":[599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628]},"15":{"po":{"36":2066,"37":2067,"38":2068,"41":2068,"42":2069,"47":2073,"48":2075,"56":2077},"pp":[2066,2067,2068,2069,2073,2075,2077],"so":{"36":638,"37":638,"38":639,"41":640,"42":640,"47":644,"48":644,"56":650},"sp":[638,639,640,641,642,643,644,645,646,647,648,649,650,651]},"16":{"po":{"30":2166,"32":2166,"33":2167,"35":2168,"40":2168,"41":2169,"45":2175,"51":2180},"pp":[2166,2167,2168,2169,2175,2180],"so":{"30":666,"32":667,"33":667,"35":669,"40":674,"41":675,"45":681,"51":684},"sp":[666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685]},"17":{"po":{"27":2294,"28":2294,"29":2295,"32":2296,"33":2297,"36":2298,"37":2298,"39":2299,"40":2299},"pp":[2294,2295,2296,2297,2298,2299],"so":{"27":701,"28":703,"29":703,"32":706,"33":708,"36":710,"37":710,"39":712,"40":713},"sp":[701,702,703,704,705,706,707,708,709,710,711,712,713,714]},"18":{"po":{"32":2407,"33":2407,"34":2407,"35":2407,"42":2409,"43":2409,"45":2410,"47":2410,"50":2411,"56":2415,"59":2417},"pp":[2407,2409,2410,2411,2415,2417],"so":{"32":741,"33":742,"34":743,"35":745,"42":747,"43":748,"45":750,"50":753,"56":760,"59":763},"sp":[741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764]},"19":{"po":{"27":2526,"28":2527,"33":2532,"35":2532,"37":2533,"38":2533,"40":2534,"41":2534,"45":2535},"pp":[2526,2527,2532,2533,2534,2535],"so":{"27":783,"28":784,"33":787,"35":788,"37":789,"38":789,"40":791,"41":792,"45":793},"sp":[783,784,785,786,787,788,789,790,791,792,793,794]},"20":{"po":{"30":2633,"32":2634,"34":2634,"35":2635,"36":2635,"39":2636,"44":2637,"45":2637,"49":2639,"50":2640,"52":2640,"53":2640,"56":2641},"pp":[2633,2634,2635,2636,2637,2639,2640,2641],"so":{"30":808,"32":809,"34":812,"35":812,"36":812,"39":815,"44":819,"45":820,"49":823,"50":823,"52":824,"53":824,"56":826},"sp":[808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827]},"21":{"po":{"27":2744,"28":2744,"35":2746,"36":2747,"38":2748,"39":2748,"44":2751,"45":2751,"46":2751,"47":2751},"pp":[2744,2746,2747,2748,2751],"so":{"27":840,"28":841,"35":847,"36":847,"38":849,"39":849,"44":853,"45":853,"46":855,"47":855},"sp":[840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856]},"22":{"po":{"37":2881,"39":2881,"43":2881,"46":2883,"56":2888,"57":2888,"58":2889,"59":2890,"66":2896,"68":2896,"71":2898},"pp":[2881,2883,2888,2889,2890,2896,2898],"so":{"37":876,"39":877,"43":879,"46":881,"56":886,"57":886,"58":887,"59":887,"66":894,"68":896,"71":900},"sp":[876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891,892,893,894,895,896,897,898,899,900,901]},"23":{"po":{"27":2967,"28":2967,"29":2968,"30":2968,"32":2969,"33":2970,"37":2972,"40":2972},"pp":[2967,2968,2969,2970,2972],"so":{"27":912,"28":913,"29":914,"30":915,"32":916,"33":916,"37":919,"40":920},"sp":[912,913,914,915,916,917,918,919,920,921]}};
+const PROB = {"14":{"po":{"32":1898,"33":1898,"34":1898,"35":1898,"36":1899,"37":1899,"38":1899,"39":1899,"40":1900,"43":1901,"44":1901,"46":1902,"47":1902,"48":1902,"49":1902,"50":1902,"51":1903,"52":1903,"53":1903,"54":1903,"55":1903,"56":1903,"57":1904,"58":1904,"59":1904,"60":1905,"61":1905,"62":1906,"63":1906,"64":1906,"66":1907,"68":1908,"70":1909,"71":1909,"72":1909,"75":1911,"76":1911,"78":1912,"79":1912,"80":1912},"pp":[1898,1899,1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912],"so":{"32":599,"33":599,"34":601,"35":601,"36":602,"37":602,"38":603,"39":603,"40":604,"43":608,"44":608,"46":608,"47":609,"48":610,"49":610,"50":611,"51":612,"52":612,"53":615,"54":615,"55":616,"56":616,"57":616,"58":617,"59":618,"60":618,"61":619,"62":621,"63":621,"64":622,"66":625,"68":625,"70":627,"71":627,"72":627,"75":630,"76":630,"78":631,"79":631,"80":631},"sp":[599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637]},"23":{"po":{"32":2969,"33":2970,"34":2970,"37":2972,"40":2972,"44":2974,"46":2975,"47":2976,"48":2977,"53":2980,"54":2980,"55":2981,"27":2967,"28":2967,"29":2968,"30":2968,"31":2969},"pp":[2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981],"so":{"27":912,"28":913,"29":914,"30":915,"31":915,"32":916,"33":916,"34":918,"37":919,"40":920,"44":923,"46":923,"47":924,"48":926,"53":930,"54":930,"55":930},"sp":[912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,931,932,933,934,935,936,937]},"20":{"po":{"30":2633,"31":2633,"32":2634,"33":2634,"34":2634,"35":2635,"36":2635,"37":2636,"38":2636,"39":2636,"40":2636,"41":2636,"42":2636,"43":2636,"44":2637,"45":2637,"46":2637,"47":2638,"48":2639,"49":2639,"50":2640,"51":2640,"52":2640,"53":2640,"54":2640,"55":2640,"56":2641,"57":2641,"58":2642,"60":2643,"67":2648},"pp":[2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648],"so":{"30":808,"31":809,"32":809,"33":811,"34":812,"35":812,"36":812,"37":814,"38":814,"39":815,"40":816,"41":816,"42":818,"43":818,"44":819,"45":820,"46":820,"47":821,"48":822,"49":823,"50":823,"51":824,"52":824,"53":824,"54":825,"55":825,"56":826,"57":826,"58":826,"60":827,"67":829},"sp":[808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839]},"21":{"po":{"27":2744,"28":2744,"29":2744,"30":2745,"34":2746,"35":2746,"36":2747,"37":2747,"38":2748,"39":2748,"40":2749,"41":2749,"44":2751,"45":2751,"46":2751,"47":2751,"49":2752,"50":2753,"51":2753,"53":2754,"54":2755,"55":2755},"pp":[2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755],"so":{"27":840,"28":841,"29":841,"30":842,"34":846,"35":847,"36":847,"37":848,"38":849,"39":849,"40":850,"41":851,"44":853,"45":853,"46":855,"47":855,"49":857,"50":857,"51":858,"53":860,"54":861,"55":862},"sp":[840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,868,869,870,871,872,873,874,875]},"17":{"po":{"32":2296,"33":2297,"34":2297,"35":2298,"36":2298,"37":2298,"38":2298,"39":2299,"40":2299,"27":2294,"28":2294,"29":2295,"30":2295,"31":2296},"pp":[2294,2295,2296,2297,2298,2299],"so":{"27":701,"28":703,"29":703,"30":703,"31":703,"32":703,"33":703,"34":703,"35":703,"36":703,"37":703,"38":703,"39":703,"40":703},"sp":[701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729,730,731,732,733,734,735,736,737,738,739,740]},"19":{"po":{"27":2526,"28":2527,"29":2527,"30":2527,"31":2528,"32":2528,"33":2532,"34":2532,"35":2532,"36":2532,"37":2533,"38":2533,"39":2534,"40":2534,"41":2534,"44":2535,"45":2535,"46":2536,"47":2536,"48":2537,"50":2537,"51":2538,"52":2538,"56":2541,"58":2542},"pp":[2526,2527,2528,2529,2530,2531,2532,2533,2534,2535,2536,2537,2538,2539,2540,2541,2542],"so":{"27":783,"28":784,"29":784,"30":784,"31":784,"32":785,"33":787,"34":787,"35":788,"36":788,"37":789,"38":789,"39":790,"40":791,"41":792,"44":793,"45":793,"46":794,"47":794,"48":795,"50":796,"51":797,"52":797,"56":800,"58":801},"sp":[782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,798,799,800,801,802,803,804,805,806,807]},"15":{"po":{"36":2066,"37":2067,"38":2068,"39":2068,"40":2068,"41":2068,"42":2069,"43":2070,"47":2073,"48":2075,"49":2075,"50":2075,"51":2075,"52":2076,"53":2076,"54":2076,"55":2076,"56":2077,"57":2077,"58":2078,"59":2079,"60":2079,"61":2080,"62":2080,"63":2080,"64":2080,"65":2081},"pp":[2066,2067,2068,2069,2070,2071,2072,2073,2074,2075,2076,2077,2078,2079,2080,2081],"so":{"36":638,"37":638,"38":639,"39":639,"40":639,"41":640,"42":640,"43":641,"47":644,"48":644,"49":646,"50":646,"51":647,"52":647,"53":649,"54":649,"55":650,"56":650,"57":652,"58":652,"59":653,"60":654,"61":654,"62":655,"63":656,"64":657,"65":658},"sp":[638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665]},"18":{"po":{"32":2407,"33":2407,"34":2407,"35":2407,"36":2408,"37":2408,"38":2409,"39":2409,"40":2409,"41":2409,"42":2409,"43":2409,"44":2410,"45":2410,"46":2410,"47":2410,"48":2411,"49":2411,"50":2411,"51":2412,"52":2412,"55":2415,"56":2415,"57":2416,"58":2417,"59":2417,"60":2418},"pp":[2407,2408,2409,2410,2411,2412,2413,2414,2415,2416,2417,2418],"so":{"32":741,"33":742,"34":743,"35":745,"36":745,"37":746,"38":746,"39":746,"40":747,"41":747,"42":747,"43":748,"44":750,"45":750,"46":750,"47":751,"48":751,"49":752,"50":753,"51":754,"52":755,"55":757,"56":760,"57":761,"58":762,"59":763,"60":764},"sp":[741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781]},"22":{"po":{"37":2881,"38":2881,"39":2881,"40":2881,"41":2881,"42":2881,"43":2881,"44":2882,"45":2882,"46":2883,"47":2883,"48":2884,"49":2884,"57":2888,"58":2889,"59":2890,"60":2891,"61":2892,"66":2896,"67":2896,"68":2896,"69":2896},"pp":[2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896],"so":{"37":876,"38":876,"39":877,"40":878,"41":878,"42":878,"43":879,"44":879,"45":879,"46":881,"47":881,"48":882,"49":883,"57":886,"58":887,"59":887,"60":889,"61":889,"66":894,"67":896,"68":896,"69":897},"sp":[876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891,892,893,894,895,896,897,898,899,900,901,902,903,904,905,906,907,908,909,910,911]},"16":{"po":{"30":2166,"31":2166,"32":2166,"33":2167,"34":2168,"35":2168,"36":2168,"37":2168,"38":2168,"39":2168,"40":2168,"41":2169,"42":2171,"43":2172,"44":2174,"45":2175,"46":2176,"47":2177,"49":2177,"50":2180,"51":2180,"52":2181,"53":2181,"55":2181,"56":2182,"58":2182},"pp":[2166,2167,2168,2169,2170,2171,2172,2173,2174,2175,2176,2177,2178,2179,2180,2181,2182],"so":{"30":666,"31":666,"32":667,"33":667,"34":668,"35":669,"36":669,"37":670,"38":671,"39":671,"40":674,"41":675,"42":676,"43":678,"44":679,"45":681,"46":682,"47":682,"49":682,"50":684,"51":684,"52":686,"53":687,"55":688,"56":688,"58":690},"sp":[666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700]}};
+const WORKSHEETS = [{"id":"ws1","title":"Resonance & Allylic Reactivity","topic":"\u00a714.1\u201314.4 \u00b7 resonance, allylic radicals/cations, NBS halogenation, allylic SN1/SN2","due":"2026-07-01","exam":"Exam 1","probs":{"14":[32,33,34,35,36,37,38,39,40,54,60,79]},"pdf":"ws1.pdf"},{"id":"ws2","title":"Conjugated Dienes: 1,2- vs 1,4-Addition & Kinetic/Thermodynamic Control","topic":"\u00a714.5\u201314.6 \u00b7 electrophilic addition to dienes, kinetic vs thermodynamic products","due":"2026-07-03","exam":"Exam 1","probs":{"14":[43,46,47,48,49,50,51,52,53,75]},"pdf":"ws2.pdf"},{"id":"nmrA","title":"\u00b9H NMR Fundamentals & the n+1 Rule","topic":"After NMR Video Series 1 (Videos 1\u20134): degrees of unsaturation, chemical shift, integration, n+1 splitting","due":"2026-07-05","exam":"Exam 1","nmr":true,"resources":["nmr-workshop1-worksheet.pdf","nmr1-1-intro-theory.pdf","nmr1-2-signals-integration.pdf","nmr1-3-chemical-shift.pdf","nmr1-4-splitting.pdf"],"probs":{"15":[43],"17":[29,31]},"pdf":"nmrA.pdf"},{"id":"ws3","title":"Diels-Alder, Pericyclic Reactions & UV / \u03c0-MOs","topic":"\u00a714.7\u201314.11 \u00b7 Diels-Alder, dienophiles, electrocyclic, molecular orbitals, UV spectroscopy","due":"2026-07-07","exam":"Exam 1","probs":{"14":[44,55,56,57,58,59,61,62,63,64,66,68,70,71,72,76,78,80]},"pdf":"ws3.pdf"},{"id":"ws4","title":"Benzene, Aromaticity & H\u00fcckel's Rule","topic":"\u00a715.1\u201315.7 \u00b7 benzene structure, aromaticity, H\u00fcckel's rule, naming aromatics, annulenes","due":"2026-07-10","exam":"Exam 1","probs":{"15":[36,37,38,39,41,42,58,59,60,61,62,63,64,65]},"pdf":"ws4.pdf"},{"id":"ws5","title":"Electrophilic Aromatic Substitution (EAS)","topic":"\u00a715.8\u201316.1 \u00b7 halogenation, nitration, sulfonation, Friedel-Crafts alkylation & acylation","due":"2026-07-15","exam":"Exam 2","probs":{"15":[47,48,49,50,51,52,53,54,55,56,57],"16":[43,52]},"pdf":"ws5.pdf"},{"id":"nmrB","title":"Complex Splitting, Aromatic Coupling & Diastereotopic Protons","topic":"After NMR Video Series 2 (Videos 1\u20135): mixtures, solvents, complex splitting, long-range coupling, diastereotopicity","due":"2026-07-16","exam":"Exam 2","nmr":true,"resources":["nmr2-1-mixtures.pdf","nmr2-2-solvents.pdf","nmr2-3-complex-splitting.pdf","nmr2-4-long-range-coupling.pdf"],"probs":{"15":[40,64,65],"16":[49]},"pdf":"nmrB.pdf"},{"id":"ws6","title":"Directing Effects & Multi-substituted Aromatic Synthesis","topic":"\u00a716.1\u201316.5 \u00b7 activators/deactivators, o/p vs m directors, substituent effects, naphthalene, multistep synthesis","due":"2026-07-17","exam":"Exam 2","probs":{"16":[30,31,32,33,34,35,36,37,38,39,40,41,42,44,45,46,47,50,51,53,55,56,58]},"pdf":"ws6.pdf"},{"id":"ws7","title":"Aldehydes & Ketones \u2014 Structure, Spectra & Nucleophilic Addition","topic":"\u00a716.6\u201317.13 \u00b7 naming, spectroscopy, oxidation/prep, nucleophilic addition, hydrates, acetals","due":"2026-07-18","exam":"Exam 2","probs":{"17":[27,28,29,30,31,32,33,34,35,36,37,38,39,40]},"pdf":"ws7.pdf"},{"id":"ws8","title":"Enols, Enolates, Aldol & Michael Addition","topic":"\u00a718 \u00b7 \u03b1-acidity, enols/enolates, alkylation, enamines, aldol condensation, conjugate (Michael) addition, Robinson annulation","due":"2026-07-21","exam":"Exam 2","probs":{"18":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,55,56,57,58,59,60]},"pdf":"ws8.pdf"},{"id":"ws9","title":"Carboxylic Acids \u2014 Naming, Acidity, Preparation & Reactions","topic":"\u00a719 \u00b7 naming, acidity, spectroscopy, preparation, addition/elimination, Hell-Volhard-Zelinsky","due":"2026-07-24","exam":"Exam 3","probs":{"19":[27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,44,45,46,47,48,50,51,52,56,58]},"pdf":"ws9.pdf"},{"id":"ws10","title":"Acid Derivatives I \u2014 Acyl Halides, Anhydrides & Esters","topic":"\u00a720.1\u201320.4 \u00b7 relative reactivity, nucleophilic acyl substitution, hydrolysis, transesterification","due":"2026-07-28","exam":"Exam 3","probs":{"20":[30,31,32,33,34,35,36,37,38,39,40,42,44,45,52,53]},"pdf":"ws10.pdf"},{"id":"ws11","title":"Acid Derivatives II \u2014 Amides, Nitriles & Hofmann Rearrangement","topic":"\u00a720.4\u201320.9 \u00b7 esters & amides, lactones/lactams, Hofmann rearrangement, nitriles","due":"2026-07-30","exam":"Exam 3","probs":{"20":[41,43,46,47,48,49,50,51,54,55,56,57,58,60,67]},"pdf":"ws11.pdf"},{"id":"ws12","title":"Amines \u2014 Structure, Basicity & Synthesis","topic":"\u00a721 \u00b7 naming, basicity, synthesis (reductive amination, Gabriel), Hofmann elimination, Mannich","due":"2026-08-01","exam":"Exam 3","probs":{"21":[27,28,29,30,34,35,36,37,38,39,40,41,44,45,46,47,49,50,51,53,54,55]},"pdf":"ws12.pdf"},{"id":"ws13","title":"Benzylic Reactivity, Phenols & Diazonium Salts","topic":"\u00a722 \u00b7 benzylic oxidation/halogenation, Birch, nucleophilic aromatic substitution, phenols, diazonium & Sandmeyer","due":"2026-08-04","exam":"Final","probs":{"22":[37,38,39,40,41,42,43,44,45,46,47,48,49,57,58,59,60,61,66,67,68,69]},"pdf":"ws13.pdf"},{"id":"ws14","title":"Ester Enolates, Claisen & \u03b2-Dicarbonyl Synthesis","topic":"\u00a723 \u00b7 Claisen & Dieckmann condensation, acetoacetic & malonic ester synthesis, Michael additions","due":"2026-08-05","exam":"Final","probs":{"23":[27,28,29,30,31,32,33,34,37,40,44,46,47,48,53,54,55]},"pdf":"ws14.pdf"}];
+const ROOMS = {"Lecture":"Chevron 152","Recitation":"Chevron 152","Lab lecture":"Chevron 135","Lab":"Chevron 419"};
 /* Reaction & concept summary pages (textbook "New Reactions / Important Concepts") */
 const RXP = {"14":[1893,1894,1895,1896,1897],"15":[2061,2062,2063,2064,2065],"16":[2162,2163,2164,2165],"17":[2285,2286,2287,2288,2289,2290,2291,2292,2293],"18":[2401,2402,2403,2404,2405,2406],"19":[2519,2520,2521,2522,2523,2524,2525],"20":[2625,2626,2627,2628,2629,2630,2631,2632],"21":[2738,2739,2740,2741,2742,2743],"22":[2872,2873,2874,2875,2876,2877,2878,2879,2880],"23":[2963,2964,2965,2966]};
 const TB_DIR='assets/textbook/', SOL_DIR='assets/solutions/';
@@ -917,7 +996,7 @@ function renderUpNext(){
   const nextMon=new Date(thisMon); nextMon.setDate(thisMon.getDate()+7);
   const nextSun=new Date(nextMon); nextSun.setDate(nextMon.getDate()+6);
   const dayOf=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
-  const items=DEADLINES.map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc}))
+  const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc}))
     .filter(x=>x.due>=n).sort((a,b)=>a.due-b.due);
   const cols=[
     {key:'today',    title:'Today',     date:fmtShort(t), urgent:true, items:[]},
@@ -1026,15 +1105,16 @@ function daysHTML(w){
             ${ev.time?`<span class="time">${ev.time}</span>`:''}
           </div>
           <div class="ttl">${ev.ttl}</div>
+          ${ROOMS[ev.kind]?`<div class="room">📍 <b>${ROOMS[ev.kind]}</b></div>`:''}
           ${ev.desc?`<div class="desc">${ev.desc}</div>`:''}
           ${ev.due?dueChipsHTML(ev.due):''}
         </div></div>`;
     }).join('');
     const isLabDay = day.evs.some(ev=>ev.cat==='lab' && ev.kind==='Lab');
-    const tip = isLabDay ? `<div class="lab-tip">🥽 Bring splash goggles, flame-resistant lab coat &amp; your numbered notebook · pre-lab due 1:00 PM on Labflow · 🎬 technique videos for each activity are on Labflow</div>` : '';
+    const safety = isLabDay ? `<div class="day-safety">🥽 <b>Lab day — required in Chevron 419:</b> splash goggles · flame-resistant lab coat · long pants (no shorts/skin) · numbered notebook. Pre-lab due 1:00 PM on Labflow · 🎬 technique videos on Labflow.</div>` : '';
     return `<div class="day${isToday?' is-today':''}">
       <div class="date">${DOW[d.getDay()]} <b>${MON[d.getMonth()]} ${d.getDate()}</b>${isToday?'<span class="tdy">Today</span>':''}</div>
-      <div class="items">${evs}${tip}</div></div>`;
+      <div class="items">${safety}${evs}</div></div>`;
   }).join('');
 }
 function dueChipsHTML(s){
@@ -1046,6 +1126,7 @@ function dueChipsHTML(s){
   }).join('')+`</div>`;
 }
 function probChipsHTML(ch, probs){
+  probs=probs.filter(n=>PROB[ch]&&PROB[ch].po[n]!=null);
   const chips=probs.map(n=>{
     const d=isDone(ch,n);
     return `<button class="prob-chip${d?' done':''}" data-ch="${ch}" data-n="${n}" onclick="openViewer(${ch},'p',${n})" title="Open problem ${n} (Ch ${ch})">${d?'<span class="ck">✓</span>':''}${n}</button>`;
@@ -1106,6 +1187,7 @@ function openWeek(n,scroll){
   if(scroll) sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function jumpToday(){
+  setView('spread');
   const t=today();
   const cw=WEEKS.find(w=> t>=parseDate(w.start)&&t<=parseDate(w.end));
   if(cw){ openWeek(cw.n,false);
@@ -1113,7 +1195,7 @@ function jumpToday(){
     if(td){ td.scrollIntoView({behavior:'smooth',block:'center'}); return; }
     $('#week-'+cw.n).scrollIntoView({behavior:'smooth',block:'start'});
   } else {
-    $('#upnext').scrollIntoView({behavior:'smooth',block:'start'});
+    $('#todo').scrollIntoView({behavior:'smooth',block:'start'});
   }
 }
 
@@ -1228,14 +1310,111 @@ function renderExamPrep(){
 /* ---------- deep links + per-week share ---------- */
 function applyHash(){
   const h=location.hash;
-  if(/^#week-[1-6]$/.test(h)) openWeek(+h.split('-')[1], true);
-  else if(h==='#exam-prep'){ $('#examprep').classList.add('open'); $('#examprep').scrollIntoView({behavior:'smooth',block:'start'}); }
+  if(/^#week-[1-6]$/.test(h)){ setView('spread'); openWeek(+h.split('-')[1], true); }
+  else if(h==='#exam-prep'){ setView('spread'); $('#examprep').classList.add('open'); $('#examprep').scrollIntoView({behavior:'smooth',block:'start'}); }
+  else if(h==='#worksheets'){ setView('worksheets'); }
+  else if(h==='#calendar'){ setView('calendar'); }
 }
 function shareWeek(n,btn){
   const url=location.origin+location.pathname+'#week-'+n;
   const ok=()=>{ if(btn){ btn.classList.add('copied'); btn.textContent='✓'; setTimeout(()=>{btn.classList.remove('copied'); btn.textContent='🔗';},1200);} };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok,ok);
   else { location.hash='#week-'+n; ok(); }
+}
+
+/* ---------- worksheet-derived deadlines (recommended) ---------- */
+function worksheetDeadlines(){
+  return WORKSHEETS.map(w=>[w.due+'T23:59','textbook','📝 '+(w.nmr?'NMR ':'')+'Worksheet: '+w.title+' (recommended)','Practice']);
+}
+function allDeadlines(){ return DEADLINES.concat(worksheetDeadlines()); }
+
+/* ---------- view tabs ---------- */
+function setView(v){
+  ['calendar','worksheets','spread'].forEach(k=>{ const el=$('#view-'+k); if(el) el.hidden=(k!==v); });
+  $$('#tabbar .tab').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.view===v)));
+  $('#filters').style.display = (v==='worksheets')?'none':'';
+  if(v==='calendar') renderCalendar();
+  if(v==='worksheets') renderWorksheets();
+  try{ localStorage.setItem('orgo-view2',v); }catch(e){}
+}
+
+/* ---------- 6-week calendar grid ---------- */
+function calLabel(ev){
+  if(ev.cat==='exam'||ev.cat==='quiz') return ev.ttl;
+  if(ev.cat==='spec') return 'NMR videos';
+  return ev.kind;
+}
+function renderCalendar(){
+  const host=$('#calendar'); const t=today();
+  const dows=['Mon','Tue','Wed','Thu','Fri'];
+  const wsByDate={}; WORKSHEETS.forEach(w=>{ (wsByDate[w.due]=wsByDate[w.due]||[]).push(w); });
+  let h=`<div class="cal-scroll"><div class="cal"><div class="cal-headrow"><div></div>${dows.map(d=>`<div class="cal-dow">${d}</div>`).join('')}</div>`;
+  WEEKS.forEach(w=>{
+    h+=`<div class="cal-row"><div class="cal-wk"><span class="cw-n">Wk ${w.n}</span><span class="cw-d">${w.range.split(' – ')[0]}</span></div>`;
+    w.days.forEach(day=>{
+      const d=parseDate(day.date); const isT=dayDiff(d,t)===0;
+      const chips=day.evs.map(ev=>{
+        if(ev.holiday) return `<div class="cal-holiday" data-cat="${ev.cat}">${ev.ttl}</div>`;
+        const c=CATS[ev.cat]; const rm=ROOMS[ev.kind]?' · '+ROOMS[ev.kind]:'';
+        const time=ev.time?ev.time.split('–')[0]:'';
+        return `<span class="cal-chip" data-cat="${ev.cat}" style="--cc:${c.color}" title="${(ev.ttl||'').replace(/"/g,'')}${rm}">${time?`<span class="cc-t">${time}</span>`:''}${calLabel(ev)}</span>`;
+      }).join('');
+      const dueHTML=day.evs.filter(e=>e.due).map(e=>{
+        const c=CATS[e.cat].color;
+        return e.due.split(' · ').map(p=>{
+          const name=p.replace(/\s+due\s+.*/i,'').replace(/^watch\s+/i,'');
+          return `<span class="cal-due" data-cat="${e.cat}" style="--cc:${c}" title="${p.replace(/"/g,'')}">📋 ${name}</span>`;
+        }).join('');
+      }).join('');
+      const wsHTML=(wsByDate[day.date]||[]).map(ws=>`<span class="cal-due" data-cat="textbook" style="--cc:${CATS.textbook.color}" title="Recommended worksheet: ${ws.title.replace(/"/g,'')}">📝 ${ws.title.slice(0,24)}</span>`).join('');
+      const safety=day.evs.some(ev=>ev.cat==='lab'&&ev.kind==='Lab')?`<div class="cal-safety">🥽 goggles · coat · pants · notebook — Chevron 419</div>`:'';
+      const empty=(!chips&&!dueHTML&&!wsHTML);
+      h+=`<div class="cal-day${isT?' is-today':''}${empty?' empty':''}"><div class="cal-date"><span>${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</span>${isT?'<span class="cd-t">TODAY</span>':''}</div>${safety}${chips}${dueHTML}${wsHTML}</div>`;
+    });
+    h+=`</div>`;
+  });
+  h+=`</div></div>`;
+  host.innerHTML=h; applyFilters();
+}
+
+/* ---------- worksheets tab ---------- */
+function wsProbChips(w){
+  let out='';
+  for(const ch in w.probs){
+    const cch=+ch;
+    out+=`<span class="prob-ch">Ch ${ch}</span>`;
+    out+=w.probs[ch].map(n=>{
+      const dn=isDone(cch,n);
+      return `<button class="prob-chip${dn?' done':''}" data-ch="${ch}" data-n="${n}" onclick="openViewer(${ch},'p',${n})">${dn?'<span class="ck">✓</span>':''}${n}</button>`;
+    }).join('');
+  }
+  return out;
+}
+function renderWorksheets(){
+  const host=$('#worksheets'); const t=today();
+  let h=`<div class="ws-intro">Topic-aligned practice that follows the lecture schedule — each worksheet pulls the textbook problems for that exact subject, as many as apply. <b>Due dates are recommended</b> and are timed so each exam's material finishes <b>2 days before the exam</b>, leaving those days for review. Tap any problem to see it · <b>📄 Worksheet PDF</b> = one problem per page with blank working space (built for GoodNotes) · <b>🔑 Answer key</b> opens the worked solutions.</div><div class="ws-grid">`;
+  WORKSHEETS.forEach(w=>{
+    const due=parseDate(w.due); const diff=dayDiff(due,t); const overdue=diff<0;
+    const dueLbl = diff<0?'was due '+MON[due.getMonth()].slice(0,3)+' '+due.getDate()
+      : diff===0?'due today' : diff===1?'due tomorrow'
+      : `due ${DOW[due.getDay()]} ${MON[due.getMonth()].slice(0,3)} ${due.getDate()}`;
+    const nprobs=Object.values(w.probs).reduce((s,a)=>s+a.length,0);
+    const firstCh=Object.keys(w.probs)[0];
+    const res=(w.resources||[]).map(r=>`<a href="assets/resources/${r}" target="_blank" rel="noopener">${r.replace(/\.pdf$/,'').replace(/-/g,' ')}</a>`).join(' · ');
+    h+=`<div class="ws-card${w.nmr?' nmr':''}">
+      <div class="ws-top"><span class="ws-title">${w.nmr?'📺 ':''}${w.title}</span><span class="ws-due${overdue?' overdue':''}">${dueLbl}</span></div>
+      <div class="ws-topic">${w.topic}</div>
+      <div class="ws-count">${nprobs} problems · counts toward ${w.exam}</div>
+      <div class="ws-probs">${wsProbChips(w)}</div>
+      ${res?`<div class="ws-res">📊 ${res}</div>`:''}
+      <div class="ws-actions">
+        ${w.pdf?`<a class="ws-btn pdf" href="assets/worksheets/${w.pdf}" target="_blank" rel="noopener">📄 Worksheet PDF (GoodNotes)</a>`:''}
+        <button class="ws-btn key" onclick="openViewer(${firstCh},'s')">🔑 Answer key</button>
+      </div>
+    </div>`;
+  });
+  h+=`</div>`;
+  host.innerHTML=h; applyFilters();
 }
 
 /* ---------- boot ---------- */
@@ -1265,6 +1444,9 @@ function boot(){
   $('#viewer').addEventListener('click',e=>{ if(e.target.id==='viewer') closeViewer(); });
   $('#epHead').addEventListener('click',()=>$('#examprep').classList.toggle('open'));
   $('#weeks').addEventListener('click',e=>{ const s=e.target.closest('.wk-share'); if(s){ e.stopPropagation(); shareWeek(+s.dataset.week,s); } });
+  $$('#tabbar .tab').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+  let v0='calendar'; try{ const s=localStorage.getItem('orgo-view2'); if(s) v0=s; }catch(e){}
+  setView(v0);
   window.addEventListener('hashchange',applyHash);
   const searchEl=$('#search');
   searchEl.addEventListener('input',()=>runSearch(searchEl.value));
@@ -1286,7 +1468,7 @@ function boot(){
 }
 
 /* expose data for smoke tests (Node) */
-if(typeof module!=='undefined'){ module.exports={WEEKS,DEADLINES,CATS,PROB,RXP,EXAMS,parseDateTime,parseDate}; }
+if(typeof module!=='undefined'){ module.exports={WEEKS,DEADLINES,CATS,PROB,RXP,EXAMS,WORKSHEETS,ROOMS,parseDateTime,parseDate}; }
 if(typeof window!=='undefined'){ window.__PLANNER__={WEEKS,DEADLINES,CATS}; document.addEventListener('DOMContentLoaded',boot); }
 </script>
 </body>
