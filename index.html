@@ -18,7 +18,7 @@
   }
   [data-theme="sage"]{
     --bg:#f5f3e7; --bg-2:#efedde; --card:#fefcf2; --card-2:#f7f5e9;
-    --ink:#2a2e26; --ink-soft:#5d6655; --ink-faint:#919a7f;
+    --ink:#2a2e26; --ink-soft:#525b49; --ink-faint:#6d7658;
     --rule:#d7d9bf; --rule-soft:#e6e7d2; --accent:#5d7d3f; --accent-ink:#3f5a28;
     --chip:#ffffff; --shadow-sm:0 1px 4px rgba(93,125,63,.08);
     --shadow-md:0 6px 22px rgba(93,125,63,.12),0 2px 6px rgba(93,125,63,.06);
@@ -31,7 +31,7 @@
   }
   [data-theme="carbon"]{
     --bg:#ffffff; --bg-2:#f4f4f4; --card:#ffffff; --card-2:#f6f6f6;
-    --ink:#0a0a0a; --ink-soft:#3a3a3a; --ink-faint:#808080;
+    --ink:#0a0a0a; --ink-soft:#2e2e2e; --ink-faint:#565656;
     --rule:#111; --rule-soft:#d6d6d6; --accent:#ff3300; --accent-ink:#cc2900;
     --chip:#fff; --shadow-sm:2px 2px 0 #111; --shadow-md:3px 3px 0 #111;
     --shadow-lg:5px 5px 0 #111;
@@ -42,17 +42,17 @@
     --today:#ff3300;
   }
   [data-theme="midnight"]{
-    --bg:#0d1018; --bg-2:#11141d; --card:#161a26; --card-2:#1b2030;
-    --ink:#e8e6df; --ink-soft:#b4bdcf; --ink-faint:#8a93a8;
-    --rule:#2a3142; --rule-soft:#212838; --accent:#e94f8a; --accent-ink:#f2a0c2;
-    --chip:#1e2433; --shadow-sm:0 2px 6px rgba(0,0,0,.35);
-    --shadow-md:0 8px 26px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);
-    --shadow-lg:0 24px 60px rgba(0,0,0,.55),0 8px 16px rgba(0,0,0,.35);
+    --bg:#0a0e1a; --bg-2:#0d1220; --card:#141b2e; --card-2:#1a2236;
+    --ink:#eef1fa; --ink-soft:#c6cfe4; --ink-faint:#9ba7c4;
+    --rule:#293353; --rule-soft:#1c2440; --accent:#8ea2ff; --accent-ink:#bcc8ff;
+    --chip:#1a2237; --shadow-sm:0 2px 12px rgba(0,0,0,.45);
+    --shadow-md:0 12px 34px rgba(3,6,18,.55),0 3px 10px rgba(0,0,0,.4);
+    --shadow-lg:0 30px 72px rgba(3,6,18,.65),0 10px 22px rgba(0,0,0,.45);
     --font-display:'Manrope',system-ui,sans-serif;
     --font-body:'IBM Plex Sans',system-ui,sans-serif;
     --font-mono:'IBM Plex Mono',ui-monospace,monospace;
-    --display-wt:800; --radius:14px; --radius-sm:9px;
-    --today:#e94f8a;
+    --display-wt:800; --radius:15px; --radius-sm:11px;
+    --today:#8ea2ff;
   }
 
   *{box-sizing:border-box}
@@ -64,7 +64,15 @@
   }
   /* Solid, cheap backgrounds — no fixed-attachment (that caused scroll jank). */
   [data-theme="sage"] body{ background:#eff0e2; }
-  [data-theme="midnight"] body{ background:#0d1018; }
+  [data-theme="midnight"] body{ background:#080b14; }
+  /* midnight: soft aurora glow at the top of the content pane (contained → no scroll jank) */
+  [data-theme="midnight"] .content{
+    background:
+      radial-gradient(900px 460px at 18% -8%, color-mix(in srgb,#3a4a86 42%,transparent), transparent 60%),
+      radial-gradient(760px 420px at 96% -6%, color-mix(in srgb,#4a3a86 34%,transparent), transparent 58%);}
+  [data-theme="midnight"] .sidebar{background:linear-gradient(180deg,#131a2c,#0d1220);border-right-color:#232c48}
+  [data-theme="midnight"] .topbar{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(8px);border-bottom-color:#222c48}
+  [data-theme="midnight"] .sb-item.active{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 24%,transparent),transparent);box-shadow:inset 2px 0 0 var(--accent)}
   a{color:var(--accent-ink)}
 
   /* ===================== TOPBAR ===================== */
@@ -443,18 +451,62 @@
   .ev .room{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-faint);margin-top:3px}
   .ev .room b{color:var(--ink-soft);font-weight:700}
 
-  /* week-by-week progress ring */
-  .wk-prog{display:flex;align-items:center;gap:16px;margin:2px 0 18px;padding:14px 18px;border:1px solid var(--rule);border-radius:var(--radius-sm);background:linear-gradient(180deg,var(--card),var(--card-2));box-shadow:var(--shadow-sm)}
-  [data-theme="carbon"] .wk-prog{border-radius:0}
-  .wk-ring{flex:none;transform:rotate(-90deg)}
+  /* ===================== WEEK-BY-WEEK PROGRESS METER ===================== */
+  .wk-prog{position:relative;display:flex;align-items:center;gap:20px;margin:2px 0 20px;padding:16px 22px;
+    border:1px solid var(--rule);border-radius:var(--radius-sm);background:linear-gradient(180deg,var(--card),var(--card-2));box-shadow:var(--shadow-sm);overflow:hidden}
+  [data-theme="carbon"] .wk-prog{border-radius:0;border-width:2px}
+  .wk-meter{position:relative;width:82px;height:82px;flex:none;display:grid;place-items:center}
+  .wk-meter-pct{position:absolute;inset:0;display:grid;place-items:center;z-index:3;
+    font-family:var(--font-display);font-weight:var(--display-wt);font-size:23px;line-height:1;color:var(--ink)}
+  .wk-meter-pct small{font-size:11px;color:var(--ink-soft);margin-left:1px;font-weight:600}
+  .wk-ring{position:relative;z-index:2;transform:rotate(-90deg)}
   .wk-ring circle{fill:none;stroke-width:7;stroke-linecap:round}
   .wk-ring .wk-ring-bg{stroke:var(--rule-soft)}
-  .wk-ring .wk-ring-fg{stroke:var(--accent);transition:stroke-dashoffset var(--motion-slow) var(--ease-out)}
-  .wk-prog-txt .pct{font-family:var(--font-display);font-weight:var(--display-wt);font-size:26px;line-height:1}
-  .wk-prog-txt .cnt{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft);margin-top:3px}
-  .wk-prog-note{font-size:12.5px;color:var(--ink-faint);max-width:46ch;margin-left:auto}
-  .wk-prog.complete .wk-ring .wk-ring-fg{stroke:var(--c-lecture)}
-  .wk-prog.complete .wk-prog-txt .pct{color:var(--c-lecture)}
+  .wk-ring .wk-ring-fg{stroke:url(#wkGrad);transition:stroke-dashoffset 1s var(--ease-out)}
+  .wg0{stop-color:var(--accent)} .wg1{stop-color:color-mix(in srgb,var(--accent) 45%,#ffffff)}
+  .wk-prog-h{font-family:var(--font-display);font-weight:var(--display-wt);font-size:18px;color:var(--ink)}
+  .wk-prog-note{font-size:12.5px;color:var(--ink-soft);margin-top:2px;max-width:54ch}
+  .wk-sq{display:none}
+  /* sage: soft breathing halo behind the ring, grows with progress */
+  .wk-meter::before{content:'';position:absolute;z-index:0;width:58px;height:58px;border-radius:50%;
+    background:radial-gradient(circle,color-mix(in srgb,var(--accent) 55%,transparent),transparent 68%);
+    opacity:calc(.12 + var(--pct)/220);animation:wkBreathe 3.4s ease-in-out infinite}
+  @keyframes wkBreathe{0%,100%{transform:scale(.86);opacity:.28}50%{transform:scale(1.14);opacity:.55}}
+  .wk-prog.complete .wg0{stop-color:var(--c-lecture)} .wk-prog.complete .wg1{stop-color:#a9d18a}
+  .wk-prog.complete .wk-meter::before{animation-duration:1.5s;background:radial-gradient(circle,color-mix(in srgb,var(--c-lecture) 65%,transparent),transparent 68%)}
+  .wk-prog.complete .wk-prog-h{color:var(--c-lecture)}
+  /* midnight: neon aurora — rotating conic glow + colored stroke shadow */
+  [data-theme="midnight"] .wk-ring .wk-ring-fg{filter:drop-shadow(0 0 5px color-mix(in srgb,var(--accent) 85%,transparent))}
+  [data-theme="midnight"] .wg0{stop-color:#5cd6ff} [data-theme="midnight"] .wg1{stop-color:#b98bff}
+  [data-theme="midnight"] .wk-prog.complete .wg0{stop-color:#57e39a} [data-theme="midnight"] .wk-prog.complete .wg1{stop-color:#9be6ff}
+  [data-theme="midnight"] .wk-meter::before{width:80px;height:80px;filter:blur(5px);border-radius:50%;
+    background:conic-gradient(from 0deg,transparent 0%,color-mix(in srgb,#5cd6ff 60%,transparent) 20%,transparent 40%,color-mix(in srgb,#b98bff 60%,transparent) 65%,transparent 85%);
+    opacity:calc(.22 + var(--pct)/160);animation:wkSpin 5.5s linear infinite}
+  @keyframes wkSpin{to{transform:rotate(360deg)}}
+  [data-theme="midnight"] .wk-prog{border-color:color-mix(in srgb,var(--accent) 30%,var(--rule));box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent),var(--shadow-sm)}
+  /* carbon: brutalist square that fills bottom-up + hard stepped pulse */
+  [data-theme="carbon"] .wk-ring{display:none}
+  [data-theme="carbon"] .wk-meter::before{display:none}
+  [data-theme="carbon"] .wk-sq{display:block;position:absolute;inset:5px;border:3px solid #111;background:#fff;overflow:hidden;box-shadow:4px 4px 0 #111;animation:wkTick 1.05s steps(1) infinite}
+  [data-theme="carbon"] .wk-sq-fill{position:absolute;left:0;right:0;bottom:0;height:calc(var(--pct) * 1%);background:var(--accent);transition:height .8s steps(10)}
+  [data-theme="carbon"] .wk-meter-pct{color:#111;mix-blend-mode:difference;color:#fff}
+  @keyframes wkTick{0%,49%{box-shadow:4px 4px 0 #111;transform:translate(0,0)}50%,100%{box-shadow:6px 6px 0 var(--accent);transform:translate(-1px,-1px)}}
+  [data-theme="carbon"] .wk-prog.complete .wk-sq-fill{background:var(--accent)}
+  [data-theme="carbon"] .wk-prog.complete .wk-sq{animation-duration:.5s}
+  @media (prefers-reduced-motion:reduce){.wk-meter::before,[data-theme="carbon"] .wk-sq{animation:none !important}}
+  /* cooked-o-meter chip (week-by-week only) */
+  .cooked{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;white-space:nowrap;
+    padding:4px 11px;border-radius:999px;border:1px solid var(--rule);background:var(--chip);color:var(--ink-soft);margin-left:6px}
+  [data-theme="carbon"] .cooked{border-radius:0;border-width:1.5px}
+  .cooked b{font-weight:800;color:var(--ink)}
+  .cooked.ck1{border-color:color-mix(in srgb,#3a72b0 45%,var(--rule));background:color-mix(in srgb,#3a72b0 10%,var(--card))}
+  .cooked.ck2{border-color:color-mix(in srgb,#c2682f 40%,var(--rule));background:color-mix(in srgb,#c2682f 9%,var(--card))}
+  .cooked.ck3{border-color:color-mix(in srgb,#c2682f 55%,var(--rule));background:color-mix(in srgb,#c2682f 13%,var(--card))}
+  .cooked.ck4{border-color:color-mix(in srgb,#c0436b 50%,var(--rule));background:color-mix(in srgb,#c0436b 12%,var(--card))}
+  .cooked.ck5{border-color:color-mix(in srgb,#c0392b 55%,var(--rule));background:color-mix(in srgb,#c0392b 14%,var(--card))}
+  .cooked.ck6{border-color:color-mix(in srgb,#c0392b 70%,var(--rule));background:color-mix(in srgb,#c0392b 18%,var(--card));color:var(--ink);animation:ckPulse 1.8s ease-in-out infinite}
+  @keyframes ckPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,#c0392b 45%,transparent)}50%{box-shadow:0 0 0 4px transparent}}
+  @media (prefers-reduced-motion:reduce){.cooked.ck6{animation:none}}
 
   /* ===================== PRINT ===================== */
   @media print{
@@ -675,7 +727,7 @@
         <button class="sb-item" data-sec="textbook"><span class="ic">📚</span>Textbook problems</button>
         <button class="sb-item" data-sec="answers"><span class="ic">🔑</span>Answer keys</button>
         <button class="sb-item" data-sec="reactions"><span class="ic">⚗️</span>Reaction summaries</button>
-        <button class="sb-item" data-sec="exams"><span class="ic">📕</span>Past exams &amp; reference</button>
+        <button class="sb-item" data-sec="exams"><span class="ic">📕</span>Past exams</button>
         <div class="sb-group c-lab">Orgo Lab · Chem 0345</div>
         <button class="sb-item" data-sec="lab"><span class="ic">🧫</span>Lab activities</button>
         <button class="sb-item" data-sec="extra"><span class="ic">📄</span>Extra practice</button>
@@ -684,7 +736,8 @@
       </nav>
       <div class="sb-foot">
         <a href="https://canvas.pitt.edu" target="_blank" rel="noopener">Canvas ↗</a>
-        <a href="https://app.labflow.com" target="_blank" rel="noopener">Labflow ↗</a>
+        <a href="#textbook">📚 Textbook</a>
+        <a href="#answers">🔑 Answer key</a>
       </div>
     </aside>
 
@@ -693,7 +746,6 @@
         <button class="ham" id="ham" aria-label="Menu">☰</button>
         <h1 class="tb-title" id="secTitle">Dashboard</h1>
         <div class="tb-spacer"></div>
-        <div class="searchwrap"><span class="si">🔍</span><input class="searchbox" id="search" type="search" placeholder="Search…  ( / )" autocomplete="off"></div>
         <div class="filters" id="filters" hidden><span class="lbl">Show</span></div>
         <div class="seg" id="themeSeg" role="group" aria-label="Theme">
           <button data-theme-set="sage" type="button">Sage</button>
@@ -758,15 +810,19 @@ const DEADLINES = [
   // pre-labs (due 1:00pm on the lab day)
   ['2026-06-30T13:00','lab','Pre-Lab 1 — Intro / Safety / IR','Labflow'],
   ['2026-07-02T13:00','lab','Pre-Lab 2 — ¹H NMR Workshop 1','Labflow'],
-  ['2026-07-07T13:00','lab','Pre-Lab 3 — Extraction & Recrystallization (+ notebook pages)','Labflow'],
+  ['2026-07-07T13:00','lab','Pre-Lab 3 — Extraction & Recrystallization','Labflow'],
+  ['2026-07-07T13:00','lab','📓 Notebook pages — Activity 3 (Extraction)','Numbered notebook'],
   ['2026-07-09T13:00','lab','Pre-Lab 4 — TLC','Labflow'],
   ['2026-07-14T13:00','lab','Pre-Lab 5 — ¹H NMR Workshop 2','Labflow'],
   ['2026-07-16T13:00','lab','Pre-Lab 6 — Dehydration of Cyclohexanol','Labflow'],
-  ['2026-07-21T13:00','lab','Pre-Lab 7 — Grignard / Triphenylmethanol (+ notebook pages)','Labflow'],
+  ['2026-07-21T13:00','lab','Pre-Lab 7 — Grignard / Triphenylmethanol','Labflow'],
+  ['2026-07-21T13:00','lab','📓 Notebook pages — Activity 7 (Grignard)','Numbered notebook'],
   ['2026-07-23T13:00','lab','Pre-Lab 8 — Carvone Hydrohalogenation','Labflow'],
-  ['2026-07-28T13:00','lab','Pre-Lab 9 — EAS / Bromination of Aniline (+ notebook pages)','Labflow'],
+  ['2026-07-28T13:00','lab','Pre-Lab 9 — EAS / Bromination of Aniline','Labflow'],
+  ['2026-07-28T13:00','lab','📓 Notebook pages — Activity 9 (EAS)','Numbered notebook'],
   ['2026-07-30T13:00','lab','Pre-Lab 10 — Aldol Condensation','Labflow'],
-  ['2026-08-04T13:00','lab','Pre-Lab 11 — Luminol / Forensic (+ notebook pages)','Labflow'],
+  ['2026-08-04T13:00','lab','Pre-Lab 11 — Luminol / Forensic','Labflow'],
+  ['2026-08-04T13:00','lab','📓 Notebook pages — Activity 11 (Luminol)','Numbered notebook'],
   // post-labs (due 1:00pm, one week after the lab; none for Activity 5 or 11)
   ['2026-07-07T13:00','lab','Post-Lab 1 — Intro / Safety / IR','Labflow'],
   ['2026-07-09T13:00','lab','Post-Lab 2 — ¹H NMR Workshop 1','Labflow'],
@@ -1067,15 +1123,15 @@ const CHNAME = {"14":"Delocalized π Systems","15":"Benzene & Aromaticity","16":
 const ROOMS = {"Lecture":"Chevron 152","Recitation":"Chevron 152","Lab lecture":"Chevron 135","Lab":"Chevron 419"};
 const RESOURCES = {
   recitation:[
-    {label:"Wk 3 — Regio/stereo mechanisms & short synthesis", file:"recit-wk03.pdf", topic:"Ch 14 · allylic / substitution", by:"2026-06-30"},
-    {label:"Wk 4 — 1,2 vs 1,4 dienes & Diels-Alder", file:"recit-wk04.pdf", topic:"Ch 14", by:"2026-07-02"},
-    {label:"Wk 5 — Aromaticity, Hückel & EAS electrophiles", file:"recit-wk05.pdf", topic:"Ch 15–16", by:"2026-07-07"},
-    {label:"Wk 6 — EAS mechanisms & directing effects", file:"recit-wk06.pdf", topic:"Ch 16", by:"2026-07-09"},
-    {label:"Wk 7 — Carbonyl reaction products", file:"recit-wk07.pdf", topic:"Ch 17", by:"2026-07-16"},
+    {label:"Wk 3 — Regio/stereo mechanisms & short synthesis", file:"recit-wk03.pdf", topic:"Ch 14 · allylic / substitution", by:"2026-07-03"},
+    {label:"Wk 4 — 1,2 vs 1,4 dienes & Diels-Alder", file:"recit-wk04.pdf", topic:"Ch 14", by:"2026-07-03"},
+    {label:"Wk 5 — Aromaticity, Hückel & EAS electrophiles", file:"recit-wk05.pdf", topic:"Ch 15–16", by:"2026-07-10"},
+    {label:"Wk 6 — EAS mechanisms & directing effects", file:"recit-wk06.pdf", topic:"Ch 16", by:"2026-07-10"},
+    {label:"Wk 7 — Carbonyl reaction products", file:"recit-wk07.pdf", topic:"Ch 17", by:"2026-07-17"},
     {label:"Wk 8 — Enolate / aldol products", file:"recit-wk08.pdf", topic:"Ch 18", by:"2026-07-17"},
-    {label:"Wk 11 — Acid-derivative products & reagents", file:"recit-wk11.pdf", topic:"Ch 19–20", by:"2026-07-23"},
-    {label:"Wk 12 — Ester reactions & amide acidity", file:"recit-wk12.pdf", topic:"Ch 20", by:"2026-07-28"},
-    {label:"Wk 14 — Amine basicity & synthesis", file:"recit-wk14.pdf", topic:"Ch 21", by:"2026-07-31"}
+    {label:"Wk 11 — Acid-derivative products & reagents", file:"recit-wk11.pdf", topic:"Ch 19–20", by:"2026-07-24"},
+    {label:"Wk 12 — Ester reactions & amide acidity", file:"recit-wk12.pdf", topic:"Ch 20", by:"2026-07-31"},
+    {label:"Wk 14 — Amine basicity & synthesis", file:"recit-wk14.pdf", topic:"Ch 21", by:"2026-08-02"}
   ],
   exams:[
     {label:"Past Exam 1 · Spring 2024", file:"past-exam-1.pdf", note:"Timed practice before Exam 1 (Mon Jul 13)", by:"2026-07-11"},
@@ -1087,14 +1143,14 @@ const RESOURCES = {
     {label:"Aldehydes & Ketones — Orgo I review", file:"aldehydes-review.pdf", note:"Recall what you already know before Ch 17"}
   ],
   extra:[
-    {label:"Activity 3 — Extraction & Recrystallization", file:"labprep-act3.pdf", by:"2026-07-05", quiz:"Quiz 2"},
-    {label:"Activity 4 — Thin-Layer Chromatography (TLC)", file:"labprep-act4.pdf", by:"2026-07-07", quiz:"Quiz 3"},
-    {label:"Activity 5 — ¹H NMR Workshop 2", file:"labprep-act5.pdf", by:"2026-07-12", quiz:"Quiz 4"},
-    {label:"Activity 6 — Dehydration of Cyclohexanol", file:"labprep-act6.pdf", by:"2026-07-14", quiz:"Quiz 5"},
-    {label:"Activity 7 — Grignard / Triphenylmethanol", file:"labprep-act7.pdf", by:"2026-07-19", quiz:"Quiz 6"},
-    {label:"Activity 8 — Markovnikov Hydrohalogenation of Carvone", file:"labprep-act8.pdf", by:"2026-07-21", quiz:"Quiz 7"},
-    {label:"Activity 9 — EAS: Bromination of Aniline", file:"labprep-act9.pdf", by:"2026-07-26", quiz:"Quiz 8"},
-    {label:"Activity 10 — Aldol Addition & Condensation", file:"labprep-act10.pdf", by:"2026-07-28", quiz:"Quiz 9"}
+    {label:"Activity 3 — Extraction & Recrystallization", file:"labprep-act3.pdf", by:"2026-07-09", quiz:"Quiz 2"},
+    {label:"Activity 4 — Thin-Layer Chromatography (TLC)", file:"labprep-act4.pdf", by:"2026-07-11", quiz:"Quiz 3"},
+    {label:"Activity 5 — ¹H NMR Workshop 2", file:"labprep-act5.pdf", by:"2026-07-16", quiz:"Quiz 4"},
+    {label:"Activity 6 — Dehydration of Cyclohexanol", file:"labprep-act6.pdf", by:"2026-07-18", quiz:"Quiz 5"},
+    {label:"Activity 7 — Grignard / Triphenylmethanol", file:"labprep-act7.pdf", by:"2026-07-23", quiz:"Quiz 6"},
+    {label:"Activity 8 — Markovnikov Hydrohalogenation of Carvone", file:"labprep-act8.pdf", by:"2026-07-25", quiz:"Quiz 7"},
+    {label:"Activity 9 — EAS: Bromination of Aniline", file:"labprep-act9.pdf", by:"2026-07-30", quiz:"Quiz 8"},
+    {label:"Activity 10 — Aldol Addition & Condensation", file:"labprep-act10.pdf", by:"2026-08-01", quiz:"Quiz 9"}
   ],
   nmrWorksheets:[
     {label:"NMR Workshop 1 — practice problems", file:"nmr-workshop1-worksheet.pdf", note:"Do after NMR Video Series 1"}
@@ -1154,7 +1210,18 @@ const RES=f=>`assets/resources/${f}`, WSF=f=>`assets/worksheets/${f}`, PDFF=f=>`
 
 /* deadlines incl recommended worksheet dues */
 function worksheetDeadlines(){return WORKSHEETS.map(w=>[w.due+'T23:59','textbook','📝 '+(w.nmr?'NMR ':'')+'Worksheet: '+w.title+' (recommended)','Practice']);}
-function allDeadlines(){return DEADLINES.concat(worksheetDeadlines());}
+/* recitation worksheets, lab extra practice, and past-exam practice as tracked assignments */
+function extraDeadlines(){
+  const out=[];
+  RESOURCES.recitation.forEach(x=>{if(x.by)out.push([x.by+'T23:59','recit','✍️ Recitation worksheet: '+x.label,x.topic||'Recitation worksheet']);});
+  RESOURCES.extra.forEach(x=>{if(x.by)out.push([x.by+'T23:59','lab','🧪 Extra practice: '+x.label,x.quiz?('prep for '+x.quiz):'Lab practice']);});
+  // Orgo II past exams — due the day of the exam we're practicing for
+  [[1,'2026-07-13'],[2,'2026-07-23'],[3,'2026-08-03']].forEach(([n,d])=>out.push([d+'T10:00','textbook','📕 Past Exam '+n+' practice (Orgo II)','Timed practice']));
+  // Orgo Lab — practice for the Lab Final (Thu Aug 6)
+  [['Midterm Practice'],['Post-midterm review'],['Final review doc']].forEach(([lbl])=>out.push(['2026-08-06T13:00','lab','📋 Lab Final practice — '+lbl,'Lab Final prep']));
+  return out;
+}
+function allDeadlines(){return DEADLINES.concat(worksheetDeadlines(),extraDeadlines());}
 function nextExam(){const n=now();return EXAMS.find(e=>parseDateTime(e.date)>=n)||null;}
 function examCountdown(e){const d=parseDate(e.date.split('T')[0]),diff=dayDiff(d,today());return diff<0?'done':diff===0?'today':diff===1?'tomorrow':`in ${diff} days`;}
 
@@ -1280,23 +1347,42 @@ function asItem(x){const c=CATS[x.cat].color; const done=isDone(x.title);
     <span class="as-bar" style="background:${c}"></span><span class="as-check">${done?'✓':'○'}</span>
     <span class="as-t">${label}</span><span class="as-meta">${time?time+' · ':''}${x.loc}</span>
     <span class="as-tag" style="background:${c}">${CATS[x.cat].label}</span></div>`;}
+function cookedLevel(n){
+  if(n<=8) return {emo:'🧊',word:'Barely simmering',cls:'ck1'};
+  if(n<=10)return {emo:'🔥',word:'Warming up',cls:'ck2'};
+  if(n<=13)return {emo:'🔥🔥',word:'Getting toasty',cls:'ck3'};
+  if(n<=15)return {emo:'🔥🔥🔥',word:'Cooking',cls:'ck4'};
+  if(n<=18)return {emo:'🔥🔥🔥🔥',word:'Well done',cls:'ck5'};
+  return {emo:'🔥🔥🔥🔥🔥',word:'Absolutely cooked 💀',cls:'ck6'};
+}
 function renderWeeks(){const host=$('#weeks');const t=today();
   const all=allDeadlines();const total=all.length;const done=all.filter(([dt,cat,title])=>isDone(title)).length;
-  const pct=total?Math.round(done/total*100):0;const C=175.93;const off=(C*(1-pct/100)).toFixed(1);
-  const ring=`<div class="wk-prog${pct>=100?' complete':''}">
-    <svg class="wk-ring" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true"><circle class="wk-ring-bg" cx="36" cy="36" r="28"/><circle class="wk-ring-fg" cx="36" cy="36" r="28" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/></svg>
-    <div class="wk-prog-txt"><div class="pct">${pct}%</div><div class="cnt">${done} / ${total} done</div></div>
-    <div class="wk-prog-note">${pct>=100?'Everything marked done — nice work. 🎉':'Fills up as you check things off across the term.'}</div>
+  const pct=total?Math.round(done/total*100):0;const C=188.5;const off=(C*(1-pct/100)).toFixed(1);
+  const note=pct>=100?'All done — you absolutely cooked the whole term. 🔥':pct>=50?'Past halfway. Keep the streak alive.':pct>0?'Nice start. The meter&rsquo;s hungry for more.':'Fills up as you check things off. Reward incoming.';
+  const meter=`<div class="wk-prog${pct>=100?' complete':''}" style="--pct:${pct}">
+    <div class="wk-meter">
+      <svg class="wk-ring" width="82" height="82" viewBox="0 0 82 82" aria-hidden="true">
+        <defs><linearGradient id="wkGrad" x1="0" y1="0" x2="1" y2="1"><stop class="wg0" offset="0"/><stop class="wg1" offset="1"/></linearGradient></defs>
+        <circle class="wk-ring-bg" cx="41" cy="41" r="30"/>
+        <circle class="wk-ring-fg" cx="41" cy="41" r="30" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/>
+      </svg>
+      <div class="wk-sq" aria-hidden="true"><span class="wk-sq-fill"></span></div>
+      <div class="wk-meter-pct">${pct}<small>%</small></div>
+    </div>
+    <div class="wk-prog-txt"><div class="wk-prog-h">${done} of ${total} assignments done</div><div class="wk-prog-note">${note}</div></div>
   </div>`;
-  host.innerHTML=ring+`<p class="sec-intro">Every assignment &amp; recommended task, week by week — <b>only assignments, no class periods</b>. Click any item for details &amp; a <b>Mark&nbsp;as&nbsp;done</b> button; done items cross out and drop off the dashboard. Progress saves in this browser.</p>`+
+  host.innerHTML=meter+`<p class="sec-intro">Every assignment &amp; recommended task, week by week — <b>only assignments, no class periods</b>. Click any item for details &amp; a <b>Mark&nbsp;as&nbsp;done</b> button; done items cross out and drop off the dashboard. Progress saves in this browser.</p>`+
   WEEKS.map(w=>{const s=parseDate(w.start),e=parseDate(w.end);const cur=t>=s&&t<=e;const mon=parseDate(w.start);
     const dates=Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
+    const weekEnd=dates[6];
     const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc}));
+    const wkItems=items.filter(x=>{const dd=new Date(x.due.getFullYear(),x.due.getMonth(),x.due.getDate());return dd>=s&&dd<=weekEnd;});
+    const heat=wkItems.length+(wkItems.some(x=>x.cat==='exam')?4:0);const ck=cookedLevel(heat);
     let body=dates.map(d=>{const di=items.filter(x=>dayDiff(new Date(x.due.getFullYear(),x.due.getMonth(),x.due.getDate()),d)===0).sort((a,b)=>a.due-b.due);
       if(!di.length)return '';const isT=dayDiff(d,t)===0;
       return `<div class="as-day${isT?' is-today':''}"><div class="as-date">${DOW[d.getDay()]} <b>${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</b>${isT?' · today':''}</div><div class="as-items">${di.map(asItem).join('')}</div></div>`;}).join('');
     if(!body)body='<div class="as-empty">No assignments this week — get ahead on a worksheet.</div>';
-    return `<section class="as-week${cur?' current':''}" id="week-${w.n}"><div class="as-wk-head"><span class="num">Week ${w.n}</span><span class="rng">${w.range}</span><span class="focus">${w.focus}</span>${cur?'<span class="current-badge">This week</span>':''}</div>${body}</section>`;}).join('');
+    return `<section class="as-week${cur?' current':''}" id="week-${w.n}"><div class="as-wk-head"><span class="num">Week ${w.n}</span><span class="rng">${w.range}</span><span class="focus">${w.focus}</span><span class="cooked ${ck.cls}" title="Cooked-o-meter · ${wkItems.length} things due this week">${ck.emo} <b>${ck.word}</b></span>${cur?'<span class="current-badge">This week</span>':''}</div>${body}</section>`;}).join('');
 }
 
 /* ---------- helpers for resource lists ---------- */
@@ -1330,10 +1416,18 @@ function renderRecitation(){$('#sec-recitation').innerHTML=`<p class="sec-intro"
 /* ---------- CHAPTER PDF LISTS (textbook / answers / reactions) ---------- */
 function renderChapters(sec,key,intro){$('#sec-'+sec).innerHTML=`<p class="sec-intro">${intro}</p><div class="ch-grid">${Object.keys(CHPDF).map(ch=>{const f=CHPDF[ch][key];if(!f)return '';return `<a class="ch-card" href="${PDFF(f)}" target="_blank" rel="noopener"><div class="ch-n">Ch ${ch}</div><div class="ch-t">${CHNAME[ch]}</div><div class="ch-open">Open PDF ↗</div></a>`;}).join('')}</div>`;}
 
-/* ---------- EXAMS + REFERENCE ---------- */
-function renderExams(){$('#sec-exams').innerHTML=`<p class="sec-intro">Past exams (Dr. Bell, Spring 2024) for timed practice, plus reference sheets. Each opens as a PDF.</p>
-  <h3 class="sub-h">📕 Past exams</h3><div class="rc-grid">${RESOURCES.exams.map(x=>resCard(x)).join('')}</div>
-  <h3 class="sub-h">📖 Reference</h3><div class="rc-grid">${RESOURCES.reference.map(x=>resCard(x)).join('')}</div>`;}
+/* ---------- REACTION SUMMARIES (+ Orgo I references live here too) ---------- */
+function renderReactions(){
+  renderChapters('reactions','r','The textbook&rsquo;s &ldquo;New Reactions / Important Concepts&rdquo; summary for each chapter — your reaction roadmap.');
+  $('#sec-reactions').insertAdjacentHTML('beforeend',
+    `<h3 class="sub-h" style="margin-top:24px">📖 Big-picture references</h3>
+     <p class="sec-intro" style="margin-top:2px">The Orgo I carry-over sheets — the whole reaction library in one place, plus the aldehydes &amp; ketones refresher. Lean on these for the cumulative final.</p>
+     <div class="rc-grid">${RESOURCES.reference.map(x=>resCard(x)).join('')}</div>`);
+}
+
+/* ---------- PAST EXAMS ---------- */
+function renderExams(){$('#sec-exams').innerHTML=`<p class="sec-intro">Past exams (Dr. Bell, Spring 2024) for timed practice — each opens as a PDF. They&rsquo;re also tracked as assignments, due on the day of the matching exam so you rehearse right before.</p>
+  <div class="rc-grid">${RESOURCES.exams.map(x=>resCard(x)).join('')}</div>`;}
 
 /* ---------- LAB ACTIVITIES ---------- */
 function renderLab(){const t=today();$('#sec-lab').innerHTML=`<p class="sec-intro">All 11 lab activities in Chevron 419. <b>Pre-lab</b> is due 1:00 PM on the lab day; <b>post-lab</b> 1:00 PM one week later (Labflow). 🥽 Bring goggles, flame-resistant coat, long pants &amp; a numbered notebook.</p>
@@ -1362,7 +1456,7 @@ function renderNMR(){const s1=DEADLINES.find(d=>d[2].includes('Series 1')),s2=DE
 function renderLabReview(){$('#sec-labreview').innerHTML=`<p class="sec-intro">Review documents for the lab final (covers Activities 1–11) and extra practice.</p><div class="rc-grid">${RESOURCES.labReview.map(x=>resCard(x)).join('')}</div>`;}
 
 /* ---------- section routing ---------- */
-const SEC_TITLE={dashboard:'Dashboard',calendar:'Calendar',schedule:'Week-by-week',worksheets:'Practice worksheets',recitation:'Recitation worksheets',textbook:'Textbook problems',answers:'Answer keys',reactions:'Reaction summaries',exams:'Past exams & reference',lab:'Lab activities',extra:'Extra practice',nmr:'NMR videos & slides',labreview:'Lab reviews'};
+const SEC_TITLE={dashboard:'Dashboard',calendar:'Calendar',schedule:'Week-by-week',worksheets:'Practice worksheets',recitation:'Recitation worksheets',textbook:'Textbook problems',answers:'Answer keys',reactions:'Reaction summaries',exams:'Past exams',lab:'Lab activities',extra:'Extra practice',nmr:'NMR videos & slides',labreview:'Lab reviews'};
 const RENDERED={};
 function renderSection(sec){
   if(sec==='dashboard')renderDashboard();
@@ -1372,7 +1466,7 @@ function renderSection(sec){
   else if(sec==='recitation'){if(!RENDERED.recitation){renderRecitation();RENDERED.recitation=1;}}
   else if(sec==='textbook'){if(!RENDERED.textbook){renderChapters('textbook','p','Every chapter&rsquo;s end-of-chapter problems as a scrollable PDF — open in a new tab to double-check any question.');RENDERED.textbook=1;}}
   else if(sec==='answers'){if(!RENDERED.answers){renderChapters('answers','s','Full worked solutions (Vollhardt Study Guide &amp; Solutions Manual) per chapter, as PDFs.');RENDERED.answers=1;}}
-  else if(sec==='reactions'){if(!RENDERED.reactions){renderChapters('reactions','r','The textbook&rsquo;s &ldquo;New Reactions / Important Concepts&rdquo; summary for each chapter — your reaction roadmap.');RENDERED.reactions=1;}}
+  else if(sec==='reactions'){if(!RENDERED.reactions){renderReactions();RENDERED.reactions=1;}}
   else if(sec==='exams'){if(!RENDERED.exams){renderExams();RENDERED.exams=1;}}
   else if(sec==='lab'){if(!RENDERED.lab){renderLab();RENDERED.lab=1;}}
   else if(sec==='extra'){if(!RENDERED.extra){renderExtra();RENDERED.extra=1;}}
@@ -1416,6 +1510,16 @@ const QUIZINFO={
 const L=(label,href)=>({label,href});
 function describeItem(cat,title){
   let m;
+  if(m=title.match(/Recitation worksheet:\s*(.+)/)){const lbl=m[1];const r=RESOURCES.recitation.find(x=>x.label===lbl);
+    return {icon:'✍️',tag:'Orgo II · recitation',head:r?r.label:lbl,what:(r&&r.topic?r.topic+'. ':'')+'Recitation worksheet — recommended due 2 days after the recitation that covers it. Work the mechanisms & short syntheses.',sh:'Open',study:r?[L('Recitation worksheet (PDF)',RES(r.file))]:[]};}
+  if(m=title.match(/Extra practice:\s*(.+)/)){const lbl=m[1];const r=RESOURCES.extra.find(x=>x.label===lbl);
+    return {icon:'🧪',tag:'Orgo Lab · extra practice',head:r?r.label:lbl,what:'Extra-practice problems'+(r&&r.quiz?' — great prep for '+r.quiz:'')+'. Recommended due 2 days after the lab that covers it.',sh:'Open',study:r?[L('Extra practice (PDF)',RES(r.file))]:[]};}
+  if(m=title.match(/Past Exam (\d) practice/)){const n=+m[1];
+    return {icon:'📕',tag:'Orgo II · exam practice',head:'Past Exam '+n+' (Orgo II)',what:'Sit it timed like the real thing, then check yourself with the chapter answer keys & your worksheets. Set to the day of Exam '+n+' so you practice right before.',sh:'Open',study:[L('Past Exam '+n+' (PDF)',RES('past-exam-'+n+'.pdf'))]};}
+  if(m=title.match(/Lab Final practice — (.+)/)){const key=m[1];const map={'Midterm Practice':'lab-midterm-practice.pdf','Post-midterm review':'lab-postmidterm-review.pdf','Final review doc':'lab-final-review.pdf'};const file=map[key]||'lab-final-review.pdf';
+    return {icon:'📋',tag:'Orgo Lab · exam practice',head:'Lab Final practice',what:'Practice for the Lab Final — covers Activities 1–11, Thu Aug 6 in the lab. Work through it in the final week.',sh:'Open',study:[L(key,RES(file))]};}
+  if(m=title.match(/Notebook pages — Activity (\d+)/)){const n=+m[1];const a=LABACTS.find(a=>a.n===n)||{};
+    return {icon:'📓',tag:'Orgo Lab · notebook',head:'Notebook pages — Activity '+n,what:'Hand-written pre-lab notebook pages for Activity '+n+' ('+(a.title||'')+'): title, objective, reagent table & procedure outline in your numbered notebook. Bring it to lab — checked at 1:00 PM. Separate from the Labflow pre-lab assessment.',sh:'',study:[]};}
   if(m=title.match(/Quiz (\d+)/)){const n=+m[1];const qi=QUIZINFO[n]||{};
     return {icon:'📝',tag:'Lab quiz',head:'Quiz '+n,what:'Taken on Canvas during lab lecture (LockDown Browser). '+(qi.covers||''),sh:qi.links&&qi.links.length?'Recommended study':'',study:(qi.links||[]).map(x=>L(x.label,RES(x.file)))};}
   if(/Lab Final/i.test(title)){return {icon:'🧫',tag:'Lab final',head:'Lab Final Exam',what:'Covers Activities 1–11 · Thu Aug 6 in the lab. Review your notebooks, post-lab work, and the review documents.',sh:'Lab reviews',study:RESOURCES.labReview.map(x=>L(x.label,RES(x.file)))};}
@@ -1450,7 +1554,7 @@ function describeItem(cat,title){
 }
 let DETAIL_TITLE='';
 function updateDoneBtn(title){const b=$('#dtDone');
-  const markable=/Quiz|Pre-Lab|Post-Lab|Exam|Final|Worksheet|NMR Video/i.test(title);
+  const markable=/Quiz|Pre-Lab|Post-Lab|Exam|Final|Worksheet|NMR Video|Notebook pages|Recitation worksheet|Extra practice|Past Exam|Lab Final practice/i.test(title);
   if(!markable){b.hidden=true;return;}
   const done=isDone(title);b.hidden=false;b.textContent=done?'↺ Mark as not done':'✓ Mark as done';b.classList.toggle('is-done',done);}
 function showDetail(cat,title){DETAIL_TITLE=title;const d=describeItem(cat,title);const c=CATS[cat]?CATS[cat].color:'var(--accent)';
@@ -1470,13 +1574,11 @@ function boot(){
   $('#ham').addEventListener('click',()=>$('#app').classList.toggle('sb-open'));
   $('#scrim').addEventListener('click',closeSidebar);
   $$('#themeSeg button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.themeSet)));
-  const searchEl=$('#search');searchEl.addEventListener('input',()=>runSearch(searchEl.value));
-  searchEl.addEventListener('keydown',e=>{if(e.key==='Escape'){searchEl.value='';runSearch('');searchEl.blur();}});
   $('#content').addEventListener('click',e=>{const el=e.target.closest('[data-detail]');if(el){e.preventDefault();showDetail(el.dataset.cat,el.dataset.title);}});
   $('#dtClose').addEventListener('click',closeDetail);
   $('#dtDone').addEventListener('click',()=>toggleDone(DETAIL_TITLE));
   $('#detail').addEventListener('click',e=>{if(e.target.id==='detail')closeDetail();});
-  document.addEventListener('keydown',e=>{const typing=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);if(e.key==='/'&&!typing){e.preventDefault();searchEl.focus();}if(e.key==='Escape')closeDetail();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
   let sec=(location.hash||'').replace('#','');
   if(!SEC_TITLE[sec]){try{const s=localStorage.getItem('orgo-sec');if(s&&SEC_TITLE[s])sec=s;}catch(e){}}
   setSection(SEC_TITLE[sec]?sec:'dashboard');
