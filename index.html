@@ -586,6 +586,30 @@
   .wk-ws a{color:var(--accent-ink)}
   .week{margin:0 0 18px}
 
+  /* clickable calendar items + bolder quizzes/exams */
+  .wv-adchip,.wv-dl,.wv-ev,.dl{cursor:pointer}
+  .wv-adchip[data-cat="quiz"],.wv-dl[data-cat="quiz"],.wv-ev[data-cat="quiz"]{font-weight:800}
+  .wv-adchip[data-cat="exam"],.wv-dl[data-cat="exam"]{font-weight:800}
+  .wv-adchip:hover,.wv-dl:hover{filter:brightness(.97);box-shadow:0 0 0 1px var(--cc)}
+  .dl:hover{background:var(--card-2)}
+  .copyright{margin-top:10px;font-size:11px;font-weight:700;color:var(--ink-soft)}
+
+  /* detail modal */
+  .detail{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(20,16,10,.55);padding:16px}
+  .detail.open{display:flex}
+  .detail-panel{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);max-width:460px;width:100%;padding:20px 22px;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
+  [data-theme="carbon"] .detail-panel{border-radius:0}
+  .dt-close{position:absolute;top:12px;right:12px;border:0;background:transparent;font-size:16px;cursor:pointer;color:var(--ink-faint)}
+  .dt-top{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .dt-icon{font-size:22px}
+  .dt-tag{font-family:var(--font-mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;padding:3px 9px;border-radius:999px}
+  [data-theme="carbon"] .dt-tag{border-radius:0}
+  .dt-head{font-family:var(--font-display);font-weight:var(--display-wt);font-size:20px;margin:0 0 7px;line-height:1.1}
+  .dt-what{font-size:13.5px;color:var(--ink-soft);line-height:1.5;margin:0 0 12px}
+  .dt-sh{font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink-faint);margin:6px 0 7px}
+  .dt-link{display:block;font-size:13px;font-weight:600;color:var(--accent-ink);text-decoration:none;padding:8px 11px;border:1px solid var(--rule-soft);border-radius:9px;margin-bottom:6px;background:var(--card-2)}
+  [data-theme="carbon"] .dt-link{border-radius:0}
+  .dt-link:hover{border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -647,8 +671,19 @@
         <footer class="site-foot">
           Recommended dates are guidance, timed to land <b>before</b> deadlines so busy weeks don't sink you.
           Canvas &amp; Labflow are the source of truth. Textbook: Vollhardt &amp; Schore, <i>Organic Chemistry</i>, 8th ed.
+          <div class="copyright">Created by Michael Bockstaller — do not distribute due to copyright issues.</div>
         </footer>
       </main>
+    </div>
+
+    <div class="detail" id="detail" role="dialog" aria-modal="true" aria-label="Details">
+      <div class="detail-panel">
+        <button class="dt-close" id="dtClose" aria-label="Close">✕</button>
+        <div class="dt-top"><span class="dt-icon" id="dtIcon"></span><span class="dt-tag" id="dtTag"></span></div>
+        <h3 class="dt-head" id="dtHead"></h3>
+        <p class="dt-what" id="dtWhat"></p>
+        <div class="dt-study" id="dtStudy"></div>
+      </div>
     </div>
   </div>
 
@@ -1090,7 +1125,7 @@ function initTheme(){let t='sage';try{const s=localStorage.getItem('orgo-theme')
 
 /* ---------- DASHBOARD ---------- */
 function dlRow(x,big){const w=relDay(x.due);const c=CATS[x.cat];
-  return `<div class="dl${big?' big':''}${w.diff<=0?' urgent':''}" data-cat="${x.cat}">
+  return `<div class="dl${big?' big':''}${w.diff<=0?' urgent':''}" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}">
     <div class="dl-bar" style="background:${c.color}"></div>
     <div class="dl-when"><b>${w.big}</b>${w.small?`<span>${w.small}</span>`:''}</div>
     <div class="dl-body"><div class="dl-t">${x.title}</div><div class="dl-m">${x.loc}</div></div>
@@ -1153,7 +1188,7 @@ function renderCalendar(){
     head+=`<div class="wv-dh${isT?' is-today':''}${wknd?' wknd':''}"><div class="dh-dow">${dows[i]}</div><div class="dh-date">${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</div>${labDay?'<div class="dh-safe">🥽 gear · 419</div>':''}</div>`;});
   head+=`</div>`;
   let ad=`<div class="wv-allday"><div class="wv-adlabel">due</div>`;
-  dates.forEach((d,i)=>{const k=iso(d),wknd=i>=5;const chips=byDate[k].allday.map(x=>{const c=CATS[x.cat].color;return `<span class="wv-adchip" data-cat="${x.cat}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;}).join('');ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;});
+  dates.forEach((d,i)=>{const k=iso(d),wknd=i>=5;const chips=byDate[k].allday.map(x=>{const c=CATS[x.cat].color;return `<span class="wv-adchip" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;}).join('');ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;});
   ad+=`</div>`;
   const H=(GH1-GH0)*HPX;let gut=`<div class="wv-gutter" style="position:relative;height:${H}px">`;
   for(let hh=GH0;hh<GH1;hh++)gut+=`<div class="wv-hour" style="position:absolute;top:${(hh-GH0)*HPX-5}px;right:0">${fmtHour(hh)}</div>`;gut+=`</div>`;
@@ -1162,8 +1197,8 @@ function renderCalendar(){
     for(let hh=GH0;hh<=GH1;hh++)cell+=`<div class="wv-hline" style="top:${(hh-GH0)*HPX}px"></div>`;
     const blocks=[];(evByDate[k]||[]).forEach(ev=>{if(ev.holiday){cell+=`<div class="wv-holiday">${ev.ttl}</div>`;return;}const bt=blockTimes(ev);if(bt&&bt[0]!=null)blocks.push({s:bt[0],e:bt[1],ev});});
     packBlocks(blocks);blocks.forEach(b=>{const ev=b.ev,c=CATS[ev.cat].color;const laneW=60,colW=laneW/b.nc,left=1+b.col*colW,top=(b.s-GH0)*HPX,ht=Math.max(20,(b.e-b.s)*HPX-2);const rm=ROOMS[ev.kind]?`<div class="we-room">📍 ${ROOMS[ev.kind]}</div>`:'';
-      cell+=`<div class="wv-ev${ev.cat==='exam'?' exam':''}" data-cat="${ev.cat}" style="--cc:${c};top:${top}px;height:${ht}px;left:${left}%;width:${colW-1}%" title="${(ev.ttl||'').replace(/"/g,'')}"><div class="we-time">${ev.time||''}</div><div class="we-ttl">${calLabel(ev)}</div>${ht>46?rm:''}</div>`;});
-    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{const c=CATS[x.cat].color;const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);cell+=`<div class="wv-dl" data-cat="${x.cat}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;});
+      cell+=`<div class="wv-ev${ev.cat==='exam'?' exam':''}" data-cat="${ev.cat}" data-detail="1" data-title="${(ev.ttl||'').replace(/"/g,'&quot;')}" style="--cc:${c};top:${top}px;height:${ht}px;left:${left}%;width:${colW-1}%" title="${(ev.ttl||'').replace(/"/g,'')}"><div class="we-time">${ev.time||''}</div><div class="we-ttl">${calLabel(ev)}</div>${ht>46?rm:''}</div>`;});
+    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{const c=CATS[x.cat].color;const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);cell+=`<div class="wv-dl" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;});
     if(isT){const hr=nowD.getHours()+nowD.getMinutes()/60;if(hr>=GH0&&hr<=GH1)cell+=`<div class="wv-now" style="top:${(hr-GH0)*HPX}px;left:0;right:0"></div>`;}
     cell+=`</div>`;cols+=cell;});
   host.innerHTML=nav+`<div class="wv-scroll"><div class="wv-inner">${head}${ad}<div class="wv-grid">${gut}${cols}</div></div></div>`;
@@ -1290,6 +1325,53 @@ function runSearch(q){q=(q||'').trim().toLowerCase();const sec=$('.sec:not([hidd
   if(!q){cards.forEach(c=>c.style.display='');return;}
   cards.forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'':'none');}
 
+/* ---------- click-to-describe (calendar & dashboard items) ---------- */
+const QUIZINFO={
+ 1:{covers:'Chem 0345 course policies (syllabus, safety, Labflow & Canvas) — asynchronous on Canvas, no chemistry to study.',links:[]},
+ 2:{covers:'Activities 1–2: lab safety, IR basics, and ¹H NMR Workshop 1.',links:[{label:'NMR Workshop 1 worksheet',file:'nmr-workshop1-worksheet.pdf'}]},
+ 3:{covers:'Activity 3 — Extraction & Recrystallization of Benzoic Acid.',links:[{label:'Activity 3 extra practice',file:'labprep-act3.pdf'}]},
+ 4:{covers:'Activity 4 — Thin-Layer Chromatography (TLC).',links:[{label:'Activity 4 extra practice',file:'labprep-act4.pdf'}]},
+ 5:{covers:'Activity 5 — ¹H NMR Workshop 2 (structure & reaction analysis).',links:[{label:'Activity 5 extra practice',file:'labprep-act5.pdf'},{label:'NMR Series 2 · Complex splitting',file:'nmr2-3-complex-splitting.pdf'}]},
+ 6:{covers:'Activity 6 — Dehydration of Cyclohexanol.',links:[{label:'Activity 6 extra practice',file:'labprep-act6.pdf'}]},
+ 7:{covers:'Activity 7 — Grignard / Triphenylmethanol.',links:[{label:'Activity 7 extra practice',file:'labprep-act7.pdf'}]},
+ 8:{covers:'Activity 8 — Markovnikov Hydrohalogenation of Carvone.',links:[{label:'Activity 8 extra practice',file:'labprep-act8.pdf'}]},
+ 9:{covers:'Activity 9 — EAS: Bromination of Aniline & N-Acetylaniline.',links:[{label:'Activity 9 extra practice',file:'labprep-act9.pdf'}]},
+ 10:{covers:'Activity 10 — Aldol Addition & Condensation.',links:[{label:'Activity 10 extra practice',file:'labprep-act10.pdf'}]}
+};
+const L=(label,href)=>({label,href});
+function describeItem(cat,title){
+  let m;
+  if(m=title.match(/Quiz (\d+)/)){const n=+m[1];const qi=QUIZINFO[n]||{};
+    return {icon:'📝',tag:'Lab quiz',head:'Quiz '+n,what:'Taken on Canvas during lab lecture (LockDown Browser). '+(qi.covers||''),sh:qi.links&&qi.links.length?'Recommended study':'',study:(qi.links||[]).map(x=>L(x.label,RES(x.file)))};}
+  if(cat==='exam'&&/Final/i.test(title)){
+    return {icon:'📕',tag:'Lecture final',head:'Final Exam — Orgo II',what:'Cumulative · Fri Aug 7, 10:00–12:00 in Chevron 152, slightly weighted toward the newest material.',sh:'Recommended study',
+      study:[L('Organic Reaction Library','assets/resources/reaction-library.pdf'),L('Past Exam 1','assets/resources/past-exam-1.pdf'),L('Past Exam 2','assets/resources/past-exam-2.pdf'),L('Past Exam 3','assets/resources/past-exam-3.pdf')].concat(WORKSHEETS.filter(w=>!w.nmr).map(w=>L(w.title.split(/[—:]/)[0].trim()+' worksheet',WSF(w.pdf))).slice(0,6))};}
+  if(m=title.match(/Exam (\d)/)){const n=+m[1];const ex=EXAMS.find(e=>e.name==='Exam '+n)||{};const d=ex.date?parseDateTime(ex.date):null;
+    const study=[];if(ex.past)study.push(L('Past Exam '+n+' (timed practice)','assets/resources/'+ex.past));
+    (ex.chapters||[]).forEach(ch=>{if(CHPDF[ch]){study.push(L('Ch '+ch+' problems',PDFF(CHPDF[ch].p)));study.push(L('Ch '+ch+' answer key',PDFF(CHPDF[ch].s)));}});
+    WORKSHEETS.filter(w=>w.exam==='Exam '+n).forEach(w=>study.push(L(w.title.split(/[—:]/)[0].trim()+' worksheet',WSF(w.pdf))));
+    return {icon:'📕',tag:'Lecture exam',head:'Exam '+n+' — Orgo II',what:'Covers '+(ex.covers||'')+'. '+(d?DOW[d.getDay()]+' '+MON[d.getMonth()].slice(0,3)+' '+d.getDate()+', 10:00 in Chevron 152.':''),sh:'Recommended study',study};}
+  if(/NMR Video Series/i.test(title)){const s2=/Series 2/.test(title);
+    return {icon:'📺',tag:'Lab assignment · Canvas',head:title.replace(/ — .*/,''),what:'Watch on Canvas before the lab that uses it'+(s2?' (¹H NMR Workshop 2, Mon Jul 13)':' (¹H NMR Workshop 1, Thu Jul 2)')+'. Required lab assignment — watch by the day before.',sh:'Slide decks (PDF)',study:RESOURCES.nmrSlides.filter(x=>new RegExp(s2?'nmr2':'nmr1').test(x.file)).map(x=>L(x.label,RES(x.file)))};}
+  if(m=title.match(/Worksheet:\s*(.+?)(?:\s*\(recommended\))?$/)){const nm=m[1].replace(/^📝\s*/,'');const w=WORKSHEETS.find(w=>nm.includes(w.title)||w.title.includes(nm));
+    return {icon:'📝',tag:'Recommended worksheet',head:w?w.title:nm,what:w?'Topic-aligned practice — '+w.topic+'. Recommended (optional); finish before the exam.':'Recommended practice worksheet.',sh:'Open',
+      study:w?[L('Worksheet PDF (GoodNotes)',WSF(w.pdf))].concat(Object.keys(w.probs).map(ch=>L('Ch '+ch+' problems',PDFF(CHPDF[ch].p))),Object.keys(w.probs).slice(0,1).map(ch=>L('Ch '+ch+' answer key',PDFF(CHPDF[ch].s)))):[]};}
+  if(m=title.match(/(Pre-Lab|Post-Lab)\s*(\d+)/)){const kind=m[1],n=+m[2];const a=LABACTS.find(a=>a.n===n)||{};
+    return {icon:'📋',tag:'Lab assignment · Labflow',head:kind+' '+n,what:(kind==='Pre-Lab'?'Complete BEFORE lab — due 1:00 PM on the lab day':'Complete AFTER lab — due 1:00 PM one week later')+', on Labflow. Activity '+n+': '+(a.title||'')+'.',sh:a.extra?'Extra practice':'',study:a.extra?[L('Activity '+n+' extra practice',RES(a.extra))]:[]};}
+  if(cat==='lecture')return {icon:'🎓',tag:'Orgo II lecture',head:title,what:'Lecture in Chevron 152, 10:00–11:45 AM. Read the assigned sections beforehand.',sh:'',study:[]};
+  if(cat==='recit')return {icon:'✍️',tag:'Orgo II recitation',head:'Recitation',what:'Recitation in Chevron 152, 11:00–11:50 AM (Wednesday). Bring the week&rsquo;s worksheet.',sh:'Recitation worksheets',study:RESOURCES.recitation.slice(0,3).map(x=>L(x.label,RES(x.file)))};
+  if(cat==='lab')return {icon:'🧫',tag:'Orgo Lab',head:title,what:'Chevron 419, 1:00–4:50 PM. 🥽 Bring goggles, flame-resistant coat, long pants & numbered notebook. Pre-lab due 1:00 PM.',sh:'',study:[]};
+  return {icon:'📌',tag:(CATS[cat]?CATS[cat].label:''),head:title,what:'',sh:'',study:[]};
+}
+function showDetail(cat,title){const d=describeItem(cat,title);const c=CATS[cat]?CATS[cat].color:'var(--accent)';
+  $('#dtIcon').textContent=d.icon;$('#dtTag').textContent=d.tag;$('#dtTag').style.background=c;
+  $('#dtHead').textContent=d.head;$('#dtWhat').textContent=d.what;
+  const s=$('#dtStudy');
+  if(d.study&&d.study.length){s.innerHTML='<div class="dt-sh">'+d.sh+'</div>'+d.study.map(x=>`<a class="dt-link" href="${x.href}" target="_blank" rel="noopener">${x.label} ↗</a>`).join('');s.hidden=false;}
+  else s.hidden=true;
+  $('#detail').classList.add('open');}
+function closeDetail(){$('#detail').classList.remove('open');}
+
 /* ---------- boot ---------- */
 function boot(){
   initTheme();renderFilters();
@@ -1299,7 +1381,10 @@ function boot(){
   $$('#themeSeg button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.themeSet)));
   const searchEl=$('#search');searchEl.addEventListener('input',()=>runSearch(searchEl.value));
   searchEl.addEventListener('keydown',e=>{if(e.key==='Escape'){searchEl.value='';runSearch('');searchEl.blur();}});
-  document.addEventListener('keydown',e=>{const typing=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);if(e.key==='/'&&!typing){e.preventDefault();searchEl.focus();}});
+  $('#content').addEventListener('click',e=>{const el=e.target.closest('[data-detail]');if(el){e.preventDefault();showDetail(el.dataset.cat,el.dataset.title);}});
+  $('#dtClose').addEventListener('click',closeDetail);
+  $('#detail').addEventListener('click',e=>{if(e.target.id==='detail')closeDetail();});
+  document.addEventListener('keydown',e=>{const typing=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);if(e.key==='/'&&!typing){e.preventDefault();searchEl.focus();}if(e.key==='Escape')closeDetail();});
   let sec=(location.hash||'').replace('#','');
   if(!SEC_TITLE[sec]){try{const s=localStorage.getItem('orgo-sec');if(s&&SEC_TITLE[s])sec=s;}catch(e){}}
   setSection(SEC_TITLE[sec]?sec:'dashboard');
