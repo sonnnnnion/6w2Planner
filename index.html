@@ -567,8 +567,12 @@
   .sb-item .ic{font-size:15px;width:20px;text-align:center}
   .sb-item:hover{background:var(--card-2);color:var(--ink)}
   .sb-item.active{background:color-mix(in srgb,var(--accent) 15%,var(--card));color:var(--ink);font-weight:700}
-  .sb-foot{margin-top:auto;display:flex;gap:12px;padding:12px 10px 2px;border-top:1px solid var(--rule-soft)}
-  .sb-foot a{font-size:11.5px;font-weight:600;color:var(--accent-ink);text-decoration:none}
+  .sb-foot{margin-top:auto;display:flex;gap:12px;padding:12px 8px 4px;border-top:1px solid var(--rule-soft)}
+  .sb-canvas{flex:1;text-align:center;font-size:12.5px;font-weight:700;color:var(--accent-ink);text-decoration:none;
+    padding:9px 12px;border:1px solid var(--rule);border-radius:9px;background:var(--chip);
+    transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast)}
+  [data-theme="carbon"] .sb-canvas{border-radius:0;border-width:1.5px}
+  .sb-canvas:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--ink)}
   .main-wrap{flex:1;min-width:0;display:flex;flex-direction:column}
   .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;padding:10px clamp(14px,2.5vw,26px);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:none;border-bottom:1px solid var(--rule)}
   .ham{font-size:20px;cursor:pointer;border:0;background:transparent;color:var(--ink);padding:2px 6px;line-height:1}
@@ -761,9 +765,7 @@
         <button class="sb-item" data-sec="progress"><span class="ic">📈</span>Progress</button>
       </nav>
       <div class="sb-foot">
-        <a href="https://canvas.pitt.edu" target="_blank" rel="noopener">Canvas ↗</a>
-        <a href="#textbook">📚 Textbook</a>
-        <a href="#answers">🔑 Answer key</a>
+        <a class="sb-canvas" href="https://canvas.pitt.edu" target="_blank" rel="noopener">Canvas ↗</a>
       </div>
     </aside>
 
@@ -1473,7 +1475,6 @@ function courseOfItem(cat,title){if(cat==='lab'||cat==='quiz'||cat==='spec')retu
 function renderProgress(){
   const all=allDeadlines();const total=all.length;const done=all.filter(([dt,cat,title])=>isDone(title)).length;
   const pct=total?Math.round(done/total*100):0;const R=54,C=2*Math.PI*R;const off=(C*(1-pct/100)).toFixed(1);
-  const note=pct>=100?'Every assignment checked off — you cooked the entire term. 🔥':pct>=75?'Almost there. The finish line is in sight.':pct>=50?'Past the halfway mark. Keep the streak alive.':pct>=25?'Building momentum — nice.':pct>0?'You&rsquo;re on the board. Keep going.':'Nothing checked off yet. Mark something done to start the fill.';
   // per-course
   const courses={ii:{label:'Orgo II · Chem 0320',color:'var(--c-lecture)',done:0,total:0},lab:{label:'Orgo Lab · Chem 0345',color:'var(--c-lab)',done:0,total:0}};
   all.forEach(([dt,cat,title])=>{const k=courseOfItem(cat,title);courses[k].total++;if(isDone(title))courses[k].done++;});
@@ -1493,12 +1494,10 @@ function renderProgress(){
           <circle class="pg-ring-fg" cx="75" cy="75" r="${R}" style="stroke-dasharray:${C.toFixed(1)};stroke-dashoffset:${off}"/>
         </svg>
         <div class="pg-sq" aria-hidden="true"><span class="pg-sq-fill"></span></div>
-        <div class="pg-pct">${pct}<small>%</small></div>
+        <div class="pg-pct"><span>${pct}<small>%</small></span></div>
       </div>
       <div class="pg-hero-txt">
-        <div class="pg-hero-h">${done} <span>of ${total} done</span></div>
-        <div class="pg-hero-note">${note}</div>
-        <div class="pg-hero-cta">${pct>=100?'':'Head to <b>Week-by-week</b> or the <b>Dashboard</b> and hit “✓ Mark as done”.'}</div>
+        <div class="pg-hero-h">Term progress</div>
       </div>
     </div>
     <h3 class="sub-h">By course</h3>
