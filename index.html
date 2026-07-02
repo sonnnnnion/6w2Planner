@@ -586,6 +586,40 @@
   .wk-ws a{color:var(--accent-ink)}
   .week{margin:0 0 18px}
 
+  /* assignment spread (week-by-week) */
+  .as-week{margin:0 0 24px}
+  .as-wk-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;border-bottom:2px solid var(--rule-soft);margin-bottom:8px}
+  .as-wk-head .num{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--accent-ink);border:1px solid var(--rule);border-radius:6px;padding:3px 8px}
+  [data-theme="carbon"] .as-wk-head .num{border-radius:0}
+  .as-wk-head .rng{font-family:var(--font-display);font-weight:var(--display-wt);font-size:20px}
+  .as-wk-head .focus{font-size:12px;color:var(--ink-faint)}
+  .as-week.current .as-wk-head .rng{color:var(--today)}
+  .as-day{display:grid;grid-template-columns:118px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--rule-soft)}
+  .as-day:first-of-type{border-top:0}
+  .as-date{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft);padding-top:7px}
+  .as-date b{color:var(--ink);font-family:var(--font-display);font-weight:var(--display-wt);font-size:16px}
+  .as-day.is-today .as-date b{color:var(--today)}
+  .as-items{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .as-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;background:var(--card);border:1px solid var(--rule-soft);cursor:pointer;transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast)}
+  [data-theme="carbon"] .as-item{border-radius:0}
+  .as-item:hover{transform:translateX(2px);box-shadow:var(--shadow-sm)}
+  .as-bar{flex:0 0 4px;align-self:stretch;border-radius:3px;min-height:22px}
+  .as-check{flex:0 0 15px;font-weight:800;color:var(--c-lecture);text-align:center}
+  .as-item:not(.done) .as-check{color:var(--ink-faint);font-weight:400}
+  .as-t{flex:1;min-width:0;font-weight:600;font-size:14px;line-height:1.25}
+  .as-item[data-cat="quiz"] .as-t,.as-item[data-cat="exam"] .as-t{font-weight:800}
+  .as-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-faint);white-space:nowrap}
+  .as-tag{font-family:var(--font-mono);font-size:8.5px;font-weight:700;text-transform:uppercase;color:#fff;padding:3px 7px;border-radius:999px;white-space:nowrap}
+  [data-theme="carbon"] .as-tag{border-radius:0}
+  .as-item.done{opacity:.62}
+  .as-item.done .as-t{text-decoration:line-through;color:var(--ink-faint)}
+  .as-empty{color:var(--ink-faint);font-style:italic;font-size:12.5px;padding:8px 2px}
+  .wv-adchip.done,.wv-dl.done{text-decoration:line-through;opacity:.5}
+  .dt-done{margin-top:10px;width:100%;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:10px;border-radius:10px;border:1px solid var(--rule);background:var(--card-2);color:var(--ink)}
+  [data-theme="carbon"] .dt-done{border-radius:0}
+  .dt-done:hover{box-shadow:var(--shadow-sm)}
+  .dt-done.is-done{background:color-mix(in srgb,var(--c-lecture) 18%,var(--card));border-color:var(--c-lecture)}
+
   /* clickable calendar items + bolder quizzes/exams */
   .wv-adchip,.wv-dl,.wv-ev,.dl{cursor:pointer}
   .wv-adchip[data-cat="quiz"],.wv-dl[data-cat="quiz"],.wv-ev[data-cat="quiz"]{font-weight:800}
@@ -683,6 +717,7 @@
         <h3 class="dt-head" id="dtHead"></h3>
         <p class="dt-what" id="dtWhat"></p>
         <div class="dt-study" id="dtStudy"></div>
+        <button class="dt-done" id="dtDone" hidden></button>
       </div>
     </div>
   </div>
@@ -1110,6 +1145,18 @@ function allDeadlines(){return DEADLINES.concat(worksheetDeadlines());}
 function nextExam(){const n=now();return EXAMS.find(e=>parseDateTime(e.date)>=n)||null;}
 function examCountdown(e){const d=parseDate(e.date.split('T')[0]),diff=dayDiff(d,today());return diff<0?'done':diff===0?'today':diff===1?'tomorrow':`in ${diff} days`;}
 
+/* ---------- done state (saved in this browser) ---------- */
+let DONE=new Set();
+try{const s=localStorage.getItem('orgo-done');if(s)DONE=new Set(JSON.parse(s));}catch(e){}
+const isDone=t=>DONE.has(t);
+function saveDone(){try{localStorage.setItem('orgo-done',JSON.stringify([...DONE]));}catch(e){}}
+function toggleDone(t){DONE.has(t)?DONE.delete(t):DONE.add(t);saveDone();
+  const active=(document.querySelector('.sec:not([hidden])')||{}).id;
+  if(active==='sec-dashboard')renderDashboard();
+  else if(active==='sec-calendar')renderCalendar();
+  else if(active==='sec-schedule')renderWeeks();
+  if($('#detail').classList.contains('open'))updateDoneBtn(t);}
+
 /* ---------- filters ---------- */
 const filterState={};Object.keys(CATS).forEach(k=>filterState[k]=true);
 function renderFilters(){const host=$('#filters');host.querySelectorAll('.fchip').forEach(e=>e.remove());
@@ -1132,7 +1179,7 @@ function dlRow(x,big){const w=relDay(x.due);const c=CATS[x.cat];
     <div class="dl-tag" style="background:${c.color}">${c.label}</div></div>`;}
 function renderDashboard(){
   const host=$('#sec-dashboard');const n=now(),t=today();
-  const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc})).filter(x=>x.due>=n).sort((a,b)=>a.due-b.due);
+  const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc})).filter(x=>x.due>=n&&!isDone(x.title)).sort((a,b)=>a.due-b.due);
   const dayOf=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
   const tonight=items.filter(x=>dayDiff(dayOf(x.due),t)<=1);
   const thisSun=new Date(startOfWeekMon(t));thisSun.setDate(thisSun.getDate()+6);
@@ -1188,7 +1235,7 @@ function renderCalendar(){
     head+=`<div class="wv-dh${isT?' is-today':''}${wknd?' wknd':''}"><div class="dh-dow">${dows[i]}</div><div class="dh-date">${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</div>${labDay?'<div class="dh-safe">🥽 gear · 419</div>':''}</div>`;});
   head+=`</div>`;
   let ad=`<div class="wv-allday"><div class="wv-adlabel">due</div>`;
-  dates.forEach((d,i)=>{const k=iso(d),wknd=i>=5;const chips=byDate[k].allday.map(x=>{const c=CATS[x.cat].color;return `<span class="wv-adchip" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;}).join('');ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;});
+  dates.forEach((d,i)=>{const k=iso(d),wknd=i>=5;const chips=byDate[k].allday.map(x=>{const c=CATS[x.cat].color;return `<span class="wv-adchip${isDone(x.title)?' done':''}" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}" style="--cc:${c}" title="${x.title.replace(/"/g,'')}">${x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*(NMR )?Worksheet:\s*/,'📝 ').slice(0,42)}</span>`;}).join('');ad+=`<div class="wv-adcell${wknd?' wknd':''}">${chips}</div>`;});
   ad+=`</div>`;
   const H=(GH1-GH0)*HPX;let gut=`<div class="wv-gutter" style="position:relative;height:${H}px">`;
   for(let hh=GH0;hh<GH1;hh++)gut+=`<div class="wv-hour" style="position:absolute;top:${(hh-GH0)*HPX-5}px;right:0">${fmtHour(hh)}</div>`;gut+=`</div>`;
@@ -1198,7 +1245,7 @@ function renderCalendar(){
     const blocks=[];(evByDate[k]||[]).forEach(ev=>{if(ev.holiday){cell+=`<div class="wv-holiday">${ev.ttl}</div>`;return;}const bt=blockTimes(ev);if(bt&&bt[0]!=null)blocks.push({s:bt[0],e:bt[1],ev});});
     packBlocks(blocks);blocks.forEach(b=>{const ev=b.ev,c=CATS[ev.cat].color;const laneW=60,colW=laneW/b.nc,left=1+b.col*colW,top=(b.s-GH0)*HPX,ht=Math.max(20,(b.e-b.s)*HPX-2);const rm=ROOMS[ev.kind]?`<div class="we-room">📍 ${ROOMS[ev.kind]}</div>`:'';
       cell+=`<div class="wv-ev${ev.cat==='exam'?' exam':''}" data-cat="${ev.cat}" data-detail="1" data-title="${(ev.ttl||'').replace(/"/g,'&quot;')}" style="--cc:${c};top:${top}px;height:${ht}px;left:${left}%;width:${colW-1}%" title="${(ev.ttl||'').replace(/"/g,'')}"><div class="we-time">${ev.time||''}</div><div class="we-ttl">${calLabel(ev)}</div>${ht>46?rm:''}</div>`;});
-    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{const c=CATS[x.cat].color;const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);cell+=`<div class="wv-dl" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;});
+    byDate[k].timed.sort((a,b)=>a.hr-b.hr).forEach((x,j)=>{const c=CATS[x.cat].color;const short=x.title.replace(/\s+due.*/i,'').replace(/^📺?\s*/,'').replace(/^Watch\s+/i,'').slice(0,22);cell+=`<div class="wv-dl${isDone(x.title)?' done':''}" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}" style="--cc:${c};top:${(x.hr-GH0)*HPX+j*15}px;right:3px;width:34%" title="${x.title.replace(/"/g,'')}">${short}</div>`;});
     if(isT){const hr=nowD.getHours()+nowD.getMinutes()/60;if(hr>=GH0&&hr<=GH1)cell+=`<div class="wv-now" style="top:${(hr-GH0)*HPX}px;left:0;right:0"></div>`;}
     cell+=`</div>`;cols+=cell;});
   host.innerHTML=nav+`<div class="wv-scroll"><div class="wv-inner">${head}${ad}<div class="wv-grid">${gut}${cols}</div></div></div>`;
@@ -1213,17 +1260,23 @@ function daysHTML(w){const t=today();return w.days.map(day=>{const d=parseDate(d
     const c=CATS[ev.cat];return `<div class="ev" data-cat="${ev.cat}"><div class="accent" style="background:${c.color}"></div><div class="ev-main"><div class="ev-top"><span class="kind" style="background:${c.color}">${ev.kind}</span>${ev.time?`<span class="time">${ev.time}</span>`:''}</div><div class="ttl">${ev.ttl}</div>${ROOMS[ev.kind]?`<div class="room">📍 <b>${ROOMS[ev.kind]}</b></div>`:''}${ev.desc?`<div class="desc">${ev.desc}</div>`:''}${ev.due?dueChips(ev.due):''}</div></div>`;}).join('');
   return `<div class="day${isToday?' is-today':''}"><div class="date">${DOW[d.getDay()]} <b>${MON[d.getMonth()]} ${d.getDate()}</b>${isToday?'<span class="tdy">Today</span>':''}</div><div class="items">${safety}${evs}</div></div>`;}).join('');}
 function dueChips(s){return `<div class="due-items">`+s.split(' · ').map(p=>{const icon=/watch/i.test(p)?'📺':'📋';const m=p.match(/^(.*?)\s+due\s+(.*)$/i);const inner=m?`<b>${m[1]}</b> <span class="dw">due ${m[2]}</span>`:p;return `<span class="due-chip"><span class="di">${icon}</span><span>${inner}</span></span>`;}).join('')+`</div>`;}
+function asItem(x){const c=CATS[x.cat].color; const done=isDone(x.title);
+  const time=x.due.getHours()!==23?timeStr(x.due):'';
+  const label=x.title.replace(/\s*\(recommended\)/,'').replace(/^📝\s*/,'📝 ').replace(/ — watch.*/,'').replace(/\s+due\s+.*/,'');
+  return `<div class="as-item${done?' done':''}" data-cat="${x.cat}" data-detail="1" data-title="${x.title.replace(/"/g,'&quot;')}">
+    <span class="as-bar" style="background:${c}"></span><span class="as-check">${done?'✓':'○'}</span>
+    <span class="as-t">${label}</span><span class="as-meta">${time?time+' · ':''}${x.loc}</span>
+    <span class="as-tag" style="background:${c}">${CATS[x.cat].label}</span></div>`;}
 function renderWeeks(){const host=$('#weeks');const t=today();
-  host.innerHTML=WEEKS.map(w=>{const s=parseDate(w.start),e=parseDate(w.end);const cur=t>=s&&t<=e;
-    const wsHere=WORKSHEETS.filter(x=>{const dd=parseDate(x.due);return dd>=s&&dd<=e;});
-    const wsLinks=wsHere.length?`<div class="wk-ws">📝 Worksheets due this week: ${wsHere.map(x=>`<a href="${WSF(x.pdf)}" target="_blank" rel="noopener">${x.title.split(' — ')[0].split(':')[0]}</a>`).join(' · ')}</div>`:'';
-    const st=w.study;
-    const study=`<div class="wk-study"><div class="wk-study-h">◆ Focus this week</div>
-      <div class="wk-study-g">
-        <p><b>Synthesis:</b> ${st.synth}</p><p><b>Spectroscopy:</b> ${st.spec}</p>
-        <p><b>Recitation:</b> ${st.recit}</p><p><b>Exams/quizzes:</b> ${st.quiz}</p><p><b>Keep warm:</b> ${st.review}</p>
-      </div>${wsLinks}</div>`;
-    return `<section class="week${cur?' current':''}" id="week-${w.n}"><div class="wk-head"><span class="num">Week ${w.n}</span><div class="titles"><div class="rng">${w.range}</div><div class="focus">${w.focus}</div></div>${cur?'<span class="current-badge">This week</span>':''}${w.exam?`<span class="pill-exam">${w.exam}</span>`:''}</div><div class="wk-body">${daysHTML(w)}${study}</div></section>`;}).join('');
+  host.innerHTML=`<p class="sec-intro">Every assignment &amp; recommended task, week by week — <b>only assignments, no class periods</b>. Click any item for details &amp; a <b>Mark&nbsp;as&nbsp;done</b> button; done items cross out and drop off the dashboard. Progress saves in this browser.</p>`+
+  WEEKS.map(w=>{const s=parseDate(w.start),e=parseDate(w.end);const cur=t>=s&&t<=e;const mon=parseDate(w.start);
+    const dates=Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
+    const items=allDeadlines().map(([dt,cat,title,loc])=>({due:parseDateTime(dt),cat,title,loc}));
+    let body=dates.map(d=>{const di=items.filter(x=>dayDiff(new Date(x.due.getFullYear(),x.due.getMonth(),x.due.getDate()),d)===0).sort((a,b)=>a.due-b.due);
+      if(!di.length)return '';const isT=dayDiff(d,t)===0;
+      return `<div class="as-day${isT?' is-today':''}"><div class="as-date">${DOW[d.getDay()]} <b>${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</b>${isT?' · today':''}</div><div class="as-items">${di.map(asItem).join('')}</div></div>`;}).join('');
+    if(!body)body='<div class="as-empty">No assignments this week — get ahead on a worksheet.</div>';
+    return `<section class="as-week${cur?' current':''}" id="week-${w.n}"><div class="as-wk-head"><span class="num">Week ${w.n}</span><span class="rng">${w.range}</span><span class="focus">${w.focus}</span>${cur?'<span class="current-badge">This week</span>':''}</div>${body}</section>`;}).join('');
 }
 
 /* ---------- helpers for resource lists ---------- */
@@ -1343,6 +1396,7 @@ function describeItem(cat,title){
   let m;
   if(m=title.match(/Quiz (\d+)/)){const n=+m[1];const qi=QUIZINFO[n]||{};
     return {icon:'📝',tag:'Lab quiz',head:'Quiz '+n,what:'Taken on Canvas during lab lecture (LockDown Browser). '+(qi.covers||''),sh:qi.links&&qi.links.length?'Recommended study':'',study:(qi.links||[]).map(x=>L(x.label,RES(x.file)))};}
+  if(/Lab Final/i.test(title)){return {icon:'🧫',tag:'Lab final',head:'Lab Final Exam',what:'Covers Activities 1–11 · Thu Aug 6 in the lab. Review your notebooks, post-lab work, and the review documents.',sh:'Lab reviews',study:RESOURCES.labReview.map(x=>L(x.label,RES(x.file)))};}
   if(cat==='exam'&&/Final/i.test(title)){
     return {icon:'📕',tag:'Lecture final',head:'Final Exam — Orgo II',what:'Cumulative · Fri Aug 7, 10:00–12:00 in Chevron 152, slightly weighted toward the newest material.',sh:'Recommended study',
       study:[L('Organic Reaction Library','assets/resources/reaction-library.pdf'),L('Past Exam 1','assets/resources/past-exam-1.pdf'),L('Past Exam 2','assets/resources/past-exam-2.pdf'),L('Past Exam 3','assets/resources/past-exam-3.pdf')].concat(WORKSHEETS.filter(w=>!w.nmr).map(w=>L(w.title.split(/[—:]/)[0].trim()+' worksheet',WSF(w.pdf))).slice(0,6))};}
@@ -1363,12 +1417,18 @@ function describeItem(cat,title){
   if(cat==='lab')return {icon:'🧫',tag:'Orgo Lab',head:title,what:'Chevron 419, 1:00–4:50 PM. 🥽 Bring goggles, flame-resistant coat, long pants & numbered notebook. Pre-lab due 1:00 PM.',sh:'',study:[]};
   return {icon:'📌',tag:(CATS[cat]?CATS[cat].label:''),head:title,what:'',sh:'',study:[]};
 }
-function showDetail(cat,title){const d=describeItem(cat,title);const c=CATS[cat]?CATS[cat].color:'var(--accent)';
+let DETAIL_TITLE='';
+function updateDoneBtn(title){const b=$('#dtDone');
+  const markable=/Quiz|Pre-Lab|Post-Lab|Exam|Final|Worksheet|NMR Video/i.test(title);
+  if(!markable){b.hidden=true;return;}
+  const done=isDone(title);b.hidden=false;b.textContent=done?'↺ Mark as not done':'✓ Mark as done';b.classList.toggle('is-done',done);}
+function showDetail(cat,title){DETAIL_TITLE=title;const d=describeItem(cat,title);const c=CATS[cat]?CATS[cat].color:'var(--accent)';
   $('#dtIcon').textContent=d.icon;$('#dtTag').textContent=d.tag;$('#dtTag').style.background=c;
   $('#dtHead').textContent=d.head;$('#dtWhat').textContent=d.what;
   const s=$('#dtStudy');
   if(d.study&&d.study.length){s.innerHTML='<div class="dt-sh">'+d.sh+'</div>'+d.study.map(x=>`<a class="dt-link" href="${x.href}" target="_blank" rel="noopener">${x.label} ↗</a>`).join('');s.hidden=false;}
   else s.hidden=true;
+  updateDoneBtn(title);
   $('#detail').classList.add('open');}
 function closeDetail(){$('#detail').classList.remove('open');}
 
@@ -1383,6 +1443,7 @@ function boot(){
   searchEl.addEventListener('keydown',e=>{if(e.key==='Escape'){searchEl.value='';runSearch('');searchEl.blur();}});
   $('#content').addEventListener('click',e=>{const el=e.target.closest('[data-detail]');if(el){e.preventDefault();showDetail(el.dataset.cat,el.dataset.title);}});
   $('#dtClose').addEventListener('click',closeDetail);
+  $('#dtDone').addEventListener('click',()=>toggleDone(DETAIL_TITLE));
   $('#detail').addEventListener('click',e=>{if(e.target.id==='detail')closeDetail();});
   document.addEventListener('keydown',e=>{const typing=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);if(e.key==='/'&&!typing){e.preventDefault();searchEl.focus();}if(e.key==='Escape')closeDetail();});
   let sec=(location.hash||'').replace('#','');
