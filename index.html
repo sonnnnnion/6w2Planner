@@ -6,6 +6,14 @@
 <title>Orgo II + Lab — Summer 2026 Study Planner</title>
 <meta name="description" content="Week-by-week study planner for Organic Chemistry II (lecture) and Organic Chemistry Lab, Summer 2026." />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%235d7d3f'/><path d='M16 5 l9 5 v8 a9 11 0 0 1 -9 9 a9 11 0 0 1 -9 -9 v-8 z' fill='none' stroke='%23dfe5cc' stroke-width='2'/><circle cx='16' cy='14' r='3' fill='%23dfe5cc'/></svg>">
+<!-- Installable web app (PWA) -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#5d7d3f">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Orgo Planner">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
   /* ===================== DESIGN TOKENS ===================== */
   :root{
@@ -1276,8 +1284,10 @@ function renderFilters(){const host=$('#filters');host.querySelectorAll('.fchip'
 function applyFilters(){$$('[data-cat]').forEach(el=>{if(el.classList.contains('fchip'))return;el.style.display=filterState[el.dataset.cat]?'':'none';});}
 
 /* ---------- theme ---------- */
+const THEME_BAR={sage:'#f5f3e7',carbon:'#ffffff',midnight:'#0a0e1a'};
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('orgo-theme',t);}catch(e){}
-  $$('#themeSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)));}
+  $$('#themeSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)));
+  const tc=document.querySelector('meta[name="theme-color"]');if(tc&&THEME_BAR[t])tc.setAttribute('content',THEME_BAR[t]);}
 function initTheme(){let t='sage';try{const s=localStorage.getItem('orgo-theme');if(s)t=s;}catch(e){}setTheme(t);}
 
 /* ---------- DASHBOARD ---------- */
@@ -1636,6 +1646,7 @@ function boot(){
   if(!SEC_TITLE[sec]){try{const s=localStorage.getItem('orgo-sec');if(s&&SEC_TITLE[s])sec=s;}catch(e){}}
   setSection(SEC_TITLE[sec]?sec:'dashboard');
   window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(SEC_TITLE[h])setSection(h);});
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 }
 if(typeof module!=='undefined'){module.exports={WEEKS,DEADLINES,CATS,EXAMS,WORKSHEETS,ROOMS,CHPDF,RESOURCES,LABACTS,parseDateTime,parseDate};}
 if(typeof window!=='undefined'){document.addEventListener('DOMContentLoaded',boot);}
