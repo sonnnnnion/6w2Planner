@@ -859,7 +859,6 @@ const DEADLINES = [
   ['2026-07-09T13:00','lab','Pre-Lab 4 — TLC','Labflow'],
   ['2026-07-09T13:00','lab','📓 Notebook pages — Activity 4 (TLC)','Numbered notebook'],
   ['2026-07-14T13:00','lab','Pre-Lab 5 — ¹H NMR Workshop 2','Labflow'],
-  ['2026-07-14T13:00','lab','📓 Notebook pages — Activity 5 (NMR Workshop 2)','Numbered notebook'],
   ['2026-07-16T13:00','lab','Pre-Lab 6 — Dehydration of Cyclohexanol','Labflow'],
   ['2026-07-16T13:00','lab','📓 Notebook pages — Activity 6 (Dehydration)','Numbered notebook'],
   ['2026-07-21T13:00','lab','Pre-Lab 7 — Grignard / Triphenylmethanol','Labflow'],
@@ -1256,7 +1255,9 @@ function relDay(due){const t=today();const dd=new Date(due.getFullYear(),due.get
   else if(diff<7){big=DOW[due.getDay()];small=`${MON[due.getMonth()].slice(0,3)} ${due.getDate()}${tm?' · '+tm:''}`;}
   else{big=`${MON[due.getMonth()].slice(0,3)} ${due.getDate()}`;small=`in ${diff}d`;}
   return {big,small,diff};}
-const RES=f=>`assets/resources/${f}`, WSF=f=>`assets/worksheets/${f}`, PDFF=f=>`assets/pdf/${f}`;
+const RES=f=>`assets/resources/${f}`, WSF=f=>`assets/worksheets/${f}`, PDFF=f=>`assets/pdf/${f}`, NBF=f=>`assets/notebooks/${f}`;
+/* per-activity pre-lab notebook "what to write" guides (Activities with notebook pages: 3,4,6,7,8,9,10,11) */
+const NB_GUIDE={4:'notebook-act4.pdf'};
 
 /* deadlines incl recommended worksheet dues */
 function worksheetDeadlines(){return WORKSHEETS.map(w=>[w.due+'T23:59','textbook','📝 '+(w.nmr?'NMR ':'')+'Worksheet: '+w.title+' (recommended)','Practice']);}
@@ -1599,7 +1600,8 @@ function describeItem(cat,title){
     const study=[L(key,RES(file))];if(keymap[key])study.push(L('🔑 Answer key',RES(keymap[key])));
     return {icon:'📋',tag:'Orgo Lab · exam practice',head:'Lab Final practice',what:'Practice for the Lab Final — covers Activities 1–11, Thu Aug 6 in the lab. Work through it in the final week.',sh:'Open',study};}
   if(m=title.match(/Notebook pages — Activity (\d+)/)){const n=+m[1];const a=LABACTS.find(a=>a.n===n)||{};
-    return {icon:'📓',tag:'Orgo Lab · notebook',head:'Notebook pages — Activity '+n,what:'Hand-written pre-lab notebook pages for Activity '+n+' ('+(a.title||'')+'): title, objective, reagent table & procedure outline in your numbered notebook. Bring it to lab — checked at 1:00 PM. Separate from the Labflow pre-lab assessment.',sh:'',study:[]};}
+    const study=NB_GUIDE[n]?[L('📓 What to write (guide PDF)',NBF(NB_GUIDE[n]))]:[];
+    return {icon:'📓',tag:'Orgo Lab · notebook',head:'Notebook pages — Activity '+n,what:'Hand-written pre-lab notebook pages for Activity '+n+' ('+(a.title||'')+'): purpose + reaction scheme, reagent/safety table, and a procedure plan in your numbered notebook. '+(NB_GUIDE[n]?'Open the guide for exactly what to write, then copy it by hand.':'')+' Bring it to lab — checked at 1:00 PM. Separate from the Labflow pre-lab assessment.',sh:NB_GUIDE[n]?'Open':'',study};}
   if(m=title.match(/Quiz (\d+)/)){const n=+m[1];const qi=QUIZINFO[n]||{};
     return {icon:'📝',tag:'Lab quiz',head:'Quiz '+n,what:'Taken on Canvas during lab lecture (LockDown Browser). '+(qi.covers||''),sh:qi.links&&qi.links.length?'Recommended study':'',study:(qi.links||[]).map(x=>L(x.label,RES(x.file)))};}
   if(/Lab Final/i.test(title)){return {icon:'🧫',tag:'Lab final',head:'Lab Final Exam',what:'Covers Activities 1–11 · Thu Aug 6 in the lab. Review your notebooks, post-lab work, and the review documents.',sh:'Lab reviews',study:RESOURCES.labReview.map(x=>L(x.label,RES(x.file)))};}
