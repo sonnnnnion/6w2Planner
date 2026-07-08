@@ -672,7 +672,10 @@
   .lab-pill.pre{color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 11%,var(--card));border-color:transparent}
   .lab-pill.post{color:var(--ink-soft)}
   .lab-pill.quiz{color:#fff;background:var(--c-quiz);border-color:transparent}
-  .lab-extra{display:inline-block;margin-top:9px;font-size:11.5px;color:var(--accent-ink);text-decoration:none;font-weight:600}
+  .lab-links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:9px}
+  .lab-extra{display:inline-block;font-size:11.5px;color:var(--accent-ink);text-decoration:none;font-weight:600}
+  .lab-links .lab-extra{margin-top:0}
+  .lab-extra:hover{text-decoration:underline}
 
   /* worksheet tweaks for text-based problems */
   .ws-probs{font-size:12.5px;color:var(--ink);line-height:1.55}
@@ -1223,15 +1226,15 @@ const RESOURCES = {
 const LABACTS = [
   {n:1, title:"Introduction, Safety & IR", date:"2026-06-30", pre:"2026-06-30", post:"2026-07-07", quiz:"Quiz 1 (policies · async, by Jul 1)"},
   {n:2, title:"¹H NMR Workshop 1", date:"2026-07-02", pre:"2026-07-02", post:"2026-07-09", quiz:null},
-  {n:3, title:"Extraction & Recrystallization of Benzoic Acid", date:"2026-07-07", pre:"2026-07-07", post:"2026-07-14", quiz:"Quiz 2", extra:"labprep-act3.pdf"},
-  {n:4, title:"Thin-Layer Chromatography (TLC)", date:"2026-07-09", pre:"2026-07-09", post:"2026-07-16", quiz:"Quiz 3", extra:"labprep-act4.pdf"},
+  {n:3, title:"Extraction & Recrystallization of Benzoic Acid", date:"2026-07-07", pre:"2026-07-07", post:"2026-07-14", quiz:"Quiz 2", extra:"labprep-act3.pdf", proc:"act3-procedure.pdf"},
+  {n:4, title:"Thin-Layer Chromatography (TLC)", date:"2026-07-09", pre:"2026-07-09", post:"2026-07-16", quiz:"Quiz 3", extra:"labprep-act4.pdf", proc:"act4-procedure.pdf"},
   {n:5, title:"¹H NMR Workshop 2", date:"2026-07-14", pre:"2026-07-14", post:null, quiz:"Quiz 4", extra:"labprep-act5.pdf"},
-  {n:6, title:"Dehydration of Cyclohexanol", date:"2026-07-16", pre:"2026-07-16", post:"2026-07-23", quiz:"Quiz 5", extra:"labprep-act6.pdf"},
-  {n:7, title:"Grignard: Synthesis of Triphenylmethanol", date:"2026-07-21", pre:"2026-07-21", post:"2026-07-28", quiz:"Quiz 6", extra:"labprep-act7.pdf"},
-  {n:8, title:"Markovnikov Hydrohalogenation of Carvone", date:"2026-07-23", pre:"2026-07-23", post:"2026-07-30", quiz:"Quiz 7", extra:"labprep-act8.pdf"},
-  {n:9, title:"EAS: Bromination of Aniline & N-Acetylaniline", date:"2026-07-28", pre:"2026-07-28", post:"2026-08-04", quiz:"Quiz 8", extra:"labprep-act9.pdf"},
-  {n:10, title:"Aldol Addition & Condensation (Crossed Aldol)", date:"2026-07-30", pre:"2026-07-30", post:"2026-08-06", quiz:"Quiz 9", extra:"labprep-act10.pdf"},
-  {n:11, title:"Forensic Chemistry: Synthesis of Luminol", date:"2026-08-04", pre:"2026-08-04", post:null, quiz:"Quiz 10"}
+  {n:6, title:"Dehydration of Cyclohexanol", date:"2026-07-16", pre:"2026-07-16", post:"2026-07-23", quiz:"Quiz 5", extra:"labprep-act6.pdf", proc:"act6-procedure.pdf"},
+  {n:7, title:"Grignard: Synthesis of Triphenylmethanol", date:"2026-07-21", pre:"2026-07-21", post:"2026-07-28", quiz:"Quiz 6", extra:"labprep-act7.pdf", proc:"act7-procedure.pdf"},
+  {n:8, title:"Markovnikov Hydrohalogenation of Carvone", date:"2026-07-23", pre:"2026-07-23", post:"2026-07-30", quiz:"Quiz 7", extra:"labprep-act8.pdf", proc:"act8-procedure.pdf"},
+  {n:9, title:"EAS: Bromination of Aniline & N-Acetylaniline", date:"2026-07-28", pre:"2026-07-28", post:"2026-08-04", quiz:"Quiz 8", extra:"labprep-act9.pdf", proc:"act9-procedure.pdf"},
+  {n:10, title:"Aldol Addition & Condensation (Crossed Aldol)", date:"2026-07-30", pre:"2026-07-30", post:"2026-08-06", quiz:"Quiz 9", extra:"labprep-act10.pdf", proc:"act10-procedure.pdf"},
+  {n:11, title:"Forensic Chemistry: Synthesis of Luminol", date:"2026-08-04", pre:"2026-08-04", post:null, quiz:"Quiz 10", proc:"act11-procedure.pdf"}
 ];
 
 /* ====================== END DATA ====================== */
@@ -1257,7 +1260,7 @@ function relDay(due){const t=today();const dd=new Date(due.getFullYear(),due.get
   return {big,small,diff};}
 const RES=f=>`assets/resources/${f}`, WSF=f=>`assets/worksheets/${f}`, PDFF=f=>`assets/pdf/${f}`, NBF=f=>`assets/notebooks/${f}`;
 /* per-activity pre-lab notebook "what to write" guides (Activities with notebook pages: 3,4,6,7,8,9,10,11) */
-const NB_GUIDE={4:'notebook-act4.pdf'};
+const NB_GUIDE={4:'notebook-act4.pdf',6:'notebook-act6.pdf',7:'notebook-act7.pdf',8:'notebook-act8.pdf',9:'notebook-act9.pdf',10:'notebook-act10.pdf',11:'notebook-act11.pdf'};
 
 /* deadlines incl recommended worksheet dues */
 function worksheetDeadlines(){return WORKSHEETS.map(w=>[w.due+'T23:59','textbook','📝 '+(w.nmr?'NMR ':'')+'Worksheet: '+w.title+' (recommended)','Practice']);}
@@ -1471,12 +1474,12 @@ function renderExams(){$('#sec-exams').innerHTML=`<p class="sec-intro">Past exam
   <div class="rc-grid">${RESOURCES.exams.map(x=>resCard(x)).join('')}</div>`;}
 
 /* ---------- LAB ACTIVITIES ---------- */
-function renderLab(){const t=today();$('#sec-lab').innerHTML=`<p class="sec-intro">All 11 lab activities in Chevron 419. <b>Pre-lab</b> is due 1:00 PM on the lab day; <b>post-lab</b> 1:00 PM one week later (Labflow). 🥽 Bring goggles, flame-resistant coat, long pants &amp; a numbered notebook.</p>
+function renderLab(){const t=today();$('#sec-lab').innerHTML=`<p class="sec-intro">All 11 lab activities in Chevron 419. <b>Pre-lab</b> is due 1:00 PM on the lab day; <b>post-lab</b> 1:00 PM one week later (Labflow). 🥽 Bring goggles, flame-resistant coat, long pants &amp; a numbered notebook. New: <b>📓 Notebook guide</b> = exactly what to write in your pre-lab notebook pages, and <b>📄 Full procedure</b> = the official Labflow procedure. <a href="${RES('notebook-prep-guidelines.pdf')}" target="_blank" rel="noopener">📋 Pre-lab notebook prep guidelines ↗</a></p>
   <div class="lab-grid">${LABACTS.map(a=>{const d=parseDate(a.date);const cur=dayDiff(d,t)===0;const pre=relDay(parseDate(a.pre));
     return `<div class="lab-card${cur?' today':''}"><div class="lab-top"><span class="lab-n">Activity ${a.n}</span><span class="lab-date">${DOW[d.getDay()]} ${MON[d.getMonth()].slice(0,3)} ${d.getDate()}</span></div>
     <div class="lab-title">${a.title}</div>
     <div class="lab-due"><span class="lab-pill pre">Pre-lab ${MON[parseDate(a.pre).getMonth()].slice(0,3)} ${parseDate(a.pre).getDate()}, 1 PM</span>${a.post?`<span class="lab-pill post">Post-lab ${MON[parseDate(a.post).getMonth()].slice(0,3)} ${parseDate(a.post).getDate()}, 1 PM</span>`:''}${a.quiz?`<span class="lab-pill quiz">${a.quiz}</span>`:''}</div>
-    ${a.extra?`<a class="lab-extra" href="${RES(a.extra)}" target="_blank" rel="noopener">📄 Extra practice ↗</a>`:''}</div>`;}).join('')}</div>`;}
+    <div class="lab-links">${NB_GUIDE[a.n]?`<a class="lab-extra" href="${NBF(NB_GUIDE[a.n])}" target="_blank" rel="noopener">📓 Notebook guide ↗</a>`:''}${a.proc?`<a class="lab-extra" href="${RES(a.proc)}" target="_blank" rel="noopener">📄 Full procedure ↗</a>`:''}${a.extra?`<a class="lab-extra" href="${RES(a.extra)}" target="_blank" rel="noopener">📄 Extra practice ↗</a>`:''}</div></div>`;}).join('')}</div>`;}
 
 /* ---------- EXTRA PRACTICE ---------- */
 function renderExtra(){$('#sec-extra').innerHTML=`<p class="sec-intro">Extra practice problems for each lab activity — great prep for that week's quiz. Recommended dates are a day or two before the quiz.</p><div class="rc-grid">${RESOURCES.extra.map(x=>resCard(x)).join('')}</div>`;}
@@ -1601,7 +1604,9 @@ function describeItem(cat,title){
     return {icon:'📋',tag:'Orgo Lab · exam practice',head:'Lab Final practice',what:'Practice for the Lab Final — covers Activities 1–11, Thu Aug 6 in the lab. Work through it in the final week.',sh:'Open',study};}
   if(m=title.match(/Notebook pages — Activity (\d+)/)){const n=+m[1];const a=LABACTS.find(a=>a.n===n)||{};
     const study=NB_GUIDE[n]?[L('📓 What to write (guide PDF)',NBF(NB_GUIDE[n]))]:[];
-    return {icon:'📓',tag:'Orgo Lab · notebook',head:'Notebook pages — Activity '+n,what:'Hand-written pre-lab notebook pages for Activity '+n+' ('+(a.title||'')+'): purpose + reaction scheme, reagent/safety table, and a procedure plan in your numbered notebook. '+(NB_GUIDE[n]?'Open the guide for exactly what to write, then copy it by hand.':'')+' Bring it to lab — checked at 1:00 PM. Separate from the Labflow pre-lab assessment.',sh:NB_GUIDE[n]?'Open':'',study};}
+    study.push(L('📋 Notebook prep guidelines',RES('notebook-prep-guidelines.pdf')));
+    if(a.proc)study.push(L('📄 Full Labflow procedure',RES(a.proc)));
+    return {icon:'📓',tag:'Orgo Lab · notebook',head:'Notebook pages — Activity '+n,what:'Hand-written pre-lab notebook pages for Activity '+n+' ('+(a.title||'')+'): purpose + reaction scheme, reagent/safety table, and a procedure plan in your numbered notebook. '+(NB_GUIDE[n]?'Open the guide for exactly what to write (black = copy, blue = context), then reproduce it by hand.':'Follow the notebook prep guidelines.')+' Bring it to lab — checked at 1:00 PM. Separate from the Labflow pre-lab assessment.',sh:'Open',study};}
   if(m=title.match(/Quiz (\d+)/)){const n=+m[1];const qi=QUIZINFO[n]||{};
     return {icon:'📝',tag:'Lab quiz',head:'Quiz '+n,what:'Taken on Canvas during lab lecture (LockDown Browser). '+(qi.covers||''),sh:qi.links&&qi.links.length?'Recommended study':'',study:(qi.links||[]).map(x=>L(x.label,RES(x.file)))};}
   if(/Lab Final/i.test(title)){return {icon:'🧫',tag:'Lab final',head:'Lab Final Exam',what:'Covers Activities 1–11 · Thu Aug 6 in the lab. Review your notebooks, post-lab work, and the review documents.',sh:'Lab reviews',study:RESOURCES.labReview.map(x=>L(x.label,RES(x.file)))};}
