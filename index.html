@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="sage">
+<html lang="en" data-theme="carbon">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,7 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%235d7d3f'/><path d='M16 5 l9 5 v8 a9 11 0 0 1 -9 9 a9 11 0 0 1 -9 -9 v-8 z' fill='none' stroke='%23dfe5cc' stroke-width='2'/><circle cx='16' cy='14' r='3' fill='%23dfe5cc'/></svg>">
 <!-- Installable web app (PWA) -->
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#5d7d3f">
+<meta name="theme-color" content="#ffffff">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -644,6 +644,13 @@
   .rc-t{font-weight:700;font-size:13.5px;line-height:1.25}
   .rc-ext{color:var(--ink-faint);font-size:11px;font-weight:400}
   .rc-m{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
+  .rc-wrap{display:flex;flex-direction:column;gap:6px}
+  .rc-key{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11.5px;font-weight:700;
+    padding:6px 12px;border-radius:9px;border:1px solid color-mix(in srgb,var(--c-synth) 45%,var(--rule));
+    background:color-mix(in srgb,var(--c-synth) 12%,var(--card));color:var(--ink);
+    transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast)}
+  [data-theme="carbon"] .rc-key{border-radius:0}
+  .rc-key:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
   .by{flex:none;font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--ink-soft);background:var(--card-2);border:1px solid var(--rule-soft);border-radius:999px;padding:4px 9px;white-space:nowrap;text-align:center}
   [data-theme="carbon"] .by{border-radius:0}
   .by.soon{color:#fff;background:var(--c-textbook);border-color:transparent}
@@ -1185,15 +1192,15 @@ const RESOURCES = {
     {label:"Aldehydes & Ketones — Orgo I review", file:"aldehydes-review.pdf", note:"Recall what you already know before Ch 17"}
   ],
   extra:[
-    {label:"Activity 2 — ¹H NMR Workshop 1 (HNMR practice)", file:"nmr-workshop1-worksheet.pdf", by:"2026-07-04", quiz:"Quiz 2"},
-    {label:"Activity 3 — Extraction & Recrystallization", file:"labprep-act3.pdf", by:"2026-07-09", quiz:"Quiz 2"},
-    {label:"Activity 4 — Thin-Layer Chromatography (TLC)", file:"labprep-act4.pdf", by:"2026-07-11", quiz:"Quiz 3"},
-    {label:"Activity 5 — ¹H NMR Workshop 2", file:"labprep-act5.pdf", by:"2026-07-16", quiz:"Quiz 4"},
-    {label:"Activity 6 — Dehydration of Cyclohexanol", file:"labprep-act6.pdf", by:"2026-07-18", quiz:"Quiz 5"},
-    {label:"Activity 7 — Grignard / Triphenylmethanol", file:"labprep-act7.pdf", by:"2026-07-23", quiz:"Quiz 6"},
-    {label:"Activity 8 — Markovnikov Hydrohalogenation of Carvone", file:"labprep-act8.pdf", by:"2026-07-25", quiz:"Quiz 7"},
-    {label:"Activity 9 — EAS: Bromination of Aniline", file:"labprep-act9.pdf", by:"2026-07-30", quiz:"Quiz 8"},
-    {label:"Activity 10 — Aldol Addition & Condensation", file:"labprep-act10.pdf", by:"2026-08-01", quiz:"Quiz 9"}
+    {label:"Activity 2 — ¹H NMR Workshop 1 (HNMR practice)", file:"nmr-workshop1-worksheet.pdf", key:"nmr-workshop1-worksheet-key.pdf", by:"2026-07-04", quiz:"Quiz 2"},
+    {label:"Activity 3 — Extraction & Recrystallization", file:"labprep-act3.pdf", key:"labprep-act3-key.pdf", by:"2026-07-09", quiz:"Quiz 2"},
+    {label:"Activity 4 — Thin-Layer Chromatography (TLC)", file:"labprep-act4.pdf", key:"labprep-act4-key.pdf", by:"2026-07-11", quiz:"Quiz 3"},
+    {label:"Activity 5 — ¹H NMR Workshop 2", file:"labprep-act5.pdf", key:"labprep-act5-key.pdf", by:"2026-07-16", quiz:"Quiz 4"},
+    {label:"Activity 6 — Dehydration of Cyclohexanol", file:"labprep-act6.pdf", key:"labprep-act6-key.pdf", by:"2026-07-18", quiz:"Quiz 5"},
+    {label:"Activity 7 — Grignard / Triphenylmethanol", file:"labprep-act7.pdf", key:"labprep-act7-key.pdf", by:"2026-07-23", quiz:"Quiz 6"},
+    {label:"Activity 8 — Markovnikov Hydrohalogenation of Carvone", file:"labprep-act8.pdf", key:"labprep-act8-key.pdf", by:"2026-07-25", quiz:"Quiz 7"},
+    {label:"Activity 9 — EAS: Bromination of Aniline", file:"labprep-act9.pdf", key:"labprep-act9-key.pdf", by:"2026-07-30", quiz:"Quiz 8"},
+    {label:"Activity 10 — Aldol Addition & Condensation", file:"labprep-act10.pdf", key:"labprep-act10-key.pdf", by:"2026-08-01", quiz:"Quiz 9"}
   ],
   nmrWorksheets:[
     {label:"NMR Workshop 1 — practice problems", file:"nmr-workshop1-worksheet.pdf", note:"Do after NMR Video Series 1"}
@@ -1210,8 +1217,8 @@ const RESOURCES = {
   ],
   labReview:[
     {label:"Lab Final review document", file:"lab-final-review.pdf", note:"Covers Activities 1–11"},
-    {label:"Lab midterm practice (Fall 2024)", file:"lab-midterm-practice.pdf", note:"Extra practice"},
-    {label:"Post-midterm material review", file:"lab-postmidterm-review.pdf", note:"Extra practice"}
+    {label:"Lab midterm practice (Fall 2024)", file:"lab-midterm-practice.pdf", key:"lab-midterm-practice-key.pdf", note:"Extra practice"},
+    {label:"Post-midterm material review", file:"lab-postmidterm-review.pdf", key:"lab-postmidterm-review-key.pdf", note:"Extra practice"}
   ]
 };
 const LABACTS = [
@@ -1294,7 +1301,7 @@ const THEME_BAR={sage:'#f5f3e7',carbon:'#ffffff',midnight:'#0a0e1a'};
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('orgo-theme',t);}catch(e){}
   $$('#themeSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)));
   const tc=document.querySelector('meta[name="theme-color"]');if(tc&&THEME_BAR[t])tc.setAttribute('content',THEME_BAR[t]);}
-function initTheme(){let t='sage';try{const s=localStorage.getItem('orgo-theme');if(s)t=s;}catch(e){}setTheme(t);}
+function initTheme(){let t='carbon';try{const s=localStorage.getItem('orgo-theme');if(s)t=s;}catch(e){}setTheme(t);}
 
 /* ---------- DASHBOARD ---------- */
 function dlRow(x,big){const w=relDay(x.due);const c=CATS[x.cat];
@@ -1418,7 +1425,9 @@ function renderWeeks(){const host=$('#weeks');const t=today();
 
 /* ---------- helpers for resource lists ---------- */
 function byLabel(x){const w=x.by?relDay(parseDate(x.by)):null;return w?`<span class="by${w.diff<0?' past':w.diff<=2?' soon':''}">do by ${w.big==='TODAY'?'today':w.big==='Tomorrow'?'tomorrow':MON[parseDate(x.by).getMonth()].slice(0,3)+' '+parseDate(x.by).getDate()}</span>`:'';}
-function resCard(x,tag){return `<a class="rc" href="${RES(x.file)}" target="_blank" rel="noopener"><div class="rc-body"><div class="rc-t">${x.label} <span class="rc-ext">↗</span></div>${x.topic?`<div class="rc-m">${x.topic}</div>`:''}${x.note?`<div class="rc-m">${x.note}</div>`:''}${x.quiz?`<div class="rc-m">for ${x.quiz}</div>`:''}</div>${x.by?byLabel(x):''}</a>`;}
+function resCard(x,tag){const main=`<a class="rc" href="${RES(x.file)}" target="_blank" rel="noopener"><div class="rc-body"><div class="rc-t">${x.label} <span class="rc-ext">↗</span></div>${x.topic?`<div class="rc-m">${x.topic}</div>`:''}${x.note?`<div class="rc-m">${x.note}</div>`:''}${x.quiz?`<div class="rc-m">for ${x.quiz}</div>`:''}</div>${x.by?byLabel(x):''}</a>`;
+  if(!x.key)return main;
+  return `<div class="rc-wrap">${main}<a class="rc-key" href="${RES(x.key)}" target="_blank" rel="noopener">🔑 Answer key ↗</a></div>`;}
 
 /* ---------- WORKSHEETS ---------- */
 function probList(o){return Object.entries(o).map(([ch,ns])=>`<span class="pl"><b>Ch ${ch}</b> ${ns.join(', ')}</span>`).join('   ');}
@@ -1582,11 +1591,13 @@ function describeItem(cat,title){
   if(m=title.match(/Recitation worksheet:\s*(.+)/)){const lbl=m[1];const r=RESOURCES.recitation.find(x=>x.label===lbl);
     return {icon:'✍️',tag:'Orgo II · recitation',head:r?r.label:lbl,what:(r&&r.topic?r.topic+'. ':'')+'Recitation worksheet — recommended due 2 days after the recitation that covers it. Work the mechanisms & short syntheses.',sh:'Open',study:r?[L('Recitation worksheet (PDF)',RES(r.file))]:[]};}
   if(m=title.match(/Extra practice:\s*(.+)/)){const lbl=m[1];const r=RESOURCES.extra.find(x=>x.label===lbl);
-    return {icon:'🧪',tag:'Orgo Lab · extra practice',head:r?r.label:lbl,what:'Extra-practice problems'+(r&&r.quiz?' — great prep for '+r.quiz:'')+'. Recommended due 2 days after the lab that covers it.',sh:'Open',study:r?[L('Extra practice (PDF)',RES(r.file))]:[]};}
+    const study=r?[L('Extra practice (PDF)',RES(r.file))]:[];if(r&&r.key)study.push(L('🔑 Answer key',RES(r.key)));
+    return {icon:'🧪',tag:'Orgo Lab · extra practice',head:r?r.label:lbl,what:'Extra-practice problems'+(r&&r.quiz?' — great prep for '+r.quiz:'')+'. Recommended due 2 days after the lab that covers it.',sh:'Open',study};}
   if(m=title.match(/Past Exam (\d) practice/)){const n=+m[1];
     return {icon:'📕',tag:'Orgo II · exam practice',head:'Past Exam '+n+' (Orgo II)',what:'Sit it timed like the real thing, then check yourself with the chapter answer keys & your worksheets. Set to the day of Exam '+n+' so you practice right before.',sh:'Open',study:[L('Past Exam '+n+' (PDF)',RES('past-exam-'+n+'.pdf'))]};}
-  if(m=title.match(/Lab Final practice — (.+)/)){const key=m[1];const map={'Midterm Practice':'lab-midterm-practice.pdf','Post-midterm review':'lab-postmidterm-review.pdf','Final review doc':'lab-final-review.pdf'};const file=map[key]||'lab-final-review.pdf';
-    return {icon:'📋',tag:'Orgo Lab · exam practice',head:'Lab Final practice',what:'Practice for the Lab Final — covers Activities 1–11, Thu Aug 6 in the lab. Work through it in the final week.',sh:'Open',study:[L(key,RES(file))]};}
+  if(m=title.match(/Lab Final practice — (.+)/)){const key=m[1];const map={'Midterm Practice':'lab-midterm-practice.pdf','Post-midterm review':'lab-postmidterm-review.pdf','Final review doc':'lab-final-review.pdf'};const keymap={'Midterm Practice':'lab-midterm-practice-key.pdf','Post-midterm review':'lab-postmidterm-review-key.pdf'};const file=map[key]||'lab-final-review.pdf';
+    const study=[L(key,RES(file))];if(keymap[key])study.push(L('🔑 Answer key',RES(keymap[key])));
+    return {icon:'📋',tag:'Orgo Lab · exam practice',head:'Lab Final practice',what:'Practice for the Lab Final — covers Activities 1–11, Thu Aug 6 in the lab. Work through it in the final week.',sh:'Open',study};}
   if(m=title.match(/Notebook pages — Activity (\d+)/)){const n=+m[1];const a=LABACTS.find(a=>a.n===n)||{};
     return {icon:'📓',tag:'Orgo Lab · notebook',head:'Notebook pages — Activity '+n,what:'Hand-written pre-lab notebook pages for Activity '+n+' ('+(a.title||'')+'): title, objective, reagent table & procedure outline in your numbered notebook. Bring it to lab — checked at 1:00 PM. Separate from the Labflow pre-lab assessment.',sh:'',study:[]};}
   if(m=title.match(/Quiz (\d+)/)){const n=+m[1];const qi=QUIZINFO[n]||{};
