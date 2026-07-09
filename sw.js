@@ -1,6 +1,6 @@
 /* Orgo Planner service worker — makes the app installable + offline-capable.
    App shell is precached; PDFs/resources are cached on first open. */
-const CACHE = 'orgo-planner-v2';
+const CACHE = 'orgo-planner-v3';
 const SHELL = [
   './',
   './index.html',
